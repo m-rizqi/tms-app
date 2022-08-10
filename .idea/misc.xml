@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/bg_splash.xml" value="0.1" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/splash_background.xml" value="0.172" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/splash_launcher.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_main.xml" value="0.20052083333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>

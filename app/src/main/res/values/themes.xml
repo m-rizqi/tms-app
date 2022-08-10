@@ -16,6 +16,12 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
     </style>
+    <style name="Theme.TokoManagementSystem.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/primary_100</item>
+    </style>
 
 <!--    TextStyle-->
     <style name="TextAppearance">TMS TextAppearance</style>
