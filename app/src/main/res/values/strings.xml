@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Toko Management System</string>
+    <string name="app_name_short">TMS</string>
 </resources>
