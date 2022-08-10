@@ -1,5 +1,7 @@
 package com.rizqi.tms.ui.onboarding
 
+import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ class OnBoardingActivity : AppCompatActivity() {
     private var _binding : ActivityOnBoardingBinding? = null
     private val binding : ActivityOnBoardingBinding
         get() = _binding!!
+    private var lastPosition = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityOnBoardingBinding.inflate(layoutInflater)
@@ -24,19 +27,31 @@ class OnBoardingActivity : AppCompatActivity() {
         binding.vpOnboarding.adapter = pagerAdapter
         binding.vpOnboarding.registerOnPageChangeCallback(
             object : ViewPager2.OnPageChangeCallback(){
+                @SuppressLint("Recycle")
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     when(position){
                         0 -> {
-                            binding.lpiOnboarding.progress = 1
+                            if (lastPosition > position){
+                                animateProgressIndicator(200, 100)
+                            }else{
+                                animateProgressIndicator(0, 100)
+                            }
+                            lastPosition = position
                             setNextButton()
                         }
                         1 -> {
-                            binding.lpiOnboarding.progress = 2
+                            if (lastPosition > position){
+                                animateProgressIndicator(300, 200)
+                            }else{
+                                animateProgressIndicator(100, 200)
+                            }
+                            lastPosition = position
                             setNextButton()
                         }
                         2 -> {
-                            binding.lpiOnboarding.progress = 3
+                            animateProgressIndicator(200, 300)
+                            lastPosition = position
                             setStartButton()
                         }
                     }
@@ -78,6 +93,15 @@ class OnBoardingActivity : AppCompatActivity() {
             setPadding(paddingHorizontal, paddingVertical, paddingHorizontal, paddingVertical)
             cornerRadius = 50.dp(this@OnBoardingActivity)
             text = context.getString(R.string.start)
+        }
+    }
+
+    private fun animateProgressIndicator(from : Int, to : Int){
+        ValueAnimator.ofInt(from, to).apply {
+            addUpdateListener {
+                binding.lpiOnboarding.progress = it.animatedValue as Int
+            }
+            start()
         }
     }
 

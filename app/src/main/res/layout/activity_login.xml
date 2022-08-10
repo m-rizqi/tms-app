@@ -1,9 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.login.LoginActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+        <import type="android.text.InputType"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.login.LoginActivity"
+        android:background="@color/white"
+        >
+
+             <ScrollView
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
+
+                 <androidx.constraintlayout.widget.ConstraintLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:paddingHorizontal="16dp"
+                     android:paddingVertical="18dp">
+
+                     <TextView
+                         android:id="@+id/tv_login_skip"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toTopOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         style="@style/TextAppearance.Body2"
+                         android:textColor="@color/black_80"
+                         android:text="@string/skip"/>
+
+                     <ImageView
+                         android:id="@+id/iv_login_vector"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintTop_toBottomOf="@id/tv_login_skip"
+                         android:layout_marginTop="32dp"
+                         android:src="@drawable/vector_login"/>
+
+                     <TextView
+                         android:id="@+id/tv_login_heading"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/iv_login_vector"
+                         app:layout_constraintStart_toStartOf="parent"
+                         android:layout_marginTop="24dp"
+                         style="@style/TextAppearance.Headline5"
+                         android:text="@string/login"
+                         android:textColor="@color/primary_100"/>
+
+                     <include layout="@layout/layout_with_google"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:id="@+id/btn_login_with_google"
+                         app:layout_constraintTop_toBottomOf="@id/tv_login_heading"
+                         android:layout_marginTop="24dp"
+                         app:buttonText="@{@string/login_with_google}"
+                         />
+
+                     <include layout="@layout/layout_divider_or"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/btn_login_with_google"
+                         android:layout_marginTop="24dp"
+                         android:id="@+id/l_login_divider_or"
+                         />
+
+                     <include layout="@layout/layout_input_layout_default"
+                         android:id="@+id/til_login_email"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/l_login_divider_or"
+                         android:layout_marginTop="24dp"
+                         app:title="@{@string/email}"
+                         app:hint="@{@string/email_hint}"
+                         app:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS}"
+                         />
+
+                     <include layout="@layout/layout_input_layout_default"
+                         android:id="@+id/til_login_password"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/til_login_email"
+                         android:layout_marginTop="16dp"
+                         app:title="@{@string/password}"
+                         app:hint="@{@string/password_hint}"
+                         app:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD}"
+                         app:helperText="@{@string/password_helper}"
+                         />
+
+                     <TextView
+                         android:id="@+id/tv_login_forgot_password"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/til_login_password"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         android:layout_marginTop="16dp"
+                         style="@style/TextAppearance.KarlaMedium16"
+                         android:textColor="@color/primary_100"
+                         android:text="@string/forgot_password"
+                         />
+
+                     <com.google.android.material.button.MaterialButton
+                         android:id="@+id/btn_login"
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/tv_login_forgot_password"
+                         android:layout_marginTop="32dp"
+                         style="@style/MaterialButton.Default"
+                         android:text="@string/login"
+                         />
+
+                     <TextView
+                         android:id="@+id/tv_login_dont_have_account"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toTopOf="@id/tv_register"
+                         app:layout_constraintBottom_toBottomOf="@id/tv_register"
+                         app:layout_constraintStart_toStartOf="parent"
+                         app:layout_constraintEnd_toStartOf="@id/tv_register"
+                         app:layout_constraintHorizontal_chainStyle="packed"
+                         android:layout_marginEnd="5dp"
+                         style="@style/TextAppearance.Body2"
+                         android:text="@string/doesnt_have_account"
+                         android:textColor="@color/black_80"/>
+
+                     <TextView
+                         android:id="@+id/tv_register"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         app:layout_constraintTop_toBottomOf="@id/btn_login"
+                         app:layout_constraintEnd_toEndOf="parent"
+                         app:layout_constraintStart_toEndOf="@id/tv_login_dont_have_account"
+                         android:layout_marginTop="48dp"
+                         android:fontFamily="@font/karla_medium"
+                         android:textSize="14sp"
+                         android:text="@string/register"
+                         android:textColor="@color/primary_100"/>
+
+                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+             </ScrollView>
+
+            <include layout="@layout/layout_loading"
+                android:id="@+id/l_login_loading"
+                android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

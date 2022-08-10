@@ -47,11 +47,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="40dp"
-            android:max="3"
+            android:max="300"
             app:trackCornerRadius="4dp"
             app:trackThickness="8dp"
             app:trackColor="@color/primary_20"
-            android:value="1"
             app:indicatorColor="@color/primary_100"
             android:progress="0"
             />
