@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Toko Management System</string>
     <string name="app_name_short">TMS</string>
+    <string name="skip">Lewati</string>
+    <string name="next">Lanjut</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="scan_and_save_item">Scan dan Simpan Barang</string>
+    <string name="scan_save_see_items_in_your_merchant">Scan, simpan dan lihat detail barang - barang yang ada di tokomu</string>
+    <string name="easy_cashier_feature">Fitur Kasir yang Mudah</string>
+    <string name="scan_to_speed_up_merchant_performance">Scan barcode pada barang untuk mempercepat kinerja toko</string>
+    <string name="see_financial_progress">Lihat Perkembangan Finansial</string>
+    <string name="income_resume_to_see_merchant_progress">Ringkasan pemasukkan dari hari ke hari untuk melihat kemajuan tokomu</string>
+    <string name="start">Mulai</string>
 </resources>
