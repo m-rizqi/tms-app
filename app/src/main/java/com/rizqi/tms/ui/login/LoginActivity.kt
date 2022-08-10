@@ -1,10 +1,12 @@
 package com.rizqi.tms.ui.login
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityLoginBinding
+import com.rizqi.tms.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private var _binding : ActivityLoginBinding? = null
@@ -14,6 +16,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         setContentView(binding.root)
+
+        binding.apply {
+            tvLoginRegister.setOnClickListener {
+                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            }
+        }
     }
 
     override fun onDestroy() {

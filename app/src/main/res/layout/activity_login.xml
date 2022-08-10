@@ -94,6 +94,7 @@
                          app:hint="@{@string/password_hint}"
                          app:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD}"
                          app:helperText="@{@string/password_helper}"
+                         app:passwordToggleEnabled="@{true}"
                          />
 
                      <TextView
@@ -103,7 +104,7 @@
                          app:layout_constraintTop_toBottomOf="@id/til_login_password"
                          app:layout_constraintEnd_toEndOf="parent"
                          android:layout_marginTop="16dp"
-                         style="@style/TextAppearance.KarlaMedium16"
+                         style="@style/TextAppearance.Button"
                          android:textColor="@color/primary_100"
                          android:text="@string/forgot_password"
                          />
@@ -113,7 +114,7 @@
                          android:layout_width="match_parent"
                          android:layout_height="wrap_content"
                          app:layout_constraintTop_toBottomOf="@id/tv_login_forgot_password"
-                         android:layout_marginTop="32dp"
+                         android:layout_marginTop="40dp"
                          style="@style/MaterialButton.Default"
                          android:text="@string/login"
                          />
@@ -122,10 +123,10 @@
                          android:id="@+id/tv_login_dont_have_account"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
-                         app:layout_constraintTop_toTopOf="@id/tv_register"
-                         app:layout_constraintBottom_toBottomOf="@id/tv_register"
+                         app:layout_constraintTop_toTopOf="@id/tv_login_register"
+                         app:layout_constraintBottom_toBottomOf="@id/tv_login_register"
                          app:layout_constraintStart_toStartOf="parent"
-                         app:layout_constraintEnd_toStartOf="@id/tv_register"
+                         app:layout_constraintEnd_toStartOf="@id/tv_login_register"
                          app:layout_constraintHorizontal_chainStyle="packed"
                          android:layout_marginEnd="5dp"
                          style="@style/TextAppearance.Body2"
@@ -133,7 +134,7 @@
                          android:textColor="@color/black_80"/>
 
                      <TextView
-                         android:id="@+id/tv_register"
+                         android:id="@+id/tv_login_register"
                          android:layout_width="wrap_content"
                          android:layout_height="wrap_content"
                          app:layout_constraintTop_toBottomOf="@id/btn_login"
