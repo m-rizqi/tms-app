@@ -13,4 +13,56 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+<!--    TextStyle-->
+    <style name="TextAppearance">TMS TextAppearance</style>
+    <style name="TextAppearance.Headline4">
+        <item name="fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">29sp</item>
+    </style>
+    <style name="TextAppearance.Headline5">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+    <style name="TextAppearance.Headline6">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+    <style name="TextAppearance.Subtitle1">
+        <item name="fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.Subtitle2">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.Body1">
+        <item name="fontFamily">@font/karla_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.Body12">
+        <item name="fontFamily">@font/karla_regular</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.Button">
+        <item name="fontFamily">@font/karla_medium</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="TextAppearance.Caption">
+        <item name="fontFamily">@font/karla_regular</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="TextAppearance.Overline">
+        <item name="fontFamily">@font/karla_regular</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="TextAppearance.KarlaMedium16">
+        <item name="fontFamily">@font/karla_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="TextAppearance.RubikMedium14">
+        <item name="fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>
