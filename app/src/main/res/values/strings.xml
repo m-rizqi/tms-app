@@ -27,4 +27,8 @@
     <string name="already_have_account">Sudah punya akun ?</string>
     <string name="name">Name</string>
     <string name="name_hint">Namaku adalah</string>
+    <string name="data_wont_saved">Data Tidak Akan Disimpan</string>
+    <string name="skip_alert_explanation"><![CDATA[Data mengenai tokomu tidak akan tersimpan di cloud sehingga tidak bisa dibackup-restore. <font color=#4641A7>Tetap lanjutkan ?</font>]]></string>
+    <string name="yes">Ya</string>
+    <string name="cancel">Batal</string>
 </resources>

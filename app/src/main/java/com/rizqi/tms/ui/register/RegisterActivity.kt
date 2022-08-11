@@ -15,6 +15,10 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_register)
         setContentView(binding.root)
+
+        binding.apply {
+            tvRegisterLogin.setOnClickListener { finish() }
+        }
     }
 
     override fun onDestroy() {
