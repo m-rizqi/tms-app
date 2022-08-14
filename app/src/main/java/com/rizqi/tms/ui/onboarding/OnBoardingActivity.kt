@@ -14,13 +14,11 @@ import com.rizqi.tms.utility.dp
 import com.rizqi.tms.utility.getColorSafe
 
 class OnBoardingActivity : AppCompatActivity() {
-    private var _binding : ActivityOnBoardingBinding? = null
-    private val binding : ActivityOnBoardingBinding
-        get() = _binding!!
+    private lateinit var binding : ActivityOnBoardingBinding
     private var lastPosition = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityOnBoardingBinding.inflate(layoutInflater)
+        binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val pagerAdapter = OnBoardingViewPagerAdapter(this)
@@ -105,8 +103,4 @@ class OnBoardingActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 }

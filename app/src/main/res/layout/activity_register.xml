@@ -64,6 +64,7 @@
                     android:layout_marginTop="24dp"
                     app:title="@{@string/name}"
                     app:hint="@{@string/name_hint}"
+                    app:inputType="@{InputType.TYPE_CLASS_TEXT}"
                     />
 
                 <include layout="@layout/layout_input_layout_default"

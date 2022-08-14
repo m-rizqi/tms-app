@@ -93,7 +93,6 @@
                          app:title="@{@string/password}"
                          app:hint="@{@string/password_hint}"
                          app:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD}"
-                         app:helperText="@{@string/password_helper}"
                          app:passwordToggleEnabled="@{true}"
                          />
 

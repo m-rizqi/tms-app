@@ -59,8 +59,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextInputEditText.Default"
                 android:hint="@{hint}"
-                android:imeOptions='@{imeOption, default=actionNext}'
-                android:inputType='@{inputType, default=text}'
+                android:imeOptions="@{imeOption, default=actionNext}"
+                android:inputType="@{inputType}"
                 tools:hint="Masukkan Input"
                 />
 
