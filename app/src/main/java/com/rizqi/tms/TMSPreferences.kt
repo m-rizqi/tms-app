@@ -14,6 +14,7 @@ class TMSPreferences {
         private const val TMS_PREF = "toko_management_system"
         private const val IS_LOGIN = "is_login"
         private const val IS_ANONYMOUS = "is_anonymous"
+        private const val USER_ID = "user_id"
 
         fun Context.isLogin() : Boolean = pref(this).getBoolean(IS_LOGIN, false)
 
@@ -31,5 +32,13 @@ class TMSPreferences {
                 apply()
             }
         }
+
+        fun Context.setUserId(value : Long){
+            val editor = pref(this).edit()
+            editor.putLong(USER_ID, value)
+            editor.apply()
+        }
+
+        fun Context.getUserId() : Long = pref(this).getLong(USER_ID, -1)
     }
 }
