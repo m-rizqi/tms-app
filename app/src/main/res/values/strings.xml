@@ -36,4 +36,11 @@
     <string name="confirm_password_must_equal">Konfirmasi password harus sama dengan password</string>
     <string name="no_id_token_passed">No Id Token Passed</string>
     <string name="you_dont_have_linked_account_register_first">Kamu belum memiliki akun tertaut! Daftar terlebih dahulu</string>
+    <string name="home">Beranda</string>
+    <string name="cashier">Kasir</string>
+    <string name="finance">Keuangan</string>
+    <string name="profile">Profil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="press_again_to_exit_the_app">Tekan sekali lagi untuk keluar dari aplikasi</string>
 </resources>
