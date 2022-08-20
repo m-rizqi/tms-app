@@ -21,7 +21,7 @@ import androidx.room.ForeignKey
 )
 data class PriceUnitCrossRef(
     @ColumnInfo(name = "price_id")
-    val priceId : Long?,
+    val priceId : Long,
     @ColumnInfo(name = "unit_id")
     val unitId : Long
 )

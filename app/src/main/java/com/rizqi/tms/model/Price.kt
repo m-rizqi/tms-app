@@ -22,7 +22,8 @@ data class Price(
     val isMainPrice : Boolean,
     @ColumnInfo(name = "quantity_connector")
     val quantityConnector : Long,
-    val priceConnector : Price?,
+    @ColumnInfo(name = "price_connector_id")
+    val priceConnectorId : Long?,
     @ColumnInfo(name = "item_id")
     val itemId : Long?
 ){

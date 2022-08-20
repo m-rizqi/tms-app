@@ -25,4 +25,6 @@
     <color name="black_20">#330A0A0A</color>
     <color name="black_10">#1A0A0A0A</color>
     <color name="danger_main">#CB3A31</color>
+    <color name="track_color">#dad9ed</color>
+    <color name="disabled">#EDEDED</color>
 </resources>

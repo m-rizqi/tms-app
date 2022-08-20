@@ -43,4 +43,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="press_again_to_exit_the_app">Tekan sekali lagi untuk keluar dari aplikasi</string>
+    <string name="add_item">Tambah Barang</string>
+    <string name="_1">1</string>
+    <string name="name_photo">Nama, Foto</string>
+    <string name="_2">2</string>
+    <string name="price">Harga</string>
+    <string name="_3">3</string>
+    <string name="main_price">Harga Utama</string>
+    <string name="scan_barcode">Scan Barcode</string>
+    <string name="barcode_explanation"><![CDATA[Arahkan kamera ke barcode yang ada pada barang. Jika barang <font color=#4641A7>tidak memiliki barcode, klik “Barang tanpa barcode”</font>]]></string>
+    <string name="item_no_barcode">Barang tanpa barcode</string>
+    <string name="barcode_number"><![CDATA[Barcode: <font color=#4641A7>%1$s</font>]]></string>
+    <string name="permision_denied">Permission Denied</string>
+    <string name="scanner_has_been_closed">Scanner has been closed</string>
+    <string name="failed_use_camera">Gagal menggunakan kamera !</string>
 </resources>

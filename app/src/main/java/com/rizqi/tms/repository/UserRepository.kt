@@ -5,7 +5,7 @@ import com.rizqi.tms.room.TMSDatabase
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val db: TMSDatabase
+    db: TMSDatabase
 ) {
     private val userDao = db.userDao()
 
