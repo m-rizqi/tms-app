@@ -1,9 +1,12 @@
 package com.rizqi.tms.ui.dashboard
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.rizqi.tms.R
@@ -30,11 +33,23 @@ class DashboardActivity : AppCompatActivity() {
     private var menuIndex = 0
     private var dashboardState = HOME
     private var isExitApp = false
+    private val CAMERA_REQ = 732
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (ContextCompat.checkSelfPermission(
+                this, android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA),
+                CAMERA_REQ
+            )
+        }
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fcv_dashboard, homeFragment)

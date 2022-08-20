@@ -6,9 +6,6 @@
 
     <data>
         <import type="android.text.InputType"/>
-        <variable
-            name="isEnabled"
-            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="24dp"
+                android:paddingBottom="56dp"
                 >
 
                 <RelativeLayout
@@ -40,18 +37,21 @@
                     <ImageView
                         android:id="@+id/iv_step1_create_item_image"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:background="@drawable/image_placeholder" />
+                        android:layout_height="360dp"
+                        android:background="@drawable/image_placeholder"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        />
 
                     <ImageButton
+                        android:id="@+id/btn_step1_create_item_take_image"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_camera_circle"
                         android:layout_alignBottom="@id/iv_step1_create_item_image"
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="12dp"
-                        />
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_camera_circle" />
 
                 </RelativeLayout>
 
@@ -102,11 +102,11 @@
             >
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_step1_create_item_next"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MaterialButton.Default"
                 android:text="@string/next"
-                app:toggleEnabledButton="@{isEnabled}"
                 />
 
         </LinearLayout>

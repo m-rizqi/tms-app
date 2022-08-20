@@ -1,8 +1,11 @@
 package com.rizqi.tms
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.rizqi.tms.TMSPreferences.Companion.isLogin
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.dashboard.DashboardActivity

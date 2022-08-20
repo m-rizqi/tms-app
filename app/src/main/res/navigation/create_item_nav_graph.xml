@@ -19,8 +19,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/step1_create_item"
-            app:popUpToInclusive="true" />
+            />
     </fragment>
 
     <fragment
@@ -36,8 +35,17 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/step2_create_item"
-            app:popUpToInclusive="true" />
+            />
+        <action
+            android:id="@+id/step2_to_step1_create_item"
+            app:destination="@id/step1_create_item"
+            app:popUpTo="@id/step1_create_item"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            />
     </fragment>
 
     <fragment
@@ -45,6 +53,17 @@
         android:name="com.rizqi.tms.ui.createitem.Step3CreateItemFragment"
         android:label="Step2CreateItem"
         tools:layout="@layout/fragment_step2_create_item"
-        />
+        >
+        <action
+            android:id="@+id/step3_to_step2_create_item"
+            app:destination="@id/step2_create_item"
+            app:popUpTo="@id/step2_create_item"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"
+            />
+    </fragment>
 
 </navigation>

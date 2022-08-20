@@ -13,7 +13,7 @@ sealed class Message {
     fun asString(context: Context): String {
         return when(this){
             is DynamicString -> value
-            is StringResource -> context.getString(resId, args)
+            is StringResource -> context.resources.getString(resId, *args)
         }
     }
 }
