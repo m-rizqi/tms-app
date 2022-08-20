@@ -1,14 +1,13 @@
 package com.rizqi.tms.model
 
 import androidx.room.Embedded
-import androidx.room.Junction
 import androidx.room.Relation
 
-data class ItemWithPrices(
-    @Embedded val item: Item,
+data class UnitWithPrices(
+    @Embedded val unit: Unit,
     @Relation(
         parentColumn = "id",
-        entityColumn = "item_id",
+        entityColumn = "unit_id",
     )
     val prices : List<Price>
 )

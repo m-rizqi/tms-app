@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.text.InputType"/>
+        <import type="com.google.android.material.textfield.TextInputLayout"/>
+        <variable
+            name="hint"
+            type="String" />
+        <variable
+            name="imeOption"
+            type="Integer" />
+        <variable
+            name="inputType"
+            type="Integer" />
+        <variable
+            name="helperText"
+            type="String" />
+        <variable
+            name="errorText"
+            type="String" />
+        <variable
+            name="passwordToggleEnabled"
+            type="Boolean" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            style="@style/TextInputLayout.Default"
+            app:helperText='@{helperText}'
+            app:errorText='@{errorText}'
+            app:endIconMode="@{passwordToggleEnabled ? TextInputLayout.END_ICON_PASSWORD_TOGGLE : TextInputLayout.END_ICON_NONE, default=none}"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextInputEditText.Default"
+                android:hint="@{hint}"
+                android:imeOptions="@{imeOption, default=actionNext}"
+                android:inputType="@{inputType}"
+                tools:hint="Masukkan Input"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+</layout>

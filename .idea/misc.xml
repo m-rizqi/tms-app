@@ -5,26 +5,31 @@
       <map>
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/bg_primary.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/bg_splash.xml" value="0.1" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_image.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_logo.xml" value="0.172" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/image_placeholder.xml" value="0.1" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/image_placeholder_backgrounf.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/round_corner_shape.xml" value="0.1045" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/shadow.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/shadow_round_corner.xml" value="0.1045" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/shape__circular_progress.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/splash_background.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/splash_launcher.xml" value="0.1" />
-        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_create_item.xml" value="0.22" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_create_item.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_dashboard.xml" value="0.18611111111111112" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_main.xml" value="0.20052083333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_on_boarding.xml" value="0.22" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_register.xml" value="0.20052083333333334" />
-        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_scan_barcode.xml" value="0.3333333333333333" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_scan_barcode.xml" value="0.18611111111111112" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/dialog_skip_alert.xml" value="0.1871508379888268" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/fragment_home.xml" value="0.20052083333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/fragment_on_boarding1.xml" value="0.20052083333333334" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/fragment_step1_create_item.xml" value="0.14666666666666667" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_divider_or.xml" value="0.7333333333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_input_layout.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_input_layout_default.xml" value="0.5" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_input_layout_no_title.xml" value="0.13496376811594202" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_loading.xml" value="0.19021739130434784" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_with_google.xml" value="0.12407407407407407" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.14444444444444443" />

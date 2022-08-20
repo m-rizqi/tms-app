@@ -57,4 +57,7 @@
     <string name="permision_denied">Permission Denied</string>
     <string name="scanner_has_been_closed">Scanner has been closed</string>
     <string name="failed_use_camera">Gagal menggunakan kamera !</string>
+    <string name="item_name">Nama Barang</string>
+    <string name="item_name_hint">Ketik nama barang, ex: Beras</string>
+
 </resources>

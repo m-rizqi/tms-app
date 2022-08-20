@@ -17,15 +17,19 @@ import androidx.room.PrimaryKey
     ]
 )
 data class Price(
-    val barcode : String,
+    val barcode : String = "",
     @ColumnInfo(name = "is_main_price")
-    val isMainPrice : Boolean,
+    val isMainPrice : Boolean = true,
     @ColumnInfo(name = "quantity_connector")
-    val quantityConnector : Long,
+    val quantityConnector : Long = 0,
     @ColumnInfo(name = "price_connector_id")
-    val priceConnectorId : Long?,
+    val priceConnectorId : Long? = null,
     @ColumnInfo(name = "item_id")
-    val itemId : Long?
+    val itemId : Long? = null,
+    @ColumnInfo(name = "unit_id")
+    val unitId : Long? = null,
+    @ColumnInfo(name = "unit_name")
+    val unitName : String = ""
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

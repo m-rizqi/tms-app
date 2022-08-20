@@ -9,7 +9,7 @@ import com.rizqi.tms.model.Unit
 import com.rizqi.tms.utility.TMS_DATABASE
 
 @Database(
-    entities = [User::class, Unit::class, SpecialPrice::class, SubPrice::class, Price::class, Item::class, PriceUnitCrossRef::class],
+    entities = [User::class, Unit::class, SpecialPrice::class, SubPrice::class, Price::class, Item::class],
     version = 1,
     exportSchema = false
 )

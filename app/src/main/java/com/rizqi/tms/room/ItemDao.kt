@@ -18,8 +18,4 @@ interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItem(item: Item) : Long
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPriceUnitCrossRef(priceUnitCrossRef: PriceUnitCrossRef)
-
 }

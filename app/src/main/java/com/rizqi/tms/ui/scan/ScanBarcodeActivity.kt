@@ -5,12 +5,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.SurfaceHolder
-import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -43,7 +42,10 @@ class ScanBarcodeActivity : AppCompatActivity() {
         }
         binding.btnScanNext.setOnClickListener { sendResult(scannedValue.value!!) }
         binding.cvScanBack.setOnClickListener { onBackPressed() }
-        binding.cvScanBarcodeNumber.setOnClickListener { sendResult(getString(R.string.item_no_barcode)) }
+        binding.btnScanNoBarcode.setOnClickListener { sendResult(getString(R.string.item_no_barcode)) }
+        val scannerAnim: Animation =
+            AnimationUtils.loadAnimation(this@ScanBarcodeActivity, R.anim.scanner_anim)
+        binding.viewScannerAnim.startAnimation(scannerAnim)
 
         if (ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.CAMERA
@@ -90,7 +92,7 @@ class ScanBarcodeActivity : AppCompatActivity() {
 
     private fun setupControls() {
         barcodeDetector =
-            BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build()
+            BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.EAN_13).build()
 
         cameraSource = CameraSource.Builder(this, barcodeDetector)
             .setRequestedPreviewSize(1920, 1080)
