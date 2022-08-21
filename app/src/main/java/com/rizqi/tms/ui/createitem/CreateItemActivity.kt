@@ -13,20 +13,14 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityCreateItemBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
     private lateinit var binding : ActivityCreateItemBinding
     private lateinit var navHostFragment : NavHostFragment
     private lateinit var navController : NavController
     private var currentStep = 1
-
-//    private val scanBarcodeLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-//        if(it.resultCode == RESULT_OK && it.data != null){
-//            it.data!!.getStringExtra(BARCODE_NUMBER)?.let { barcode ->
-//                createItemViewModel.addPrice(barcode)
-//            }
-//        }
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +28,7 @@ class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
         setContentView(binding.root)
         navHostFragment = supportFragmentManager.findFragmentById(R.id.fcv_create_item) as NavHostFragment
         navController = navHostFragment.navController
-
+        binding.btnCreateItemBack.setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {

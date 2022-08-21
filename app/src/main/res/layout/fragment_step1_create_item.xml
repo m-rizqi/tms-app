@@ -73,7 +73,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     app:hint="@{@string/item_name_hint}"
-                    app:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                    app:inputType="@{InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE}"
                     />
 
             </LinearLayout>

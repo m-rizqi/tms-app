@@ -7,11 +7,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentStep2CreateItemBinding
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceBottomSheet
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class Step2CreateItemFragment : Fragment() {
     private var _binding : FragmentStep2CreateItemBinding? = null
     private val binding : FragmentStep2CreateItemBinding
@@ -24,7 +27,7 @@ class Step2CreateItemFragment : Fragment() {
         try{
             if (context is Activity) stepChangedListener = context as OnStepChangedListener
         }catch (e : ClassCastException){
-            throw ClassCastException(context.toString() + "must implement OnStepChagedListener")
+            throw ClassCastException(context.toString() + "must implement OnStepChangedListener")
         }
     }
 

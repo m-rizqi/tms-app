@@ -28,7 +28,6 @@ abstract class TMSDatabase : RoomDatabase(){
                     TMSDatabase::class.java,
                     TMS_DATABASE
                 )
-                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 return instance

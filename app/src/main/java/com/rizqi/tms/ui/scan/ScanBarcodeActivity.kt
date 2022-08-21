@@ -45,7 +45,7 @@ class ScanBarcodeActivity : AppCompatActivity() {
         binding.btnScanNoBarcode.setOnClickListener { sendResult(getString(R.string.item_no_barcode)) }
         val scannerAnim: Animation =
             AnimationUtils.loadAnimation(this@ScanBarcodeActivity, R.anim.scanner_anim)
-        binding.viewScannerAnim.startAnimation(scannerAnim)
+//        binding.viewScannerAnim.startAnimation(scannerAnim)
 
         if (ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.CAMERA

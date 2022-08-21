@@ -79,5 +79,7 @@
     <string name="price_hint">12.000</string>
     <string name="dot_symbol">•</string>
     <string name="piece">Buah</string>
-
+    <string name="wrap">Bungkus</string>
+    <string name="press_the_next_button">Tekan tombol disamping</string>
+    <string name="rp_hint">Rp&#160;&#160;&#160;</string>
 </resources>

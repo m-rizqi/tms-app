@@ -39,7 +39,7 @@ class Step1CreateItemFragment : Fragment() {
         try{
             if (context is Activity) stepChangedListener = context as OnStepChangedListener
         }catch (e : ClassCastException){
-            throw ClassCastException(context.toString() + "must implement OnStepChagedListener")
+            throw ClassCastException(context.toString() + "must implement OnStepChangedListener")
         }
     }
 

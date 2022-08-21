@@ -91,7 +91,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_toStartOf="@id/btn_create_price_scan"
-                            app:inputType="@{InputType.TYPE_CLASS_NUMBER}" />
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER}"
+                            app:hint="@{@string/press_the_next_button}"
+                            />
 
                         <ImageButton
                             android:id="@+id/btn_create_price_scan"
@@ -135,11 +137,57 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp">
 
-                        <com.google.android.material.chip.ChipGroup
+                        <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            >
 
-                        </com.google.android.material.chip.ChipGroup>
+                            <com.google.android.material.chip.ChipGroup
+                                android:id="@+id/chip_group_create_item_units"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:selectionRequired="true"
+                                app:singleSelection="true"
+                                />
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmer_create_price_units"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:shimmer_auto_start="true"
+                                >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    >
+
+                                    <include
+                                        layout="@layout/chip_unit"
+                                        android:layout_width="72dp"
+                                        android:layout_height="wrap_content"
+                                        />
+
+                                    <include
+                                        layout="@layout/chip_unit"
+                                        android:layout_width="72dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        />
+
+                                    <include
+                                        layout="@layout/chip_unit"
+                                        android:layout_width="72dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        />
+
+                                </LinearLayout>
+
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                        </RelativeLayout>
 
                     </HorizontalScrollView>
 
@@ -158,7 +206,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         app:hint="@{@string/price_hint}"
-                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}" />
+                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                        app:prefixText="@{@string/rp_hint}"
+                        />
 
                     <TextView
                         style="@style/TextAppearance.Caption"
@@ -191,7 +241,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         app:hint="@{@string/price_hint}"
-                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}" />
+                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                        app:prefixText="@{@string/rp_hint}"
+                        />
 
                     <TextView
                         style="@style/TextAppearance.Caption"

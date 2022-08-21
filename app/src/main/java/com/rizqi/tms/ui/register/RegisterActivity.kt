@@ -115,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
                                                     }
                                                 }
                                             }
-                                            unitViewModel.insertUnit(Unit(getString(R.string.piece)))
+                                            unitViewModel.insertUnit(Unit(getString(R.string.wrap)))
                                             unitViewModel.insertUnit.observe(this@RegisterActivity, insertUnitObserver)
                                         }
                                     }
@@ -210,7 +210,7 @@ class RegisterActivity : AppCompatActivity() {
                                                                 }
                                                             }
                                                         }
-                                                        unitViewModel.insertUnit(Unit(getString(R.string.piece)))
+                                                        unitViewModel.insertUnit(Unit(getString(R.string.wrap)))
                                                         unitViewModel.insertUnit.observe(this@RegisterActivity, insertUnitObserver)
                                                         goToDashboard()
                                                     }

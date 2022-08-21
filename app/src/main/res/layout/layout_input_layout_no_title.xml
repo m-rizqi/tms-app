@@ -24,6 +24,9 @@
             name="suffixText"
             type="String" />
         <variable
+            name="prefixText"
+            type="String" />
+        <variable
             name="passwordToggleEnabled"
             type="Boolean" />
     </data>
@@ -44,6 +47,10 @@
             app:suffixTextAppearance="@style/TextAppearance.Button"
             tools:suffixText="Suffix"
             app:suffixText='@{suffixText}'
+            app:prefixTextAppearance="@style/TextAppearance.Subtitle2"
+            app:prefixTextColor="@color/black_80"
+            app:prefixText='@{prefixText}'
+            tools:prefixText="Rp   "
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -55,6 +62,7 @@
                 android:imeOptions="@{imeOption, default=actionNext}"
                 android:inputType="@{inputType}"
                 tools:hint="Masukkan Input"
+                android:digits="0123456789.,"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>
