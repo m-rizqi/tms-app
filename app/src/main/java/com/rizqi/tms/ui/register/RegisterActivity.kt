@@ -25,12 +25,14 @@ import com.rizqi.tms.TMSPreferences.Companion.setAnonymous
 import com.rizqi.tms.TMSPreferences.Companion.setLogin
 import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityRegisterBinding
+import com.rizqi.tms.model.Unit
 import com.rizqi.tms.model.User
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.dialog.skipalert.SkipAlertDialog
 import com.rizqi.tms.utility.Resource
 import com.rizqi.tms.utility.hideLoading
 import com.rizqi.tms.utility.showLoading
+import com.rizqi.tms.viewmodel.UnitViewModel
 import com.rizqi.tms.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,6 +47,7 @@ class RegisterActivity : AppCompatActivity() {
     private var showOneTapUI = true
     private val viewModel : RegisterViewModel by viewModels()
     private val userViewModel : UserViewModel by viewModels()
+    private val unitViewModel : UnitViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,14 +96,27 @@ class RegisterActivity : AppCompatActivity() {
                                         is Resource.Error -> {
                                             hideLoading(binding.lRegisterLoading)
                                             Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
-                                            goToDashboard()
                                         }
                                         is Resource.Success -> {
-                                            hideLoading(binding.lRegisterLoading)
                                             res.data?.let { it1 -> setUserId(it1) }
                                             setLogin(true)
                                             setAnonymous(false)
-                                            goToDashboard()
+                                            // Create initial unit
+                                            val insertUnitObserver = Observer<Resource<Long>>{unitRes ->
+                                                when(unitRes){
+                                                    is Resource.Error -> {
+                                                        hideLoading(binding.lRegisterLoading)
+                                                        Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                                        goToDashboard()
+                                                    }
+                                                    is Resource.Success -> {
+                                                        hideLoading(binding.lRegisterLoading)
+                                                        goToDashboard()
+                                                    }
+                                                }
+                                            }
+                                            unitViewModel.insertUnit(Unit(getString(R.string.piece)))
+                                            unitViewModel.insertUnit.observe(this@RegisterActivity, insertUnitObserver)
                                         }
                                     }
                                 }
@@ -175,13 +191,27 @@ class RegisterActivity : AppCompatActivity() {
                                                     is Resource.Error -> {
                                                         hideLoading(binding.lRegisterLoading)
                                                         Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
-                                                        goToDashboard()
                                                     }
                                                     is Resource.Success -> {
-                                                        hideLoading(binding.lRegisterLoading)
                                                         res.data?.let { it1 -> setUserId(it1) }
                                                         setLogin(true)
                                                         setAnonymous(false)
+                                                        // Create initial unit
+                                                        val insertUnitObserver = Observer<Resource<Long>>{unitRes ->
+                                                            when(unitRes){
+                                                                is Resource.Error -> {
+                                                                    hideLoading(binding.lRegisterLoading)
+                                                                    Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                                                    goToDashboard()
+                                                                }
+                                                                is Resource.Success -> {
+                                                                    hideLoading(binding.lRegisterLoading)
+                                                                    goToDashboard()
+                                                                }
+                                                            }
+                                                        }
+                                                        unitViewModel.insertUnit(Unit(getString(R.string.piece)))
+                                                        unitViewModel.insertUnit.observe(this@RegisterActivity, insertUnitObserver)
                                                         goToDashboard()
                                                     }
                                                 }

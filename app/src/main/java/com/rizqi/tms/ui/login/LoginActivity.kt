@@ -100,6 +100,7 @@ class LoginActivity : AppCompatActivity(){
                                             res.data?.let { it1 -> setUserId(it1) }
                                             setLogin(true)
                                             setAnonymous(false)
+
                                             goToDashboard()
                                         }
                                     }

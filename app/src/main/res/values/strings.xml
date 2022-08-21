@@ -78,5 +78,6 @@
     <string name="add_unit">tambah satuan</string>
     <string name="price_hint">12.000</string>
     <string name="dot_symbol">•</string>
+    <string name="piece">Buah</string>
 
 </resources>
