@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.InputType"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/l_create_price_root"
+        android:background="@drawable/round_corner_shape"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            >
+
+            <include
+                android:id="@+id/l_create_price_home_indicator"
+                layout="@layout/home_indicator"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_create_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/l_create_price_home_indicator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="20dp"
+                style="@style/TextAppearance.RubikMedium14"
+                android:textColor="@color/black_100"
+                android:text="@string/add_price"
+                />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_above="@id/btn_create_price_cancel_delete"
+                android:layout_below="@id/tv_create_price_title"
+                android:layout_marginVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="24dp">
+
+                    <include
+                        android:id="@+id/l_create_price_connector_title"
+                        layout="@layout/layout_title_with_help"
+                        app:title="@{@string/price_connector}" />
+
+                    <include
+                        android:id="@+id/til_create_price_connector"
+                        layout="@layout/layout_input_layout_no_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        app:hint="@{@string/price_connector_hint}"
+                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}" />
+
+                    <include
+                        android:id="@+id/tv_create_price_barcode_title"
+                        layout="@layout/layout_title_with_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:title="@{@string/barcode}" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp">
+
+                        <include
+                            android:id="@+id/til_create_price_barcode"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_toStartOf="@id/btn_create_price_scan"
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER}" />
+
+                        <ImageButton
+                            android:id="@+id/btn_create_price_scan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_scan_barcode" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp">
+
+                        <include
+                            android:id="@+id/l_create_price_barcode_title"
+                            layout="@layout/layout_title_with_help"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            app:title="@{@string/unit}" />
+
+                        <TextView
+                            style="@style/TextAppearance.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:text="@string/add_unit"
+                            android:textColor="@color/primary_100" />
+
+                    </RelativeLayout>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </HorizontalScrollView>
+
+                    <include
+                        android:id="@+id/l_create_price_merchant_title"
+                        layout="@layout/layout_title_with_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:title="@{@string/merchant_price}" />
+
+                    <include
+                        android:id="@+id/til_create_price_merchant"
+                        layout="@layout/layout_input_layout_no_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        app:hint="@{@string/price_hint}"
+                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}" />
+
+                    <TextView
+                        style="@style/TextAppearance.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/special_price"
+                        android:textColor="@color/black_80" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_plus_thin" />
+
+                    <include
+                        android:id="@+id/l_create_price_consumer_title"
+                        layout="@layout/layout_title_with_help"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:title="@{@string/consumer_price}" />
+
+                    <include
+                        android:id="@+id/til_create_price_consumer"
+                        layout="@layout/layout_input_layout_no_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        app:hint="@{@string/price_hint}"
+                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}" />
+
+                    <TextView
+                        style="@style/TextAppearance.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/special_price"
+                        android:textColor="@color/black_80" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_plus_thin" />
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_price_cancel_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Outlined.Negatif"
+                android:layout_above="@id/btn_create_price_save"
+                android:layout_marginBottom="16dp"
+                android:text="@string/cancel_allcaps"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_create_price_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Default"
+                android:layout_alignParentBottom="true"
+                android:text="@string/save_allcaps"
+                />
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

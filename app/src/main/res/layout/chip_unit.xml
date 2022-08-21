@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <com.google.android.material.chip.Chip android:id="@+id/chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:chipBackgroundColor="@color/primary_20"
+        app:chipStrokeColor="@color/primary_100"
+        app:chipStrokeWidth="1dp"
+        android:textColor="@color/black_100"
+        style="@style/TextAppearance.Subtitle2"
+        tools:text="Bungkus"
+        app:chipMinTouchTargetSize="0dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        app:chipState='@{""}'
+        android:checked="false"
+        />
+</layout>

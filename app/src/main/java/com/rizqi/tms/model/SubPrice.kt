@@ -18,7 +18,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class SubPrice(
-    val price : Long,
+    val price : Double,
     @ColumnInfo(name = "is_enabled")
     val isEnabled : Boolean,
     @ColumnInfo(name = "price_id")

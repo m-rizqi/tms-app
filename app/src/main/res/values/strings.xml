@@ -58,5 +58,25 @@
     <string name="failed_use_camera">Gagal menggunakan kamera !</string>
     <string name="item_name">Nama Barang</string>
     <string name="item_name_hint">Ketik nama barang, ex: Beras</string>
+    <string name="price_list">List Harga</string>
+    <string name="create_price_of_item">Buat dan berikan harga dari barangmu.</string>
+    <string name="quantity_connector">%1$d %1$s = 1 %1$s</string>
+    <string name="barcode">Barcode</string>
+    <string name="unit">Satuan</string>
+    <string name="p">P</string>
+    <string name="merchant_price">Harga Pedagang</string>
+    <string name="rp_">Rp. %1$s</string>
+    <string name="e">E</string>
+    <string name="consumer_price">Harga Eceran</string>
+    <string name="special_price">Harga Khusus</string>
+    <string name="special_price_item">%1$s •</string>
+    <string name="add_price">Tambah Harga</string>
+    <string name="save_allcaps">SIMPAN</string>
+    <string name="cancel_allcaps">BATAL</string>
+    <string name="price_connector">Penghubung Antar Harga</string>
+    <string name="price_connector_hint">Contoh, 12 Buah = 1 Lusin</string>
+    <string name="add_unit">tambah satuan</string>
+    <string name="price_hint">12.000</string>
+    <string name="dot_symbol">•</string>
 
 </resources>

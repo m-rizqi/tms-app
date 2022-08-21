@@ -21,6 +21,9 @@
             name="errorText"
             type="String" />
         <variable
+            name="suffixText"
+            type="String" />
+        <variable
             name="passwordToggleEnabled"
             type="Boolean" />
     </data>
@@ -37,6 +40,10 @@
             app:helperText='@{helperText}'
             app:errorText='@{errorText}'
             app:endIconMode="@{passwordToggleEnabled ? TextInputLayout.END_ICON_PASSWORD_TOGGLE : TextInputLayout.END_ICON_NONE, default=none}"
+            app:suffixTextColor="@color/black_100"
+            app:suffixTextAppearance="@style/TextAppearance.Button"
+            tools:suffixText="Suffix"
+            app:suffixText='@{suffixText}'
             >
 
             <com.google.android.material.textfield.TextInputEditText

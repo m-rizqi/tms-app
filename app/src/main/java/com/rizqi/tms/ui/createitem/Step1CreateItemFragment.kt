@@ -70,6 +70,7 @@ class Step1CreateItemFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         createItemViewModel.image.value?.let { binding.ivStep1CreateItemImage.setImageBitmap(it) }
+        createItemViewModel.name.value?.let { binding.tilStep1CreateItemName.editText.setText(it) }
     }
 
     override fun onDestroyView() {
