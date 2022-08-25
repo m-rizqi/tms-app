@@ -57,7 +57,7 @@
     <string name="scanner_has_been_closed">Scanner has been closed</string>
     <string name="failed_use_camera">Gagal menggunakan kamera !</string>
     <string name="item_name">Nama Barang</string>
-    <string name="item_name_hint">Ketik nama barang, ex: Beras</string>
+    <string name="item_name_hint">Ketik nama barang, contoh: Beras</string>
     <string name="price_list">List Harga</string>
     <string name="create_price_of_item">Buat dan berikan harga dari barangmu.</string>
     <string name="quantity_connector">%1$d %1$s = 1 %1$s</string>
@@ -76,10 +76,17 @@
     <string name="price_connector">Penghubung Antar Harga</string>
     <string name="price_connector_hint">Contoh, 12 Buah = 1 Lusin</string>
     <string name="add_unit">tambah satuan</string>
-    <string name="price_hint">12.000</string>
+    <string name="price_hint">Masukkan harga, contoh: 12.000</string>
     <string name="dot_symbol">•</string>
     <string name="piece">Buah</string>
     <string name="wrap">Bungkus</string>
     <string name="press_the_next_button">Tekan tombol disamping</string>
     <string name="rp_hint">Rp&#160;&#160;&#160;</string>
+    <string name="add_unit_camel_case">Tambah Satuan</string>
+    <string name="save">Simpan</string>
+    <string name="unit_name_hint">Contoh: Dus</string>
+    <string name="connector_between_price">Penghubung antar harga</string>
+    <string name="barcode_cannot_empty_press_the_icon">Barcode tidak boleh kosong. Klik ikon scan disamping</string>
+    <string name="no_unit_yet_click_add_unit">Belum ada satuan terpilih. Klik tambah satuan</string>
+    <string name="this_part">Bagian ini</string>
 </resources>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Build
 import android.text.Html
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -61,45 +62,4 @@ fun setToggleEnabledButton(
         button.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.disabled))
         button.setTextColor(resources.getColor(R.color.black_60))
     }
-}
-
-@BindingAdapter(
-    "chipState"
-)
-fun setChipState(
-    chip: Chip, value : String
-){
-    val resources = chip.resources
-    chip.chipBackgroundColor = ColorStateList(
-        arrayOf(
-            intArrayOf(android.R.attr.state_checked),
-            intArrayOf(-(android.R.attr.state_checked))
-        ),
-        intArrayOf(
-            resources.getColor(R.color.primary_20),
-            resources.getColor(R.color.black_10)
-        )
-    )
-    chip.chipStrokeColor = ColorStateList(
-        arrayOf(
-            intArrayOf(android.R.attr.state_checked),
-            intArrayOf(-(android.R.attr.state_checked))
-        ),
-        intArrayOf(
-            resources.getColor(R.color.primary_100),
-            resources.getColor(R.color.black_20)
-        )
-    )
-    chip.setTextColor(
-        ColorStateList(
-            arrayOf(
-                intArrayOf(android.R.attr.state_checked),
-                intArrayOf(-(android.R.attr.state_checked))
-            ),
-            intArrayOf(
-                resources.getColor(R.color.black_100),
-                resources.getColor(R.color.black_80)
-            )
-        )
-    )
 }

@@ -16,10 +16,10 @@ import androidx.room.PrimaryKey
     )]
 )
 data class SpecialPrice(
-    val quantity : Double,
-    val price : Double,
+    var quantity : Double = 0.0,
+    var price : Double = 0.0,
     @ColumnInfo(name = "sub_price_id")
-    val subPriceId : Long?
+    val subPriceId : Long? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

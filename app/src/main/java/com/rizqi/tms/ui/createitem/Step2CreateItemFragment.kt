@@ -3,6 +3,7 @@ package com.rizqi.tms.ui.createitem
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,10 @@ class Step2CreateItemFragment : Fragment() {
     }
 
     private fun showPriceBottomSheet(){
-        CreatePriceBottomSheet().show(parentFragmentManager, null)
+        activity?.let {
+            CreatePriceBottomSheet{priceAndSubPrice ->
+            }.show(it.supportFragmentManager, null)
+        }
     }
 
     override fun onDestroyView() {

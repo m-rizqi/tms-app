@@ -7,12 +7,14 @@ data class PriceAndSubPrice(
     @Embedded val price: Price,
     @Relation(
         parentColumn = "id",
-        entityColumn = "price_id"
+        entityColumn = "price_id",
+        entity = SubPrice::class
     )
-    val merchantSubPrice: SubPrice,
+    val merchantSubPrice: SubPriceWithSpecialPrice,
     @Relation(
         parentColumn = "id",
-        entityColumn = "price_id"
+        entityColumn = "price_id",
+        entity = SubPrice::class
     )
-    val consumerSubPrice: SubPrice
+    val consumerSubPrice: SubPriceWithSpecialPrice
 )

@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Unit(
-    val name : String
-){
+    val name : String,
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null
+){
 }

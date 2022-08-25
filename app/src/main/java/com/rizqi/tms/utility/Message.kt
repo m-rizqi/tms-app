@@ -1,6 +1,7 @@
 package com.rizqi.tms.utility
 
 import android.content.Context
+import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 
 sealed class Message {
@@ -13,7 +14,9 @@ sealed class Message {
     fun asString(context: Context): String {
         return when(this){
             is DynamicString -> value
-            is StringResource -> context.resources.getString(resId, *args)
+            is StringResource -> {
+                context.resources.getString(resId, *args)
+            }
         }
     }
 }

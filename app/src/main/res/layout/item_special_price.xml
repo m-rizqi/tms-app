@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.text.InputType"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp">
+
+        <include
+            android:id="@+id/til_special_price_quantity"
+            layout="@layout/layout_input_layout_no_title"
+            android:layout_width="96dp"
+            android:layout_height="wrap_content"
+            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+            />
+
+        <include
+            android:id="@+id/til_special_price"
+            layout="@layout/layout_input_layout_no_title"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+            app:prefixText="@{@string/rp_hint}"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_special_price_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_xmark"
+            app:tint="@color/danger_main"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            />
+
+    </LinearLayout>
+</layout>

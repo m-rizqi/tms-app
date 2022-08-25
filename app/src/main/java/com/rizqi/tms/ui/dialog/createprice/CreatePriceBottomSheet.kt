@@ -16,20 +16,21 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
-import com.rizqi.tms.R
 import com.rizqi.tms.databinding.BottomSheetCreatePriceBinding
+import com.rizqi.tms.model.PriceAndSubPrice
+import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.model.Unit
+import com.rizqi.tms.ui.dialog.createunit.CreateUnitDialog
 import com.rizqi.tms.ui.scan.ScanBarcodeActivity
-import com.rizqi.tms.utility.BARCODE_NUMBER
-import com.rizqi.tms.utility.Resource
-import com.rizqi.tms.utility.ThousandTextWatcher
+import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.UnitViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CreatePriceBottomSheet(
-    val isConnectorVisible : Boolean = false
+    private val isConnectorVisible : Boolean = false,
+    private val prevUnit: Unit? = null,
+    private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit
 ) : BottomSheetDialogFragment(){
     private var _binding : BottomSheetCreatePriceBinding? = null
     private val binding : BottomSheetCreatePriceBinding
@@ -38,6 +39,11 @@ class CreatePriceBottomSheet(
     private val unitViewModel : UnitViewModel by viewModels()
     private var unitList : List<Unit>? = null
     private val viewModel : CreatePriceViewModel by viewModels()
+    private val merchantSpecialPriceList = mutableListOf<SpecialPrice>()
+    private val consumerSpecialPriceList = mutableListOf<SpecialPrice>()
+    private val merchantSpecialPriceAdapter = SpecialPriceAdapter(merchantSpecialPriceList)
+    private val consumerSpecialPriceAdapter = SpecialPriceAdapter(consumerSpecialPriceList)
+    private val unitsAdapter = UnitsAdapter()
 
     private val scanBarcodeLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == AppCompatActivity.RESULT_OK && it.data != null){
@@ -68,6 +74,8 @@ class CreatePriceBottomSheet(
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.maxHeight = Resources.getSystem().displayMetrics.heightPixels
 
+        unitsAdapter.setInitialUnit(viewModel.unit.value)
+
         unitViewModel.listUnit.observe(viewLifecycleOwner){res ->
             when(res){
                 is Resource.Error -> {
@@ -78,22 +86,34 @@ class CreatePriceBottomSheet(
                     stopShimmer()
                     res.data?.let { l ->
                         unitList = l
-                        l.forEachIndexed { index, unit ->
-                            val chip = LayoutInflater.from(requireContext()).inflate(R.layout.chip_unit, null) as Chip
-                            chip.text = unit.name
-                            chip.isChecked = index == 0
-                            binding.chipGroupCreateItemUnits.addView(chip)
-                        }
+                        unitsAdapter.setList(l)
                     }
                 }
             }
         }
 
         if (unitList == null){
+            startShimmer()
             unitViewModel.getListUnit()
+        }else{
+            stopShimmer()
+            unitsAdapter.setList(unitList!!)
+        }
+
+        unitsAdapter.onUnitChangedListener = {unit ->
+            viewModel.setUnit(unit)
+        }
+
+        viewModel.unit.observe(viewLifecycleOwner){
+            if (prevUnit != null && it != null){
+                viewModel.setConnectorText(prevUnit, it)
+            }
         }
 
         binding.apply {
+            rvCreateItemUnits.adapter = unitsAdapter
+            rvCreatePriceMerchantSpecial.adapter = merchantSpecialPriceAdapter
+            rvCreatePriceConsumerSpecial.adapter = consumerSpecialPriceAdapter
             lCreatePriceConnectorTitle.root.visibility = if (isConnectorVisible) View.VISIBLE else View.GONE
             tilCreatePriceConnector.root.visibility = if (isConnectorVisible) View.VISIBLE else View.GONE
             tilCreatePriceMerchant.editText.addTextChangedListener(ThousandTextWatcher(binding.tilCreatePriceMerchant.editText))
@@ -106,7 +126,41 @@ class CreatePriceBottomSheet(
                 val intent = Intent(context, ScanBarcodeActivity::class.java)
                 scanBarcodeLauncher.launch(intent)
             }
+            btnCreatePriceAddMerchantSpecial.setOnClickListener {
+                merchantSpecialPriceAdapter.addSpecialPrice(SpecialPrice())
+            }
+            btnCreatePriceAddConsumerSpecial.setOnClickListener {
+                consumerSpecialPriceAdapter.addSpecialPrice(SpecialPrice())
+            }
+            tvCreatePriceAddUnit.setOnClickListener {
+                showCreateUnitDialog()
+            }
+            btnCreatePriceCancelDelete.setOnClickListener {
+                dismiss()
+            }
+            btnCreatePriceSave.setOnClickListener {
+                val merchantSpecialPriceValidity = merchantSpecialPriceAdapter.validate()
+                val consumerSpecialPriceValidity = consumerSpecialPriceAdapter.validate()
+                val priceValidity = viewModel.validate(isConnectorVisible, requireContext())
+                binding.apply {
+                    tilCreatePriceConnector.errorText = priceValidity.connectorMessage?.asString(requireContext())
+                    tilCreatePriceBarcode.errorText = priceValidity.barcodeMessage?.asString(requireContext())
+                    tvCreatePriceUnitError.text = priceValidity.unitMessage?.asString(requireContext())
+                    tilCreatePriceMerchant.errorText = priceValidity.merchantMessage?.asString(requireContext())
+                    tilCreatePriceConsumer.errorText = priceValidity.consumerMessage?.asString(requireContext())
+                }
+                if (!merchantSpecialPriceValidity || !consumerSpecialPriceValidity || !priceValidity.isAllValid) return@setOnClickListener
+                val priceAndSubPrice = viewModel.getPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                onSaveListener(priceAndSubPrice)
+                dismiss()
+            }
         }
+    }
+
+    private fun showCreateUnitDialog(){
+        CreateUnitDialog{
+            unitsAdapter.addUnit(it)
+        }.show(parentFragmentManager, null)
     }
 
     override fun onDestroyView() {

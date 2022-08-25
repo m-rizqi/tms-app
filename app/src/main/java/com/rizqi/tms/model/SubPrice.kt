@@ -18,11 +18,11 @@ import androidx.room.PrimaryKey
     ]
 )
 data class SubPrice(
-    val price : Double,
+    val price : Double = 0.0,
     @ColumnInfo(name = "is_enabled")
-    val isEnabled : Boolean,
+    val isEnabled : Boolean = true,
     @ColumnInfo(name = "price_id")
-    val priceId : Long?
+    val priceId : Long? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

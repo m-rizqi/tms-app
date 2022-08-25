@@ -9,6 +9,7 @@ data class ItemWithPrices(
     @Relation(
         parentColumn = "id",
         entityColumn = "item_id",
+        entity = Price::class
     )
-    val prices : List<Price>
+    val prices : List<PriceAndSubPrice>
 )

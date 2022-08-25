@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="android.text.InputType"/>
@@ -91,9 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_toStartOf="@id/btn_create_price_scan"
-                            app:inputType="@{InputType.TYPE_CLASS_NUMBER}"
                             app:hint="@{@string/press_the_next_button}"
-                            />
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER}" />
 
                         <ImageButton
                             android:id="@+id/btn_create_price_scan"
@@ -114,19 +114,29 @@
                         android:layout_marginTop="24dp">
 
                         <include
-                            android:id="@+id/l_create_price_barcode_title"
+                            android:id="@+id/l_create_price_unit_title"
                             layout="@layout/layout_title_with_help"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            android:layout_alignParentTop="true"
                             app:title="@{@string/unit}" />
 
                         <TextView
+                            android:id="@+id/tv_create_price_unit_error"
+                            style="@style/TextAppearance.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/l_create_price_unit_title"
+                            android:textColor="@color/danger_main"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_create_price_add_unit"
                             style="@style/TextAppearance.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
+                            android:layout_alignParentTop="true"
                             android:text="@string/add_unit"
                             android:textColor="@color/primary_100" />
 
@@ -135,53 +145,48 @@
                     <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp">
+                        android:layout_marginTop="8dp">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            >
+                            android:layout_height="wrap_content">
 
-                            <com.google.android.material.chip.ChipGroup
-                                android:id="@+id/chip_group_create_item_units"
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_create_item_units"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:selectionRequired="true"
-                                app:singleSelection="true"
-                                />
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                android:orientation="horizontal"
+                                tools:listitem="@layout/chip_unit"
+                                tools:itemCount="0"/>
 
                             <com.facebook.shimmer.ShimmerFrameLayout
                                 android:id="@+id/shimmer_create_price_units"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:shimmer_auto_start="true"
-                                >
+                                app:shimmer_auto_start="true">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    >
+                                    android:orientation="horizontal">
+
+                                    <include
+                                        layout="@layout/chip_unit"
+                                        android:layout_width="72dp"
+                                        android:layout_height="wrap_content" />
 
                                     <include
                                         layout="@layout/chip_unit"
                                         android:layout_width="72dp"
                                         android:layout_height="wrap_content"
-                                        />
+                                        android:layout_marginStart="10dp" />
 
                                     <include
                                         layout="@layout/chip_unit"
                                         android:layout_width="72dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        />
-
-                                    <include
-                                        layout="@layout/chip_unit"
-                                        android:layout_width="72dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        />
+                                        android:layout_marginStart="10dp" />
 
                                 </LinearLayout>
 
@@ -207,8 +212,7 @@
                         android:layout_marginTop="4dp"
                         app:hint="@{@string/price_hint}"
                         app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                        app:prefixText="@{@string/rp_hint}"
-                        />
+                        app:prefixText="@{@string/rp_hint}" />
 
                     <TextView
                         style="@style/TextAppearance.Caption"
@@ -218,12 +222,22 @@
                         android:text="@string/special_price"
                         android:textColor="@color/black_80" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_create_price_merchant_special"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_special_price" />
+
                     <ImageButton
+                        android:id="@+id/btn_create_price_add_merchant_special"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="4dp"
                         android:background="@android:color/transparent"
+                        android:padding="8dp"
                         android:src="@drawable/ic_plus_thin" />
 
                     <include
@@ -242,8 +256,7 @@
                         android:layout_marginTop="4dp"
                         app:hint="@{@string/price_hint}"
                         app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                        app:prefixText="@{@string/rp_hint}"
-                        />
+                        app:prefixText="@{@string/rp_hint}" />
 
                     <TextView
                         style="@style/TextAppearance.Caption"
@@ -253,12 +266,22 @@
                         android:text="@string/special_price"
                         android:textColor="@color/black_80" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_create_price_consumer_special"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_special_price" />
+
                     <ImageButton
+                        android:id="@+id/btn_create_price_add_consumer_special"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="4dp"
                         android:background="@android:color/transparent"
+                        android:padding="8dp"
                         android:src="@drawable/ic_plus_thin" />
 
                 </LinearLayout>
