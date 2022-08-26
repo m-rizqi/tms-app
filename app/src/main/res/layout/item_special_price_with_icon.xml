@@ -17,6 +17,7 @@
         >
 
         <ImageView
+            android:id="@+id/iv_special_price_icon_type"
             android:layout_width="12dp"
             android:layout_height="12dp"
             android:background="@android:color/transparent"
@@ -31,6 +32,7 @@
             android:layout_marginStart="8dp"
             android:gravity="center_vertical"
             tools:text="Rp. 24.000 (0.5 Bungkus)"
+            android:includeFontPadding="false"
             android:text="@{text}"
             />
 

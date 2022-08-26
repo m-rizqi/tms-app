@@ -52,6 +52,7 @@ class Step2CreateItemFragment : Fragment() {
 
         binding.apply {
             rvCreateItemPriceList.adapter = priceAdapter
+            fabStep2CreateItemCreatePrice.setOnClickListener { showPriceBottomSheet() }
         }
 
     }

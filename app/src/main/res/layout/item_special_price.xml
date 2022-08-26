@@ -15,6 +15,7 @@
             layout="@layout/layout_input_layout_no_title"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
+            app:hint="@{@string/quantity}"
             app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
             />
 
@@ -24,6 +25,7 @@
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            app:hint="@{@string/price}"
             app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
             app:prefixText="@{@string/rp_hint}"
             />

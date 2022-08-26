@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_price"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:clipToPadding="false"
                     />
 
@@ -68,6 +68,7 @@
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_step2_create_item_create_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/l_step2_create_item_next"

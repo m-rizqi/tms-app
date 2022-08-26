@@ -65,7 +65,7 @@
     <string name="unit">Satuan</string>
     <string name="p">P</string>
     <string name="merchant_price">Harga Pedagang</string>
-    <string name="rp_">Rp. %1$s</string>
+    <string name="rp_">Rp. %1$s,-</string>
     <string name="e">E</string>
     <string name="consumer_price">Harga Eceran</string>
     <string name="special_price">Harga Khusus</string>
@@ -90,4 +90,7 @@
     <string name="no_unit_yet_click_add_unit">Belum ada satuan terpilih. Klik tambah satuan</string>
     <string name="this_part">Bagian ini</string>
     <string name="price_is_disabled">Harga dinonaktifkan</string>
+    <string name="non_active">Dinonaktifkan</string>
+    <string name="special_price_format">%1$s = Rp. %2$s,-</string>
+    <string name="quantity">Kuantitas</string>
 </resources>

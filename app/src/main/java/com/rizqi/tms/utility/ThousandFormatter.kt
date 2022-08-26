@@ -18,6 +18,7 @@ class ThousandFormatter {
             }
             return formatted
         }
+        fun format(value : Double) = format(value.toString())
         private fun formatNoFloatingPoint(value : String) : String{
             val lst = StringTokenizer(value, ",")
             var str1 = value
