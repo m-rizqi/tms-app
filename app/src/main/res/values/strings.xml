@@ -89,4 +89,5 @@
     <string name="barcode_cannot_empty_press_the_icon">Barcode tidak boleh kosong. Klik ikon scan disamping</string>
     <string name="no_unit_yet_click_add_unit">Belum ada satuan terpilih. Klik tambah satuan</string>
     <string name="this_part">Bagian ini</string>
+    <string name="price_is_disabled">Harga dinonaktifkan</string>
 </resources>

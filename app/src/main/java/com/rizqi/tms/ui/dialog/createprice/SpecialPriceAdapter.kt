@@ -97,4 +97,11 @@ class SpecialPriceAdapter(
         return isAllValid
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun clear(){
+        specialPriceList.clear()
+        specialPriceHolderList.clear()
+        notifyDataSetChanged()
+    }
+
 }

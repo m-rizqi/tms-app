@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.rizqi.tms.R
 import com.rizqi.tms.databinding.BottomSheetCreatePriceBinding
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.model.SpecialPrice
@@ -109,6 +109,48 @@ class CreatePriceBottomSheet(
                 viewModel.setConnectorText(prevUnit, it)
             }
         }
+        viewModel.isMerchantEnabled.observe(viewLifecycleOwner){
+            binding.tilCreatePriceMerchant.inputLayout.isEnabled = it
+            if (it){
+                binding.apply {
+                    tvCreatePriceMerchantSpecialTitle.visibility = View.VISIBLE
+                    rvCreatePriceMerchantSpecial.visibility = View.VISIBLE
+                    btnCreatePriceAddMerchantSpecial.visibility = View.VISIBLE
+                    tilCreatePriceMerchant.hint = getString(R.string.price_hint)
+                    btnCreatePriceMerchantVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_24))
+                }
+            }else{
+                merchantSpecialPriceAdapter.clear()
+                binding.apply {
+                    tvCreatePriceMerchantSpecialTitle.visibility = View.GONE
+                    rvCreatePriceMerchantSpecial.visibility = View.GONE
+                    btnCreatePriceAddMerchantSpecial.visibility = View.GONE
+                    tilCreatePriceMerchant.hint = getString(R.string.price_is_disabled)
+                    btnCreatePriceMerchantVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_off_24))
+                }
+            }
+        }
+        viewModel.isConsumerEnabled.observe(viewLifecycleOwner){
+            binding.tilCreatePriceConsumer.inputLayout.isEnabled = it
+            if (it){
+                binding.apply {
+                    tvCreatePriceConsumerSpecialTitle.visibility = View.VISIBLE
+                    rvCreatePriceConsumerSpecial.visibility = View.VISIBLE
+                    btnCreatePriceAddConsumerSpecial.visibility = View.VISIBLE
+                    tilCreatePriceConsumer.hint = getString(R.string.price_hint)
+                    btnCreatePriceConsumerVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_24))
+                }
+            }else{
+                consumerSpecialPriceAdapter.clear()
+                binding.apply {
+                    tvCreatePriceConsumerSpecialTitle.visibility = View.GONE
+                    rvCreatePriceConsumerSpecial.visibility = View.GONE
+                    btnCreatePriceAddConsumerSpecial.visibility = View.GONE
+                    tilCreatePriceConsumer.hint = getString(R.string.price_is_disabled)
+                    btnCreatePriceConsumerVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_off_24))
+                }
+            }
+        }
 
         binding.apply {
             rvCreateItemUnits.adapter = unitsAdapter
@@ -154,6 +196,8 @@ class CreatePriceBottomSheet(
                 onSaveListener(priceAndSubPrice)
                 dismiss()
             }
+            btnCreatePriceMerchantVisibility.setOnClickListener { viewModel.toggleMerchantEnabled() }
+            btnCreatePriceConsumerVisibility.setOnClickListener { viewModel.toggleConsumerEnabled() }
         }
     }
 

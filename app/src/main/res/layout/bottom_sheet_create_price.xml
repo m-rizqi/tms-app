@@ -204,17 +204,40 @@
                         android:layout_marginTop="24dp"
                         app:title="@{@string/merchant_price}" />
 
-                    <include
-                        android:id="@+id/til_create_price_merchant"
-                        layout="@layout/layout_input_layout_no_title"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        app:hint="@{@string/price_hint}"
-                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                        app:prefixText="@{@string/rp_hint}" />
+                        >
+
+                        <include
+                            android:id="@+id/til_create_price_merchant"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            app:hint="@{@string/price_hint}"
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                            app:prefixText="@{@string/rp_hint}"
+                            android:layout_toStartOf="@id/btn_create_price_merchant_visibility"
+                            android:layout_alignParentStart="true"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_create_price_merchant_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_24"
+                            />
+
+                    </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tv_create_price_merchant_special_title"
                         style="@style/TextAppearance.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -248,17 +271,40 @@
                         android:layout_marginTop="24dp"
                         app:title="@{@string/consumer_price}" />
 
-                    <include
-                        android:id="@+id/til_create_price_consumer"
-                        layout="@layout/layout_input_layout_no_title"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        app:hint="@{@string/price_hint}"
-                        app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                        app:prefixText="@{@string/rp_hint}" />
+                        >
+
+                        <include
+                            android:id="@+id/til_create_price_consumer"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            app:hint="@{@string/price_hint}"
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                            app:prefixText="@{@string/rp_hint}"
+                            android:layout_toStartOf="@id/btn_create_price_consumer_visibility"
+                            android:layout_alignParentStart="true"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_create_price_consumer_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="24dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_24"
+                            />
+
+                    </RelativeLayout>
 
                     <TextView
+                        android:id="@+id/tv_create_price_consumer_special_title"
                         style="@style/TextAppearance.Caption"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

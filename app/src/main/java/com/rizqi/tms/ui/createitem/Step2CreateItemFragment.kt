@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentStep2CreateItemBinding
+import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +23,8 @@ class Step2CreateItemFragment : Fragment() {
         get() = _binding!!
     private var stepChangedListener : OnStepChangedListener? = null
     private val createItemViewModel : CreateItemViewModel by activityViewModels()
+    private var priceAndSubPriceList : MutableList<PriceAndSubPrice> = mutableListOf()
+    private val priceAdapter = PriceAdapter(priceAndSubPriceList)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -47,11 +50,16 @@ class Step2CreateItemFragment : Fragment() {
             showPriceBottomSheet()
         }
 
+        binding.apply {
+            rvCreateItemPriceList.adapter = priceAdapter
+        }
+
     }
 
     private fun showPriceBottomSheet(){
         activity?.let {
             CreatePriceBottomSheet{priceAndSubPrice ->
+                priceAdapter.addPriceAndSubPrice(priceAndSubPrice)
             }.show(it.supportFragmentManager, null)
         }
     }

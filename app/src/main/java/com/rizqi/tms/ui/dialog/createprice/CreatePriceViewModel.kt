@@ -17,9 +17,17 @@ class CreatePriceViewModel : ViewModel(){
     private val _unit = MutableLiveData<Unit?>()
     private val _merchantPrice = MutableLiveData(0.0)
     private val _consumerPrice = MutableLiveData(0.0)
+    private val _isMerchantEnabled = MutableLiveData(true)
+    private val _isConsumerEnabled = MutableLiveData(true)
 
     val unit : LiveData<Unit?>
         get() = _unit
+
+    val isMerchantEnabled : LiveData<Boolean>
+        get() = _isMerchantEnabled
+
+    val isConsumerEnabled : LiveData<Boolean>
+        get() = _isConsumerEnabled
 
     fun setQuantityConnector(value : String){
         try {
@@ -51,14 +59,24 @@ class CreatePriceViewModel : ViewModel(){
         }catch (e : Exception){}
     }
 
+    fun toggleMerchantEnabled(){
+        _isMerchantEnabled.value = !_isMerchantEnabled.value!!
+        if (!_isMerchantEnabled.value!!) _merchantPrice.value = -1.0 else _merchantPrice.value = 0.0
+    }
+
+    fun toggleConsumerEnabled(){
+        _isConsumerEnabled.value = !_isConsumerEnabled.value!!
+        if (!_isConsumerEnabled.value!!) _consumerPrice.value = -1.0 else _consumerPrice.value = 0.0
+    }
+
     fun validate(isUsingConnector : Boolean, context : Context) = CreatePriceValidation(
         if (isUsingConnector || _quantityConnector.value != null || _quantityConnector.value != 0.0) null else
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.connector_between_price)),
         if (_barcode.value?.isBlank() == false) null else Message.StringResource(R.string.barcode_cannot_empty_press_the_icon),
         if (_unit.value != null) null else Message.StringResource(R.string.no_unit_yet_click_add_unit),
-        if (_merchantPrice.value != 0.0) null else
+        if (!_isMerchantEnabled.value!! || _merchantPrice.value != 0.0) null else
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.merchant_price)),
-        if (_consumerPrice.value != 0.0) null else
+        if (!_isConsumerEnabled.value!! || _consumerPrice.value != 0.0) null else
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.consumer_price))
     )
 

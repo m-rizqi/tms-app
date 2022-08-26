@@ -2,6 +2,29 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isConnectorVisible"
+            type="Boolean" />
+        <variable
+            name="isMainPriceVisible"
+            type="Boolean" />
+        <variable
+            name="barcode"
+            type="String"/>
+        <variable
+            name="unitName"
+            type="String" />
+        <variable
+            name="merchantPrice"
+            type="String" />
+        <variable
+            name="consumerPrice"
+            type="String" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mcv_price_root"
         android:layout_width="match_parent"
@@ -28,6 +51,7 @@
                 app:cardElevation="0dp"
                 app:cardBackgroundColor="@color/primary_100"
                 app:cardCornerRadius="100dp"
+                android:layout_marginTop="8dp"
                 >
 
                 <TextView
@@ -78,7 +102,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/mcv_price_main_price_indicator"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="18dp"
                 style="@style/TextAppearance.Subtitle2"
                 android:textColor="@color/black_100"
                 android:text="@string/barcode"
@@ -107,7 +131,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/tv_price_unit"
+                android:id="@+id/tv_price_unit_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/til_price_barcode"
@@ -118,11 +142,23 @@
                 android:text="@string/unit"
                 />
 
+            <TextView
+                android:id="@+id/tv_price_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_price_unit_title"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="4dp"
+                style="@style/TextAppearance.Body2"
+                android:textColor="@color/black_100"
+                tools:text="Bungkus"
+                />
+
             <LinearLayout
                 android:id="@+id/l_price_prices"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/chip_price_unit"
+                app:layout_constraintTop_toBottomOf="@id/tv_price_unit"
                 android:layout_marginTop="18dp"
                 android:weightSum="2"
                 android:orientation="horizontal"
@@ -135,10 +171,10 @@
                     android:orientation="horizontal"
                     >
 
-                    <include
-                        layout="@layout/icon_merchant_price"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_p"
                         />
 
                     <LinearLayout
@@ -160,9 +196,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.Body1"
-                            android:textColor="@color/black_80"
+                            android:textColor="@color/black_100"
                             android:text="@string/rp_"
-                            tools:text="Rp. 12.000"
+                            tools:text="Rp. 12.000,-"
                             android:layout_marginTop="4dp"
                             />
 
@@ -177,10 +213,10 @@
                     android:orientation="horizontal"
                     >
 
-                    <include
-                        layout="@layout/icon_consumer_price"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_e"
                         />
 
                     <LinearLayout
@@ -202,7 +238,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             style="@style/TextAppearance.Body1"
-                            android:textColor="@color/black_80"
+                            android:textColor="@color/black_100"
                             android:text="@string/rp_"
                             tools:text="Rp. 12.000"
                             android:layout_marginTop="4dp"
@@ -238,83 +274,15 @@
                 app:layout_constraintVertical_bias="0.5"
                 />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_price_special_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 app:layout_constraintTop_toBottomOf="@id/tv_price_special_price"
-                >
-
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="14dp"
-                    app:dividerColor="@color/black_20"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    >
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/accent"
-                        app:cardCornerRadius="12dp"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        style="@style/TextAppearance.Overline"
-                        android:textColor="@color/black_80"
-                        android:text="@string/special_price_item"
-                        tools:text="6.000(Bungkus) •"
-                        />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="10dp"
-                    >
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/accent_3"
-                        app:cardCornerRadius="12dp"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        style="@style/TextAppearance.Overline"
-                        android:textColor="@color/black_80"
-                        android:text="@string/special_price_item"
-                        tools:text="6.000(Bungkus) •"
-                        />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <include
-                android:id="@+id/chip_price_unit"
-                layout="@layout/chip_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_price_unit"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_special_price_with_icon"
+                tools:itemCount="2"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
