@@ -18,10 +18,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.BottomSheetCreatePriceBinding
+import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.model.Unit
 import com.rizqi.tms.ui.dialog.createunit.CreateUnitDialog
+import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.scan.ScanBarcodeActivity
 import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.UnitViewModel
@@ -202,7 +204,16 @@ class CreatePriceBottomSheet(
             }
             btnCreatePriceMerchantVisibility.setOnClickListener { viewModel.toggleMerchantEnabled() }
             btnCreatePriceConsumerVisibility.setOnClickListener { viewModel.toggleConsumerEnabled() }
+            lCreatePriceConnectorTitle.btnQuestion.setOnClickListener { showInfoDialog(Info.Connector()) }
+            tvCreatePriceBarcodeTitle.btnQuestion.setOnClickListener { showInfoDialog(Info.Barcode()) }
+            lCreatePriceUnitTitle.btnQuestion.setOnClickListener { showInfoDialog(Info.Unit()) }
+            lCreatePriceMerchantTitle.btnQuestion.setOnClickListener { showInfoDialog(Info.MerchantPrice()) }
+            lCreatePriceConsumerTitle.btnQuestion.setOnClickListener { showInfoDialog(Info.ConsumerPrice()) }
         }
+    }
+
+    private fun showInfoDialog(info: Info){
+        InfoDialog(info).show(parentFragmentManager, null)
     }
 
     private fun showCreateUnitDialog(){

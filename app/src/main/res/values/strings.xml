@@ -94,4 +94,15 @@
     <string name="special_price_format">%1$s = Rp. %2$s,-</string>
     <string name="quantity">Kuantitas</string>
     <string name="this_unit_has_been_selected">Satuan ini telah dipilih</string>
+    <string name="close">Tutup</string>
+    <string name="what_is_connector">Apa Itu Penghubung Antar Harga ?</string>
+    <string name="connector_description">Penghubung antar harga adalah kuantitas(seberapa banyak) satuan sebelumnya sama dengan satu satuan harga ini. Contoh, 12 buah sama dengan 1 lusin, maka masukkan 12 pada input yang disediakan.</string>
+    <string name="what_is_barcode">Apa Itu Barcode ?</string>
+    <string name="barcode_description"><![CDATA[Barcode adalah angka unik yang terdapat pada barang. Biasanya diwakili dengan kumpulan garis hitam dengan ketebalan berbeda. <font color=#4641A7>Klik ikon scan untuk mendapatkannya.</font>]]></string>
+    <string name="what_is_unit">Apa Itu Satuan ?</string>
+    <string name="unit_description">Satuan adalah besaran dari suatu barang. Contoh: Bungkus, Kg, Dus</string>
+    <string name="what_is_merchant_price">Apa Itu Harga Pedagang</string>
+    <string name="merchant_price_description">Harga pedagang adalah harga yang diberikan khusus kepada pedagang karena barang akan dijual kembali olehnya. Kamu bisa menonaktifkan harga ini jika barang tidak mempunyai harga pedagang dengan klik ikon mata. Kamu juga bisa menambahkan harga khusus untuk kuantitas tertentu </string>
+    <string name="what_is_consumer_price">Apa Itu Harga Eceran</string>
+    <string name="consumer_price_description">Harga eceran adalah harga yang diberikan khusus kepada konsumen, biasanya harga konsumen lebih tinggi dari harga pedagang. Kamu bisa menonaktifkan harga ini jika barang tidak mempunyai harga pedagang dengan klik ikon mata. Kamu juga bisa menambahkan harga khusus untuk kuantitas tertentu</string>
 </resources>
