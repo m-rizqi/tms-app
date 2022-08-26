@@ -15,6 +15,7 @@ class CreatePriceViewModel : ViewModel(){
     private val _connectorText = MutableLiveData("")
     private val _barcode = MutableLiveData("")
     private val _unit = MutableLiveData<Unit?>()
+    private val _prevUnit = MutableLiveData<Unit?>()
     private val _merchantPrice = MutableLiveData(0.0)
     private val _consumerPrice = MutableLiveData(0.0)
     private val _isMerchantEnabled = MutableLiveData(true)
@@ -29,14 +30,22 @@ class CreatePriceViewModel : ViewModel(){
     val isConsumerEnabled : LiveData<Boolean>
         get() = _isConsumerEnabled
 
+    val connectorText : LiveData<String>
+        get() = _connectorText
+
     fun setQuantityConnector(value : String){
         try {
             _quantityConnector.value = value.toDouble()
         }catch (e : Exception){}
     }
 
-    fun setConnectorText(prevUnit : Unit, currentUnit: Unit){
-        _connectorText.value = String.format(CONNECTOR_TEXT_FORMAT, prevUnit.name, currentUnit.name)
+    private fun setConnectorText(){
+        _connectorText.value = String.format(CONNECTOR_TEXT_FORMAT, _prevUnit.value?.name, _unit.value?.name)
+    }
+
+    fun setPrevUnit(value: Unit?){
+        _prevUnit.value = value
+        setConnectorText()
     }
 
     fun setBarcode(value : String){
@@ -45,6 +54,7 @@ class CreatePriceViewModel : ViewModel(){
 
     fun setUnit(value : Unit){
         _unit.value = value
+        setConnectorText()
     }
 
     fun setMerchantPrice(value : String){
@@ -70,7 +80,7 @@ class CreatePriceViewModel : ViewModel(){
     }
 
     fun validate(isUsingConnector : Boolean, context : Context) = CreatePriceValidation(
-        if (isUsingConnector || _quantityConnector.value != null || _quantityConnector.value != 0.0) null else
+        if (!isUsingConnector || (_quantityConnector.value != null && _quantityConnector.value != 0.0)) null else
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.connector_between_price)),
         if (_barcode.value?.isBlank() == false) null else Message.StringResource(R.string.barcode_cannot_empty_press_the_icon),
         if (_unit.value != null) null else Message.StringResource(R.string.no_unit_yet_click_add_unit),
@@ -95,7 +105,9 @@ class CreatePriceViewModel : ViewModel(){
             price,
             merchantSubPriceWithSpecialPrice,
             consumerSubPriceWithSpecialPrice
-        )
+        ).apply {
+            unit = _unit.value
+        }
     }
 
     class CreatePriceValidation(

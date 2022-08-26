@@ -59,7 +59,11 @@ class Step2CreateItemFragment : Fragment() {
 
     private fun showPriceBottomSheet(){
         activity?.let {
-            CreatePriceBottomSheet{priceAndSubPrice ->
+            CreatePriceBottomSheet(
+                priceAndSubPriceList.isNotEmpty(),
+                priceAndSubPriceList.lastOrNull()?.unit,
+                priceAndSubPriceList.map { priceAndSubPrice ->  priceAndSubPrice.unit}
+            ){priceAndSubPrice ->
                 priceAdapter.addPriceAndSubPrice(priceAndSubPrice)
             }.show(it.supportFragmentManager, null)
         }

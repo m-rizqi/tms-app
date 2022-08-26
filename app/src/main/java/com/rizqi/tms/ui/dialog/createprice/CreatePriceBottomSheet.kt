@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreatePriceBottomSheet(
     private val isConnectorVisible : Boolean = false,
     private val prevUnit: Unit? = null,
+    private val selectedUnitList: List<Unit?>,
     private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit
 ) : BottomSheetDialogFragment(){
     private var _binding : BottomSheetCreatePriceBinding? = null
@@ -43,7 +45,7 @@ class CreatePriceBottomSheet(
     private val consumerSpecialPriceList = mutableListOf<SpecialPrice>()
     private val merchantSpecialPriceAdapter = SpecialPriceAdapter(merchantSpecialPriceList)
     private val consumerSpecialPriceAdapter = SpecialPriceAdapter(consumerSpecialPriceList)
-    private val unitsAdapter = UnitsAdapter()
+    private val unitsAdapter = UnitsAdapter(selectedUnitList)
 
     private val scanBarcodeLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == AppCompatActivity.RESULT_OK && it.data != null){
@@ -74,7 +76,9 @@ class CreatePriceBottomSheet(
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.maxHeight = Resources.getSystem().displayMetrics.heightPixels
 
-        unitsAdapter.setInitialUnit(viewModel.unit.value)
+        viewModel.unit.value?.let {
+            unitsAdapter.setInitialUnit(it)
+        }
 
         unitViewModel.listUnit.observe(viewLifecycleOwner){res ->
             when(res){
@@ -104,11 +108,7 @@ class CreatePriceBottomSheet(
             viewModel.setUnit(unit)
         }
 
-        viewModel.unit.observe(viewLifecycleOwner){
-            if (prevUnit != null && it != null){
-                viewModel.setConnectorText(prevUnit, it)
-            }
-        }
+        viewModel.setPrevUnit(prevUnit)
         viewModel.isMerchantEnabled.observe(viewLifecycleOwner){
             binding.tilCreatePriceMerchant.inputLayout.isEnabled = it
             if (it){
@@ -150,6 +150,10 @@ class CreatePriceBottomSheet(
                     btnCreatePriceConsumerVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_off_24))
                 }
             }
+        }
+
+        viewModel.connectorText.observe(this){
+            binding.tilCreatePriceConnector.suffixText = it
         }
 
         binding.apply {

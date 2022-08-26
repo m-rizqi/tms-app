@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.rizqi.tms.R
@@ -12,6 +13,7 @@ import com.rizqi.tms.databinding.ChipUnitBinding
 import com.rizqi.tms.model.Unit
 
 class UnitsAdapter(
+    private val selectedUnitList: List<Unit?>
 ) : RecyclerView.Adapter<UnitsAdapter.UnitViewHolder>() {
     private var unitList : MutableList<Unit> = mutableListOf()
     private var unitViewHolderList : MutableList<UnitViewHolder> = mutableListOf()
@@ -19,6 +21,10 @@ class UnitsAdapter(
     var onUnitChangedListener : ((Unit) -> kotlin.Unit)? = null
 
     inner class UnitViewHolder(val binding : ChipUnitBinding) : RecyclerView.ViewHolder(binding.root)
+
+    init {
+        findAvailableUnit()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UnitViewHolder {
         return UnitViewHolder(
@@ -39,11 +45,13 @@ class UnitsAdapter(
             onChipCheckedChanged(holder, position, binding.chip.isChecked, unit)
         }
         if (
-            (initialUnit != null && initialUnit?.name == unit.name) ||
-            (initialUnit == null && position == 0)
+            (initialUnit != null && initialUnit?.name == unit.name)
         ){
             binding.chip.isChecked = true
             onChipCheckedChanged(holder, position, true, unit)
+        }
+        if (unit.name in selectedUnitList.map { it?.name }){
+            setDisableChip(binding.chip)
         }
     }
 
@@ -53,7 +61,15 @@ class UnitsAdapter(
     fun setList(list: List<Unit>){
         unitList = list.toMutableList()
         unitViewHolderList.clear()
+        findAvailableUnit()
         notifyDataSetChanged()
+    }
+
+    private fun findAvailableUnit(){
+        if (initialUnit == null){
+            initialUnit =
+                unitList.firstOrNull { it.name !in selectedUnitList.map { sUnit -> sUnit?.name } }
+        }
     }
 
     fun addUnit(unit: Unit){
@@ -62,6 +78,13 @@ class UnitsAdapter(
     }
 
     private fun onChipCheckedChanged(holder: UnitViewHolder, position: Int, isChecked : Boolean, unit: Unit){
+        if (unit.name in selectedUnitList.map { it?.name }){
+            holder.binding.chip.isChecked = false
+            setDisableChip(holder.binding.chip)
+            val context = holder.binding.root.context
+            Toast.makeText(holder.binding.root.context, context.getString(R.string.this_unit_has_been_selected), Toast.LENGTH_SHORT).show()
+            return
+        }
         if (!isChecked){
             holder.binding.chip.isChecked = true
             return
@@ -91,6 +114,15 @@ class UnitsAdapter(
             chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.black_10))
             chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black_20))
             setTextColor(resources.getColor(R.color.black_80))
+        }
+    }
+
+    private fun setDisableChip(chip: Chip){
+        val resources = chip.resources
+        chip.apply {
+            chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.disabled))
+            chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black_20))
+            setTextColor(resources.getColor(R.color.black_40))
         }
     }
 

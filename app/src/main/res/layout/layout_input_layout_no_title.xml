@@ -46,10 +46,10 @@
             app:suffixTextColor="@color/black_100"
             app:suffixTextAppearance="@style/TextAppearance.Button"
             tools:suffixText="Suffix"
-            app:suffixText='@{suffixText}'
+            app:suffixText="@{suffixText}"
             app:prefixTextAppearance="@style/TextAppearance.Subtitle2"
             app:prefixTextColor="@color/black_80"
-            app:prefixText='@{prefixText}'
+            app:prefixText="@{prefixText}"
             tools:prefixText="Rp   "
             >
 

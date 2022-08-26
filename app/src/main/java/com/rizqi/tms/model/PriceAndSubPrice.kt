@@ -17,4 +17,6 @@ data class PriceAndSubPrice(
         entity = SubPrice::class
     )
     val consumerSubPrice: SubPriceWithSpecialPrice
-)
+){
+    var unit : Unit? = null
+}

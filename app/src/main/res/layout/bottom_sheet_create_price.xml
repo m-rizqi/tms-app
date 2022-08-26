@@ -34,15 +34,14 @@
 
             <TextView
                 android:id="@+id/tv_create_price_title"
+                style="@style/TextAppearance.RubikMedium14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/l_create_price_home_indicator"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
-                style="@style/TextAppearance.RubikMedium14"
-                android:textColor="@color/black_100"
                 android:text="@string/add_price"
-                />
+                android:textColor="@color/black_100" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"

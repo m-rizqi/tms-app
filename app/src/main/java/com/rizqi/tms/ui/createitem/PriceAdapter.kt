@@ -54,7 +54,7 @@ class PriceAdapter(
             }
             binding.merchantPrice =  context.getString(R.string.non_active)
         }else{
-            binding.merchantPrice = context.getString(R.string.rp_, ThousandFormatter.format(merchantSubPrice.price))
+            binding.merchantPrice = context.getString(R.string.rp_, ThousandFormatter.format(merchantSubPrice.price.toLong()))
         }
 
         if (!consumerSubPrice.isEnabled){
@@ -65,7 +65,7 @@ class PriceAdapter(
             }
             binding.consumerPrice =  context.getString(R.string.non_active)
         }else{
-            binding.consumerPrice = context.getString(R.string.rp_, ThousandFormatter.format(consumerSubPrice.price))
+            binding.consumerPrice = context.getString(R.string.rp_, ThousandFormatter.format(consumerSubPrice.price.toLong()))
         }
 
         val rootParams = binding.root.layoutParams as RecyclerView.LayoutParams
