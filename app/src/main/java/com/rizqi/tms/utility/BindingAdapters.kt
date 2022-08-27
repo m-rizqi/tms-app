@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.text.Html
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -61,5 +62,20 @@ fun setToggleEnabledButton(
     }else {
         button.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.disabled))
         button.setTextColor(resources.getColor(R.color.black_60))
+    }
+}
+
+@BindingAdapter(
+    "checkedAdapter"
+)
+fun setCheckedAdapter(
+    checkbox: CheckBox, isChecked : Boolean
+){
+    val resources = checkbox.resources
+    checkbox.isChecked = isChecked
+    if (isChecked) {
+        checkbox.buttonTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
+    }else {
+        checkbox.buttonTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
     }
 }

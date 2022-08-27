@@ -22,7 +22,7 @@ data class SubPrice(
     @ColumnInfo(name = "is_enabled")
     var isEnabled : Boolean = true,
     @ColumnInfo(name = "price_id")
-    val priceId : Long? = null
+    var priceId : Long? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

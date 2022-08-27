@@ -107,4 +107,8 @@
     <string name="merchant_price_description">Harga pedagang adalah harga yang diberikan khusus kepada pedagang karena barang akan dijual kembali olehnya. Kamu bisa menonaktifkan harga ini jika barang tidak mempunyai harga pedagang dengan klik ikon mata. Kamu juga bisa menambahkan harga khusus untuk kuantitas tertentu </string>
     <string name="what_is_consumer_price">Apa Itu Harga Eceran</string>
     <string name="consumer_price_description">Harga eceran adalah harga yang diberikan khusus kepada konsumen, biasanya harga konsumen lebih tinggi dari harga pedagang. Kamu bisa menonaktifkan harga ini jika barang tidak mempunyai harga pedagang dengan klik ikon mata. Kamu juga bisa menambahkan harga khusus untuk kuantitas tertentu</string>
+    <string name="create_min_1_price">Buat minimal 1 harga terlebih dahulu. Klik ikon plus di kanan bawah !</string>
+    <string name="select_main_price">Pilih Harga Utama</string>
+    <string name="select_main_price_description"><![CDATA[Harga utama adalah harga dengan satuan yang paling dibeli. <font color=#4641A7>Klik salah satu harga untuk mengganti.</font>]]></string>
+    <string name="remind_me_to_edit">Ingatkan saya untuk edit kembali</string>
 </resources>

@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentStep2CreateItemBinding
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceBottomSheet
@@ -53,10 +55,19 @@ class Step2CreateItemFragment : Fragment() {
             rvCreateItemPriceList.adapter = priceAdapter
             fabStep2CreateItemCreatePrice.setOnClickListener { showCreatePriceDialog() }
             btnStep2CreateItemNext.setOnClickListener {
+                if (priceAndSubPriceList.isEmpty()){
+                    Toast.makeText(context, getString(R.string.create_min_1_price), Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 createItemViewModel.setPrices(priceAndSubPriceList)
                 stepChangedListener?.changeToStep(3)
                 it.findNavController().navigate(Step2CreateItemFragmentDirections.step2ToStep3CreateItem())
             }
+        }
+
+        createItemViewModel.prices.value?.let {
+            priceAndSubPriceList = it
+            priceAdapter.setList(priceAndSubPriceList)
         }
 
         if (priceAndSubPriceList.isEmpty()){

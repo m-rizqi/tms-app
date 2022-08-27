@@ -19,7 +19,7 @@ data class SpecialPrice(
     var quantity : Double = 0.0,
     var price : Double = 0.0,
     @ColumnInfo(name = "sub_price_id")
-    val subPriceId : Long? = null
+    var subPriceId : Long? = null
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

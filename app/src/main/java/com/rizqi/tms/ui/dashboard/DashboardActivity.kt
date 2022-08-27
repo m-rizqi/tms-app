@@ -40,13 +40,25 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val arrayPermission = mutableListOf<String>()
+
         if (ContextCompat.checkSelfPermission(
                 this, android.Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) {
+            arrayPermission.add(android.Manifest.permission.CAMERA)
+        }
+        if (ContextCompat.checkSelfPermission(
+                this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            arrayPermission.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        if (arrayPermission.isNotEmpty()){
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.CAMERA),
+                arrayPermission.toTypedArray(),
                 CAMERA_REQ
             )
         }

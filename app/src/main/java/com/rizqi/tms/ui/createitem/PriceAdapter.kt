@@ -123,6 +123,12 @@ class PriceAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: MutableList<PriceAndSubPrice>){
+        priceAndSubPriceList = list
+        notifyDataSetChanged()
+    }
+
     private fun expandAccordion(v: View, arrow : View) {
         val matchParentMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(
             (v.parent as View).width,

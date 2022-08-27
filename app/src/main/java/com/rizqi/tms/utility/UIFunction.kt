@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -12,6 +13,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.chip.Chip
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.LayoutLoadingBinding
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+
 
 private fun disableScreen(appCompatActivity: AppCompatActivity){
     appCompatActivity.window.setFlags(
@@ -30,7 +35,7 @@ fun AppCompatActivity.showLoading(layout: LayoutLoadingBinding){
 
 fun AppCompatActivity.hideLoading(layout: LayoutLoadingBinding){
     enableScreen(this)
-    layout.root.visibility - View.GONE
+    layout.root.visibility = View.GONE
 }
 
 fun encodeAndSaveBitmap(context : Context, bitmap : Bitmap?) {
@@ -70,7 +75,39 @@ fun Chip.setOnCheckedListener(onCheckedListener : (CompoundButton, Boolean) -> U
     }
 }
 
-fun Context.createChipView(unit: com.rizqi.tms.model.Unit, onCheckedListener: (CompoundButton, Boolean) -> Unit){
-    val chip = Chip(this)
+fun Context.saveBitmapToFolder(bitmap: Bitmap?) : String?{
+    val imageFile = getOutputMediaFile(this)
+    try {
+        val fos = FileOutputStream(imageFile)
+        bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
+        fos.close()
+    }catch (e : Exception){
+        e.printStackTrace()
+    }
+    return imageFile?.path
+}
 
+fun Context.getBitmapFromPath(path: String): Bitmap? {
+    val bmOptions = BitmapFactory.Options()
+    return BitmapFactory.decodeFile(path, bmOptions)
+}
+
+private fun getOutputMediaFile(context: Context): File? {
+    val mediaStorageDir = File(
+        Environment.getExternalStorageDirectory()
+            .toString() + ANDROID_DATA
+                + context.applicationContext.packageName
+                + FILES
+    )
+
+    if (!mediaStorageDir.exists()) {
+        if (!mediaStorageDir.mkdirs()) {
+            return null
+        }
+    }
+    // Create a media file name
+    val mediaFile: File
+    val mImageName = "IMG_${System.currentTimeMillis()}.jpg"
+    mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
+    return mediaFile
 }

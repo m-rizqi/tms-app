@@ -3,22 +3,36 @@ package com.rizqi.tms.ui.createitem
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityCreateItemBinding
+import com.rizqi.tms.model.ItemWithPrices
+import com.rizqi.tms.utility.Resource
+import com.rizqi.tms.utility.hideLoading
+import com.rizqi.tms.utility.showLoading
+import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
     private lateinit var binding : ActivityCreateItemBinding
     private lateinit var navHostFragment : NavHostFragment
+    private val itemViewModel : ItemViewModel by viewModels()
+
     private lateinit var navController : NavController
     private var currentStep = 1
 
@@ -71,7 +85,24 @@ class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
     }
 
     override fun <T> onJourneyFinished(data: T) {
+        val itemWithPrices = data as ItemWithPrices
+        itemViewModel.insertItemWithPrices(itemWithPrices)
+        itemViewModel.insertItemWithPrices.observe(this){result ->
+            when(result){
+                is Resource.Error -> {
+                    hideLoading(binding.lCreateItemLoading)
+                    Toast.makeText(this, result.message?.asString(this), Toast.LENGTH_SHORT).show()
+                }
+                is Resource.Success -> {
+                    hideLoading(binding.lCreateItemLoading)
+                    Log.d("SUCCESS", result.data.toString())
+                }
+            }
+        }
+    }
 
+    override fun showLoading() {
+        showLoading(binding.lCreateItemLoading)
     }
 
     private fun animateNextStep(

@@ -8,7 +8,9 @@ import androidx.room.PrimaryKey
 data class Item(
     val name : String,
     @ColumnInfo(name = "image_path")
-    val imagePath : String,
+    val imagePath : String?,
+    @ColumnInfo(name = "is_reminded")
+    val isReminded : Boolean
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null
