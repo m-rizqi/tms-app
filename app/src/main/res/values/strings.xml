@@ -111,4 +111,11 @@
     <string name="select_main_price">Pilih Harga Utama</string>
     <string name="select_main_price_description"><![CDATA[Harga utama adalah harga dengan satuan yang paling dibeli. <font color=#4641A7>Klik salah satu harga untuk mengganti.</font>]]></string>
     <string name="remind_me_to_edit">Ingatkan saya untuk edit kembali</string>
+    <string name="saved_item_total">Total Barang Tersimpan</string>
+    <string name="barcode_item_total">Barang dengan Barcode</string>
+    <string name="nonbarcode_item_total">Barang Tanpa Barcode</string>
+    <string name="search_item">Cari Barang</string>
+    <string name="often_used">Sering Dipakai</string>
+    <string name="item_no_barcode_camel_case">Barang Tanpa Barcode</string>
+    <string name="more_info">Selengkapnya</string>
 </resources>

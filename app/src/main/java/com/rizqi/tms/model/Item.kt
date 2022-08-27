@@ -10,7 +10,9 @@ data class Item(
     @ColumnInfo(name = "image_path")
     val imagePath : String?,
     @ColumnInfo(name = "is_reminded")
-    val isReminded : Boolean
+    val isReminded : Boolean,
+    @ColumnInfo(name = "click_count")
+    val clickCount : Long = 0
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

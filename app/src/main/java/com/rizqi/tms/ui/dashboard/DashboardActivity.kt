@@ -18,9 +18,11 @@ import com.rizqi.tms.ui.dashboard.home.HomeFragment
 import com.rizqi.tms.ui.dashboard.profile.ProfileFragment
 import com.rizqi.tms.utility.DASHBOARD_STATE
 import com.rizqi.tms.utility.MENU_INDEX
+import dagger.hilt.android.AndroidEntryPoint
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import kotlin.system.exitProcess
 
+@AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDashboardBinding
     private val homeFragment = HomeFragment()

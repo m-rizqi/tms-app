@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (isLogin()) {
-            startActivity(Intent(this, CreateItemActivity::class.java))
+            startActivity(Intent(this, DashboardActivity::class.java))
             return
         }
         startActivity(Intent(this, LoginActivity::class.java))

@@ -20,14 +20,14 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="8dp"
+            android:layout_height="2dp"
             app:layout_constraintBottom_toTopOf="@id/bnv_dashboard"
             android:background="@drawable/shadow"
             />
 
         <nl.joery.animatedbottombar.AnimatedBottomBar
             android:id="@+id/bnv_dashboard"
-            android:background="#1ACDCDCD"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

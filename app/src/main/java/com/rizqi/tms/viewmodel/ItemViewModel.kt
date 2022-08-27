@@ -1,9 +1,6 @@
 package com.rizqi.tms.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.rizqi.tms.model.*
 import com.rizqi.tms.repository.ItemRepository
 import com.rizqi.tms.utility.Message
@@ -64,5 +61,8 @@ class ItemViewModel @Inject constructor(
         }
     }
 
+    fun getItemCount(): LiveData<Long> {
+        return itemRepository.getItemCount().asLiveData()
+    }
 
 }

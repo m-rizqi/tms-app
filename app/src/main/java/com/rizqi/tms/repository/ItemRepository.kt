@@ -20,4 +20,6 @@ class ItemRepository @Inject constructor(
 
     suspend fun insertSpecialPrice(specialPrice: SpecialPrice) = itemDao.insertSpecialPrice(specialPrice)
 
+    fun getItemCount() = itemDao.getItemCount()
+
 }
