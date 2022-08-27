@@ -50,7 +50,7 @@ class UnitsAdapter(
             binding.chip.isChecked = true
             onChipCheckedChanged(holder, position, true, unit)
         }
-        if (unit.name in selectedUnitList.map { it?.name }){
+        if (isInSelectedUnit(unit)){
             setDisableChip(binding.chip)
         }
     }
@@ -65,6 +65,10 @@ class UnitsAdapter(
         notifyDataSetChanged()
     }
 
+    private fun isInSelectedUnit(unit: Unit): Boolean {
+        return unit.name in selectedUnitList.map { it?.name }
+    }
+
     private fun findAvailableUnit(){
         if (initialUnit == null){
             initialUnit =
@@ -72,13 +76,18 @@ class UnitsAdapter(
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addUnit(unit: Unit){
         unitList.add(unit)
         notifyItemInserted(unitList.lastIndex)
+        if (initialUnit == null){
+            findAvailableUnit()
+            notifyDataSetChanged()
+        }
     }
 
     private fun onChipCheckedChanged(holder: UnitViewHolder, position: Int, isChecked : Boolean, unit: Unit){
-        if (unit.name in selectedUnitList.map { it?.name }){
+        if (isInSelectedUnit(unit)){
             holder.binding.chip.isChecked = false
             setDisableChip(holder.binding.chip)
             val context = holder.binding.root.context
@@ -91,7 +100,11 @@ class UnitsAdapter(
         }
         setCheckedChip(holder.binding.chip)
         unitViewHolderList.forEachIndexed { index, viewHolder ->
-            if (index != position){
+            if (isInSelectedUnit(unitList[index])){
+                viewHolder.binding.chip.isChecked = false
+                setDisableChip(viewHolder.binding.chip)
+            }
+            else if (index != position){
                 viewHolder.binding.chip.isChecked = false
                 setUnCheckedChip(viewHolder.binding.chip)
             }

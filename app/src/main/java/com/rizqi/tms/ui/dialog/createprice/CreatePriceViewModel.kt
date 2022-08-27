@@ -20,6 +20,7 @@ class CreatePriceViewModel : ViewModel(){
     private val _consumerPrice = MutableLiveData(0.0)
     private val _isMerchantEnabled = MutableLiveData(true)
     private val _isConsumerEnabled = MutableLiveData(true)
+    private val _updatePriceAndSubPrice = MutableLiveData<PriceAndSubPrice?>(null)
 
     val unit : LiveData<Unit?>
         get() = _unit
@@ -79,6 +80,18 @@ class CreatePriceViewModel : ViewModel(){
         if (!_isConsumerEnabled.value!!) _consumerPrice.value = -1.0 else _consumerPrice.value = 0.0
     }
 
+    fun setUpdatePriceAndSubPrice(value: PriceAndSubPrice){
+        _updatePriceAndSubPrice.value = value
+        value.unit?.let { setUnit(it) }
+        value.price.quantityConnector?.let { setQuantityConnector(it.toString()) }
+        setBarcode(value.price.barcode)
+        setMerchantPrice(value.merchantSubPrice.subPrice.price.toString())
+        setConsumerPrice(value.consumerSubPrice.subPrice.price.toString())
+        if (!value.merchantSubPrice.subPrice.isEnabled) toggleMerchantEnabled()
+        if (!value.consumerSubPrice.subPrice.isEnabled) toggleConsumerEnabled()
+
+    }
+
     fun validate(isUsingConnector : Boolean, context : Context) = CreatePriceValidation(
         if (!isUsingConnector || (_quantityConnector.value != null && _quantityConnector.value != 0.0)) null else
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.connector_between_price)),
@@ -99,7 +112,8 @@ class CreatePriceViewModel : ViewModel(){
             barcode = _barcode.value!!,
             quantityConnector = _quantityConnector.value,
             unitId = _unit.value!!.id,
-            unitName = _unit.value!!.name
+            unitName = _unit.value!!.name,
+            prevUnitName = _prevUnit.value?.name
         )
         return PriceAndSubPrice(
             price,
@@ -107,6 +121,28 @@ class CreatePriceViewModel : ViewModel(){
             consumerSubPriceWithSpecialPrice
         ).apply {
             unit = _unit.value
+        }
+    }
+
+    fun getUpdatedPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice>, consumerSpecialPriceList: List<SpecialPrice>): PriceAndSubPrice {
+        return _updatePriceAndSubPrice.value!!.apply {
+            price.apply {
+                barcode = _barcode.value!!
+                quantityConnector = _quantityConnector.value
+                unitId = _unit.value!!.id
+                unitName = _unit.value!!.name
+                prevUnitName = _prevUnit.value?.name
+            }
+            merchantSubPrice.subPrice.apply {
+                price = _merchantPrice.value!!
+                isEnabled = _isMerchantEnabled.value!!
+            }
+            consumerSubPrice.subPrice.apply {
+                price = _consumerPrice.value!!
+                isEnabled = _isConsumerEnabled.value!!
+            }
+            merchantSubPrice.specialPrices = merchantSpecialPriceList
+            consumerSubPrice.specialPrices = consumerSpecialPriceList
         }
     }
 

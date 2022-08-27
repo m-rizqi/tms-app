@@ -43,6 +43,14 @@ class CreateUnitDialog(
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,6 +72,7 @@ class CreateUnitDialog(
                     is Resource.Success -> {
                         hideLoading()
                         onNewUnitCreated(newUnit.copy(id = res.data))
+                        dismiss()
                     }
                 }
             }

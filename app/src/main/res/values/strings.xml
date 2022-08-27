@@ -31,6 +31,7 @@
     <string name="skip_alert_explanation"><![CDATA[Data mengenai tokomu tidak akan tersimpan di cloud sehingga tidak bisa dibackup-restore. <font color=#4641A7>Tetap lanjutkan ?</font>]]></string>
     <string name="yes">Ya</string>
     <string name="cancel">Batal</string>
+    <string name="delete">Hapus</string>
     <string name="field_must_be_filled">%1$s harus terisi</string>
     <string name="email_not_valid">Email tidak valid</string>
     <string name="confirm_password_must_equal">Konfirmasi password harus sama dengan password</string>
@@ -60,7 +61,7 @@
     <string name="item_name_hint">Ketik nama barang, contoh: Beras</string>
     <string name="price_list">List Harga</string>
     <string name="create_price_of_item">Buat dan berikan harga dari barangmu.</string>
-    <string name="quantity_connector">%1$d %1$s = 1 %1$s</string>
+    <string name="quantity_connector">%1$f %1$s = 1 %1$s</string>
     <string name="barcode">Barcode</string>
     <string name="unit">Satuan</string>
     <string name="p">P</string>
@@ -73,6 +74,7 @@
     <string name="add_price">Tambah Harga</string>
     <string name="save_allcaps">SIMPAN</string>
     <string name="cancel_allcaps">BATAL</string>
+    <string name="delete_allcaps">HAPUS</string>
     <string name="price_connector">Penghubung Antar Harga</string>
     <string name="price_connector_hint">Contoh, 12 Buah = 1 Lusin</string>
     <string name="add_unit">tambah satuan</string>

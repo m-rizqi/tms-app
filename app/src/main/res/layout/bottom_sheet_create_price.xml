@@ -213,12 +213,11 @@
                             layout="@layout/layout_input_layout_no_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:layout_marginTop="4dp"
-                            app:hint="@{@string/price_hint}"
+                            android:layout_toStartOf="@id/btn_create_price_merchant_visibility"
                             app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
                             app:prefixText="@{@string/rp_hint}"
-                            android:layout_toStartOf="@id/btn_create_price_merchant_visibility"
-                            android:layout_alignParentStart="true"
                             />
 
                         <ImageButton
@@ -280,13 +279,11 @@
                             layout="@layout/layout_input_layout_no_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            app:hint="@{@string/price_hint}"
-                            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                            app:prefixText="@{@string/rp_hint}"
-                            android:layout_toStartOf="@id/btn_create_price_consumer_visibility"
                             android:layout_alignParentStart="true"
-                            />
+                            android:layout_marginTop="4dp"
+                            android:layout_toStartOf="@id/btn_create_price_consumer_visibility"
+                            app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                            app:prefixText="@{@string/rp_hint}" />
 
                         <ImageButton
                             android:id="@+id/btn_create_price_consumer_visibility"

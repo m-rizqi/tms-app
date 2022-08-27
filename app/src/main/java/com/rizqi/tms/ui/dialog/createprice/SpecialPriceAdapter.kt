@@ -45,6 +45,14 @@ class SpecialPriceAdapter(
                 specialPrice.price = it.toString().replace(".","").replace(",", ".").toDouble()
             }catch (e : Exception){}
         }
+
+        if (specialPrice.price != 0.0){
+            binding.tilSpecialPrice.editText.setText(specialPrice.price.toLong().toString())
+        }
+        if (specialPrice.quantity != 0.0){
+            binding.tilSpecialPriceQuantity.editText.setText(specialPrice.quantity.toString())
+        }
+
         binding.btnSpecialPriceDelete.setOnClickListener {
             removeAt(position)
         }
@@ -100,6 +108,13 @@ class SpecialPriceAdapter(
     @SuppressLint("NotifyDataSetChanged")
     fun clear(){
         specialPriceList.clear()
+        specialPriceHolderList.clear()
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: MutableList<SpecialPrice>){
+        specialPriceList = list
         specialPriceHolderList.clear()
         notifyDataSetChanged()
     }

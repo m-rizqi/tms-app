@@ -9,5 +9,5 @@ data class SubPriceWithSpecialPrice(
         parentColumn = "id",
         entityColumn = "sub_price_id"
     )
-    val specialPrices : List<SpecialPrice>
+    var specialPrices : List<SpecialPrice>
 )

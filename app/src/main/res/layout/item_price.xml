@@ -12,9 +12,6 @@
             name="connectorText"
             type="String" />
         <variable
-            name="isMainPriceVisible"
-            type="Boolean" />
-        <variable
             name="barcode"
             type="String"/>
         <variable
@@ -55,7 +52,6 @@
                 app:cardBackgroundColor="@color/primary_100"
                 app:cardCornerRadius="100dp"
                 android:layout_marginTop="8dp"
-                android:visibility="@{isMainPriceVisible ? View.VISIBLE : View.GONE, default=gone}"
                 >
 
                 <TextView
@@ -95,7 +91,7 @@
                     android:layout_marginStart="10dp"
                     style="@style/TextAppearance.Caption"
                     android:textColor="@color/black_100"
-                    android:text="@string/quantity_connector"
+                    android:text="@{connectorText}"
                     tools:text="12 Bungkus = 1 Dus"
                     />
 

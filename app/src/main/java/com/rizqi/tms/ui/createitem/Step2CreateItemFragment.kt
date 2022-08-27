@@ -3,17 +3,16 @@ package com.rizqi.tms.ui.createitem
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import com.rizqi.tms.R
+import androidx.navigation.findNavController
 import com.rizqi.tms.databinding.FragmentStep2CreateItemBinding
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceBottomSheet
+import com.rizqi.tms.utility.CrudState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,18 +45,27 @@ class Step2CreateItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (createItemViewModel.isPricesEmpty()){
-            showPriceBottomSheet()
+        priceAdapter.onItemClickListener = {priceAndSubPrice, position ->
+            showUpdatePriceDialog(priceAndSubPrice, position)
         }
 
         binding.apply {
             rvCreateItemPriceList.adapter = priceAdapter
-            fabStep2CreateItemCreatePrice.setOnClickListener { showPriceBottomSheet() }
+            fabStep2CreateItemCreatePrice.setOnClickListener { showCreatePriceDialog() }
+            btnStep2CreateItemNext.setOnClickListener {
+                createItemViewModel.setPrices(priceAndSubPriceList)
+                stepChangedListener?.changeToStep(3)
+                it.findNavController().navigate(Step2CreateItemFragmentDirections.step2ToStep3CreateItem())
+            }
+        }
+
+        if (priceAndSubPriceList.isEmpty()){
+            showCreatePriceDialog()
         }
 
     }
 
-    private fun showPriceBottomSheet(){
+    private fun showCreatePriceDialog(){
         activity?.let {
             CreatePriceBottomSheet(
                 priceAndSubPriceList.isNotEmpty(),
@@ -65,6 +73,24 @@ class Step2CreateItemFragment : Fragment() {
                 priceAndSubPriceList.map { priceAndSubPrice ->  priceAndSubPrice.unit}
             ){priceAndSubPrice ->
                 priceAdapter.addPriceAndSubPrice(priceAndSubPrice)
+            }.show(it.supportFragmentManager, null)
+        }
+    }
+
+    private fun showUpdatePriceDialog(priceAndSubPrice: PriceAndSubPrice, position : Int){
+        activity?.let {
+            CreatePriceBottomSheet(
+                priceAndSubPrice.price.quantityConnector != null,
+                priceAndSubPriceList.find { priceSubPrice ->  priceSubPrice.price.prevUnitName == priceAndSubPrice.price.prevUnitName}?.unit,
+                priceAndSubPriceList.map { priceSubPrice ->  priceSubPrice.unit}.filter { unit -> unit?.name != priceAndSubPrice.price.unitName  },
+                priceAndSubPrice,
+                CrudState.UPDATE
+            ){updatedPriceSubPrice ->
+                priceAdapter.updatePriceAndSubPrice(updatedPriceSubPrice, position)
+            }.apply {
+                onDeleteListener = {
+                    priceAdapter.deletePriceAndSubPrice(position)
+                }
             }.show(it.supportFragmentManager, null)
         }
     }

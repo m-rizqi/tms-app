@@ -32,16 +32,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/black_20"
-                android:layout_marginBottom="180dp"
+                android:background="@color/black_40"
+                android:layout_marginBottom="200dp"
                 />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@color/black_20"
-                android:layout_marginTop="180dp"
+                android:background="@color/black_40"
+                android:layout_marginTop="200dp"
                 />
 
         </LinearLayout>
@@ -54,9 +54,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="32dp"
-            app:cardBackgroundColor="@color/primary_100"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="64dp"
-            app:strokeColor="@color/white"
+            app:strokeColor="@color/primary_100"
             app:strokeWidth="4dp"
             />
 

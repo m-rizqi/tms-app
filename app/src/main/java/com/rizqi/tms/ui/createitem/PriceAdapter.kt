@@ -1,6 +1,7 @@
 package com.rizqi.tms.ui.createitem
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,8 @@ import com.rizqi.tms.utility.dp
 class PriceAdapter(
     private var priceAndSubPriceList: MutableList<PriceAndSubPrice>
 ) : RecyclerView.Adapter<PriceAdapter.PriceViewHolder>(){
+    var onItemClickListener : ((PriceAndSubPrice, Int) -> Unit)? = null
+
     class PriceViewHolder(val binding : ItemPriceBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PriceViewHolder {
@@ -41,9 +44,15 @@ class PriceAdapter(
 
         binding.apply {
             isConnectorVisible = price.quantityConnector != null
-            isMainPriceVisible = false
             barcode = price.barcode
             unitName = price.unitName
+            connectorText = "${price.quantityConnector} ${price.prevUnitName} = 1 ${price.unitName}"
+            root.setOnClickListener { onItemClickListener?.invoke(priceAndSubPrice, position) }
+        }
+        if (price.quantityConnector != null){
+            binding.mcvPriceMainPriceIndicator.visibility = View.INVISIBLE
+        }else{
+            binding.mcvPriceMainPriceIndicator.visibility = View.GONE
         }
 
         if (!merchantSubPrice.isEnabled){
@@ -101,6 +110,17 @@ class PriceAdapter(
     fun addPriceAndSubPrice(priceAndSubPrice: PriceAndSubPrice){
         priceAndSubPriceList.add(priceAndSubPrice)
         notifyItemInserted(priceAndSubPriceList.lastIndex)
+    }
+
+    fun updatePriceAndSubPrice(priceAndSubPrice: PriceAndSubPrice, position: Int){
+        priceAndSubPriceList[position] = priceAndSubPrice
+        notifyItemChanged(position)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun deletePriceAndSubPrice(position: Int){
+        priceAndSubPriceList.removeAt(position)
+        notifyDataSetChanged()
     }
 
     private fun expandAccordion(v: View, arrow : View) {

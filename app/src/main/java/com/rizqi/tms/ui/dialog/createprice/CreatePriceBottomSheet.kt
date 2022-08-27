@@ -34,7 +34,9 @@ class CreatePriceBottomSheet(
     private val isConnectorVisible : Boolean = false,
     private val prevUnit: Unit? = null,
     private val selectedUnitList: List<Unit?>,
-    private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit
+    private val updatePriceAndSubPrice: PriceAndSubPrice? = null,
+    private val crudState: CrudState = CrudState.CREATE,
+    private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit,
 ) : BottomSheetDialogFragment(){
     private var _binding : BottomSheetCreatePriceBinding? = null
     private val binding : BottomSheetCreatePriceBinding
@@ -43,11 +45,12 @@ class CreatePriceBottomSheet(
     private val unitViewModel : UnitViewModel by viewModels()
     private var unitList : List<Unit>? = null
     private val viewModel : CreatePriceViewModel by viewModels()
-    private val merchantSpecialPriceList = mutableListOf<SpecialPrice>()
-    private val consumerSpecialPriceList = mutableListOf<SpecialPrice>()
+    private var merchantSpecialPriceList = mutableListOf<SpecialPrice>()
+    private var consumerSpecialPriceList = mutableListOf<SpecialPrice>()
     private val merchantSpecialPriceAdapter = SpecialPriceAdapter(merchantSpecialPriceList)
     private val consumerSpecialPriceAdapter = SpecialPriceAdapter(consumerSpecialPriceList)
     private val unitsAdapter = UnitsAdapter(selectedUnitList)
+    var onDeleteListener : (() -> kotlin.Unit)? = null
 
     private val scanBarcodeLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == AppCompatActivity.RESULT_OK && it.data != null){
@@ -78,8 +81,20 @@ class CreatePriceBottomSheet(
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.maxHeight = Resources.getSystem().displayMetrics.heightPixels
 
-        viewModel.unit.value?.let {
-            unitsAdapter.setInitialUnit(it)
+        viewModel.setPrevUnit(prevUnit)
+        if (crudState == CrudState.UPDATE && updatePriceAndSubPrice != null){
+            viewModel.setUpdatePriceAndSubPrice(updatePriceAndSubPrice)
+            binding.apply {
+                tilCreatePriceBarcode.editText.setText(updatePriceAndSubPrice.price.barcode)
+                tilCreatePriceMerchant.editText.setText(ThousandFormatter.format(updatePriceAndSubPrice.merchantSubPrice.subPrice.price))
+                tilCreatePriceConsumer.editText.setText(ThousandFormatter.format(updatePriceAndSubPrice.consumerSubPrice.subPrice.price))
+                merchantSpecialPriceList = updatePriceAndSubPrice.merchantSubPrice.specialPrices.toMutableList()
+                merchantSpecialPriceAdapter.setList(merchantSpecialPriceList)
+                consumerSpecialPriceList = updatePriceAndSubPrice.consumerSubPrice.specialPrices.toMutableList()
+                consumerSpecialPriceAdapter.setList(consumerSpecialPriceList)
+                btnCreatePriceCancelDelete.text = getString(R.string.delete_allcaps)
+                tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.quantityConnector.toString())
+            }
         }
 
         unitViewModel.listUnit.observe(viewLifecycleOwner){res ->
@@ -110,7 +125,9 @@ class CreatePriceBottomSheet(
             viewModel.setUnit(unit)
         }
 
-        viewModel.setPrevUnit(prevUnit)
+        viewModel.unit.value?.let {
+            unitsAdapter.setInitialUnit(it)
+        }
         viewModel.isMerchantEnabled.observe(viewLifecycleOwner){
             binding.tilCreatePriceMerchant.inputLayout.isEnabled = it
             if (it){
@@ -127,6 +144,7 @@ class CreatePriceBottomSheet(
                     tvCreatePriceMerchantSpecialTitle.visibility = View.GONE
                     rvCreatePriceMerchantSpecial.visibility = View.GONE
                     btnCreatePriceAddMerchantSpecial.visibility = View.GONE
+                    tilCreatePriceMerchant.editText.setText("")
                     tilCreatePriceMerchant.hint = getString(R.string.price_is_disabled)
                     btnCreatePriceMerchantVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_off_24))
                 }
@@ -148,6 +166,7 @@ class CreatePriceBottomSheet(
                     tvCreatePriceConsumerSpecialTitle.visibility = View.GONE
                     rvCreatePriceConsumerSpecial.visibility = View.GONE
                     btnCreatePriceAddConsumerSpecial.visibility = View.GONE
+                    tilCreatePriceConsumer.editText.setText("")
                     tilCreatePriceConsumer.hint = getString(R.string.price_is_disabled)
                     btnCreatePriceConsumerVisibility.setImageDrawable(context?.getDrawable(R.drawable.ic_baseline_visibility_off_24))
                 }
@@ -184,7 +203,13 @@ class CreatePriceBottomSheet(
                 showCreateUnitDialog()
             }
             btnCreatePriceCancelDelete.setOnClickListener {
-                dismiss()
+                when(crudState){
+                    CrudState.CREATE -> dismiss()
+                    else -> {
+                        onDeleteListener?.invoke()
+                        dismiss()
+                    }
+                }
             }
             btnCreatePriceSave.setOnClickListener {
                 val merchantSpecialPriceValidity = merchantSpecialPriceAdapter.validate()
@@ -198,7 +223,12 @@ class CreatePriceBottomSheet(
                     tilCreatePriceConsumer.errorText = priceValidity.consumerMessage?.asString(requireContext())
                 }
                 if (!merchantSpecialPriceValidity || !consumerSpecialPriceValidity || !priceValidity.isAllValid) return@setOnClickListener
-                val priceAndSubPrice = viewModel.getPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                val priceAndSubPrice = when(crudState){
+                    CrudState.CREATE -> viewModel.getPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                    else -> {
+                        viewModel.getUpdatedPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                    }
+                }
                 onSaveListener(priceAndSubPrice)
                 dismiss()
             }
