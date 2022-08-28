@@ -1,18 +1,25 @@
 package com.rizqi.tms.viewmodel
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.*
+import com.rizqi.tms.R
 import com.rizqi.tms.model.*
 import com.rizqi.tms.repository.ItemRepository
 import com.rizqi.tms.utility.Message
 import com.rizqi.tms.utility.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemViewModel @Inject constructor(
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    @SuppressLint("StaticFieldLeak")
+    @ApplicationContext
+    private val context: Context
 ) : ViewModel() {
 
     private val _insertItemWithPrices = MutableLiveData<Resource<ItemWithPrices>>()
@@ -63,6 +70,14 @@ class ItemViewModel @Inject constructor(
 
     fun getItemCount(): LiveData<Long> {
         return itemRepository.getItemCount().asLiveData()
+    }
+
+    fun getBarcodeItemCount(): LiveData<Long> {
+        return itemRepository.getBarcodeItemCount().asLiveData()
+    }
+
+    fun getNonBarcodeItemCount(): LiveData<Long> {
+        return itemRepository.getNonBarcodeItemCount().asLiveData()
     }
 
 }

@@ -22,4 +22,8 @@ class ItemRepository @Inject constructor(
 
     fun getItemCount() = itemDao.getItemCount()
 
+    fun getBarcodeItemCount() = itemDao.getBarcodeItemCount()
+
+    fun getNonBarcodeItemCount() = itemDao.getNonBarcodeItemCount()
+
 }

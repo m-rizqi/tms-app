@@ -49,8 +49,8 @@
                         />
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         >
@@ -123,17 +123,16 @@
                                     />
 
                                 <TextView
+                                    style="@style/TextAppearance.Overline"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
                                     android:layout_below="@id/tv_home_total_saved_item"
                                     android:layout_alignParentStart="true"
-                                    style="@style/TextAppearance.Overline"
-                                    android:textColor="@color/black_100"
-                                    android:text="@string/saved_item_total"
                                     android:layout_marginHorizontal="12dp"
+                                    android:layout_marginTop="4dp"
                                     android:layout_marginBottom="12dp"
-                                    />
+                                    android:text="@string/saved_item_total"
+                                    android:textColor="@color/black_100" />
                                 
                             </RelativeLayout>
                             

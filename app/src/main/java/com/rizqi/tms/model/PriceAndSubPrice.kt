@@ -1,6 +1,7 @@
 package com.rizqi.tms.model
 
 import androidx.room.Embedded
+import androidx.room.Ignore
 import androidx.room.Relation
 
 data class PriceAndSubPrice(
@@ -18,5 +19,6 @@ data class PriceAndSubPrice(
     )
     val consumerSubPrice: SubPriceWithSpecialPrice
 ){
+    @Ignore
     var unit : Unit? = null
 }

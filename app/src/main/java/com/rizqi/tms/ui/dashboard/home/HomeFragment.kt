@@ -34,6 +34,12 @@ class HomeFragment : Fragment() {
         itemViewModel.getItemCount().observe(viewLifecycleOwner){
             binding.totalItems = it.toString()
         }
+        itemViewModel.getBarcodeItemCount().observe(viewLifecycleOwner){
+            binding.barcodeTotal = it.toString()
+        }
+        itemViewModel.getNonBarcodeItemCount().observe(viewLifecycleOwner){
+            binding.nonBarcodeTotal = it.toString()
+        }
 
         binding.apply {
             fabHomeCreate.setOnClickListener {
