@@ -20,10 +20,16 @@ class ItemRepository @Inject constructor(
 
     suspend fun insertSpecialPrice(specialPrice: SpecialPrice) = itemDao.insertSpecialPrice(specialPrice)
 
+    suspend fun updatePrice(price: Price) = itemDao.updatePrice(price)
+
     fun getItemCount() = itemDao.getItemCount()
 
     fun getBarcodeItemCount() = itemDao.getBarcodeItemCount()
 
     fun getNonBarcodeItemCount() = itemDao.getNonBarcodeItemCount()
+
+    fun getPopularItems() = itemDao.getPopularItems()
+
+    fun getNonBarcodeItemsLimited(limit : Int) = itemDao.getNonBarcodeItemsLimited(limit)
 
 }

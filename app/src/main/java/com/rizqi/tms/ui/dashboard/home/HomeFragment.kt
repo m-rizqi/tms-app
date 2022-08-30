@@ -10,6 +10,9 @@ import androidx.fragment.app.viewModels
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentHomeBinding
 import com.rizqi.tms.ui.createitem.CreateItemActivity
+import com.rizqi.tms.utility.GridSpacingItemDecoration
+import com.rizqi.tms.utility.collapseAccordion
+import com.rizqi.tms.utility.expandAccordion
 import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,6 +22,8 @@ class HomeFragment : Fragment() {
     private val binding : FragmentHomeBinding
         get() = _binding!!
     private val itemViewModel : ItemViewModel by viewModels()
+    private val popularAdapter = GridItemAdapter()
+    private val nonBarcodeItemAdapter = GridItemAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,18 +45,32 @@ class HomeFragment : Fragment() {
         itemViewModel.getNonBarcodeItemCount().observe(viewLifecycleOwner){
             binding.nonBarcodeTotal = it.toString()
         }
+        itemViewModel.getPopularItems().observe(viewLifecycleOwner){
+            popularAdapter.submitList(it)
+        }
+        itemViewModel.getNonBarcodeItemsLimited().observe(viewLifecycleOwner){
+            nonBarcodeItemAdapter.submitList(it)
+        }
 
         binding.apply {
+            expandAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
+            cbHomePopularAccordian.setOnCheckedChangeListener { _, b ->
+                if (b) expandAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
+                else collapseAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
+            }
+            rvHomeOftenUsedItems.apply {
+                adapter = popularAdapter
+                addItemDecoration(GridSpacingItemDecoration(2, 32, false))
+            }
+            rvHomeNonbarcodeItems.apply {
+                adapter = nonBarcodeItemAdapter
+                addItemDecoration(GridSpacingItemDecoration(2, 32, false))
+            }
+            srlHome.setOnRefreshListener { binding.srlHome.isRefreshing = false }
             fabHomeCreate.setOnClickListener {
                 startActivity(Intent(context, CreateItemActivity::class.java))
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-
     }
 
     override fun onDestroyView() {

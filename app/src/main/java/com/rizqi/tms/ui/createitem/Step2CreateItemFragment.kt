@@ -91,7 +91,7 @@ class Step2CreateItemFragment : Fragment() {
     private fun showUpdatePriceDialog(priceAndSubPrice: PriceAndSubPrice, position : Int){
         activity?.let {
             CreatePriceBottomSheet(
-                priceAndSubPrice.price.quantityConnector != null,
+                priceAndSubPrice.price.prevQuantityConnector != null,
                 priceAndSubPriceList.find { priceSubPrice ->  priceSubPrice.price.prevUnitName == priceAndSubPrice.price.prevUnitName}?.unit,
                 priceAndSubPriceList.map { priceSubPrice ->  priceSubPrice.unit}.filter { unit -> unit?.name != priceAndSubPrice.price.unitName  },
                 priceAndSubPrice,
@@ -100,6 +100,14 @@ class Step2CreateItemFragment : Fragment() {
                 priceAdapter.updatePriceAndSubPrice(updatedPriceSubPrice, position)
             }.apply {
                 onDeleteListener = {
+                    if (position < priceAdapter.itemCount - 1){
+                        val posPrice = priceAdapter.getPriceAndSubPriceAt(position)
+                        val nextPrice = priceAdapter.getPriceAndSubPriceAt(position + 1)
+                        nextPrice.price.apply {
+                            prevQuantityConnector = posPrice.price.prevQuantityConnector
+                            prevUnitName = posPrice.price.prevUnitName
+                        }
+                    }
                     priceAdapter.deletePriceAndSubPrice(position)
                 }
             }.show(it.supportFragmentManager, null)

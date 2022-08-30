@@ -38,9 +38,10 @@ class ItemViewModel @Inject constructor(
         _insertItemWithPrices.value = Resource.Loading()
         viewModelScope.launch {
             try {
+                itemWithPrices.item.lastUpdate = System.currentTimeMillis()
                 val itemId = insertItem(itemWithPrices.item)
                 itemWithPrices.item.id = itemId
-                itemWithPrices.prices.forEach {priceAndSubPrice ->
+                itemWithPrices.prices.forEach { priceAndSubPrice ->
                     priceAndSubPrice.price.itemId = itemId
                     val priceId = insertPrice(priceAndSubPrice.price)
                     priceAndSubPrice.price.id = priceId
@@ -61,12 +62,20 @@ class ItemViewModel @Inject constructor(
                         specialPrice.id = specialPriceId
                     }
                 }
+                itemWithPrices.prices.forEachIndexed { index, priceAndSubPrice ->
+                    if (index < itemWithPrices.prices.lastIndex){
+                        priceAndSubPrice.price.nextPriceConnectorId = itemWithPrices.prices[index+1].price.id
+                        updatePrice(priceAndSubPrice.price)
+                    }
+                }
                 _insertItemWithPrices.value = Resource.Success(itemWithPrices)
             }catch (e : Exception){
                 _insertItemWithPrices.value = Resource.Error(Message.DynamicString(e.message.toString()))
             }
         }
     }
+
+    suspend fun updatePrice(price: Price) = itemRepository.updatePrice(price)
 
     fun getItemCount(): LiveData<Long> {
         return itemRepository.getItemCount().asLiveData()
@@ -78,6 +87,14 @@ class ItemViewModel @Inject constructor(
 
     fun getNonBarcodeItemCount(): LiveData<Long> {
         return itemRepository.getNonBarcodeItemCount().asLiveData()
+    }
+
+    fun getPopularItems(): LiveData<List<ItemWithPrices>> {
+        return itemRepository.getPopularItems().asLiveData()
+    }
+
+    fun getNonBarcodeItemsLimited(limit : Int = 10): LiveData<List<ItemWithPrices>> {
+        return itemRepository.getNonBarcodeItemsLimited(limit).asLiveData()
     }
 
 }

@@ -93,7 +93,7 @@ class CreatePriceBottomSheet(
                 consumerSpecialPriceList = updatePriceAndSubPrice.consumerSubPrice.specialPrices.toMutableList()
                 consumerSpecialPriceAdapter.setList(consumerSpecialPriceList)
                 btnCreatePriceCancelDelete.text = getString(R.string.delete_allcaps)
-                tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.quantityConnector.toString())
+                tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.prevQuantityConnector.toString())
             }
         }
 

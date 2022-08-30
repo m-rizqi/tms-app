@@ -12,7 +12,9 @@ data class Item(
     @ColumnInfo(name = "is_reminded")
     val isReminded : Boolean,
     @ColumnInfo(name = "click_count")
-    val clickCount : Long = 0
+    val clickCount : Long = 0,
+    @ColumnInfo(name = "last_update")
+    var lastUpdate : Long = 0
 ){
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null

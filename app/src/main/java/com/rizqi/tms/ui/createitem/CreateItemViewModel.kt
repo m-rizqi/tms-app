@@ -39,6 +39,13 @@ class CreateItemViewModel : ViewModel() {
     fun setPrices(value : MutableList<PriceAndSubPrice>){
         _prices.value = value
         _prices.value?.first()?.price?.isMainPrice = true
+        _prices.value?.let {
+            it.forEachIndexed { index, priceAndSubPrice ->
+                if (index < it.lastIndex){
+                    priceAndSubPrice.price.nextQuantityConnector = it[index+1].price.prevQuantityConnector
+                }
+            }
+        }
     }
 
     fun setIsReminded(value : Boolean){

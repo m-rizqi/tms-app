@@ -1,9 +1,6 @@
 package com.rizqi.tms.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.rizqi.tms.model.*
 import com.rizqi.tms.utility.ITEM_NO_BARCODE
 import kotlinx.coroutines.flow.Flow
@@ -22,15 +19,21 @@ interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItem(item: Item) : Long
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updatePrice(price: Price)
+
     @Query("SELECT COUNT(*) FROM Item")
     fun getItemCount() : Flow<Long>
 
-    @Query("SELECT COUNT(*) FROM Item INNER JOIN Price ON Price.item_id = Item.id WHERE Price.barcode != $ITEM_NO_BARCODE")
+    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) > 0")
     fun getBarcodeItemCount() : Flow<Long>
 
-    @Query("SELECT COUNT(*) FROM Item INNER JOIN Price ON Price.item_id = Item.id WHERE Price.barcode = $ITEM_NO_BARCODE")
+    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) < 1")
     fun getNonBarcodeItemCount() : Flow<Long>
 
     @Query("SELECT * FROM Item ORDER BY Item.click_count DESC LIMIT 6")
-    fun getPopularItem() : Flow<ItemWithPrices>
+    fun getPopularItems() : Flow<List<ItemWithPrices>>
+
+    @Query("SELECT * FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) < 1 ORDER BY Item.click_count DESC LIMIT :limit")
+    fun getNonBarcodeItemsLimited(limit : Int) : Flow<List<ItemWithPrices>>
 }

@@ -19,6 +19,7 @@ import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityCreateItemBinding
 import com.rizqi.tms.model.ItemWithPrices
+import com.rizqi.tms.ui.dialog.success.SuccessDialog
 import com.rizqi.tms.utility.Resource
 import com.rizqi.tms.utility.hideLoading
 import com.rizqi.tms.utility.showLoading
@@ -95,7 +96,9 @@ class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
                 }
                 is Resource.Success -> {
                     hideLoading(binding.lCreateItemLoading)
-                    Log.d("SUCCESS", result.data.toString())
+                    SuccessDialog(getString(R.string.success_add_item_description, itemWithPrices.item.name), {
+                        finish()
+                    }).show(supportFragmentManager, null)
                 }
             }
         }

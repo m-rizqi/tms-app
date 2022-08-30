@@ -83,7 +83,7 @@ class CreatePriceViewModel : ViewModel(){
     fun setUpdatePriceAndSubPrice(value: PriceAndSubPrice){
         _updatePriceAndSubPrice.value = value
         value.unit?.let { setUnit(it) }
-        value.price.quantityConnector?.let { setQuantityConnector(it.toString()) }
+        value.price.prevQuantityConnector?.let { setQuantityConnector(it.toString()) }
         setBarcode(value.price.barcode)
         setMerchantPrice(value.merchantSubPrice.subPrice.price.toString())
         setConsumerPrice(value.consumerSubPrice.subPrice.price.toString())
@@ -110,7 +110,7 @@ class CreatePriceViewModel : ViewModel(){
         val consumerSubPriceWithSpecialPrice = SubPriceWithSpecialPrice(consumerSubPrice, consumerSpecialPriceList)
         val price = Price(
             barcode = _barcode.value!!,
-            quantityConnector = _quantityConnector.value,
+            prevQuantityConnector = _quantityConnector.value,
             unitId = _unit.value!!.id,
             unitName = _unit.value!!.name,
             prevUnitName = _prevUnit.value?.name
@@ -128,7 +128,7 @@ class CreatePriceViewModel : ViewModel(){
         return _updatePriceAndSubPrice.value!!.apply {
             price.apply {
                 barcode = _barcode.value!!
-                quantityConnector = _quantityConnector.value
+                prevQuantityConnector = _quantityConnector.value
                 unitId = _unit.value!!.id
                 unitName = _unit.value!!.name
                 prevUnitName = _prevUnit.value?.name
