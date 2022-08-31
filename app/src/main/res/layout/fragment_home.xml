@@ -367,6 +367,7 @@
                         app:spanCount="2"
                         tools:listitem="@layout/item_card_item"
                         tools:itemCount="2"
+                        android:nestedScrollingEnabled="false"
                         />
 
                     <RelativeLayout
@@ -408,6 +409,7 @@
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         tools:listitem="@layout/item_card_item"
                         app:spanCount="2"
+                        android:nestedScrollingEnabled="false"
                         />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

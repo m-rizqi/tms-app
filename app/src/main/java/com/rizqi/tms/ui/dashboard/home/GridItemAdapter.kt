@@ -1,10 +1,12 @@
 package com.rizqi.tms.ui.dashboard.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemCardItemBinding
 import com.rizqi.tms.model.ItemWithPrices
@@ -47,7 +49,9 @@ class GridItemAdapter : ListAdapter<ItemWithPrices, GridItemAdapter.GridItemView
             CoroutineScope(Dispatchers.IO).launch {
                 val bitmap = context.getBitmapFromPath(it)
                 withContext(Dispatchers.Main){
-                    binding.ivCardItemImage.setImageBitmap(bitmap)
+                    Glide.with(binding.root.context).load(bitmap).placeholder(R.drawable.image_placeholder).into(binding.ivCardItemImage)
+                    binding.ivCardItemImage.visibility = View.VISIBLE
+                    binding.shimmerCardItemImage.visibility = View.GONE
                 }
             }
         }

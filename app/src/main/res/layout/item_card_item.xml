@@ -38,7 +38,25 @@
                 app:layout_constraintBottom_toBottomOf="@id/l_card_item_body"
                 android:scaleType="centerCrop"
                 android:background="@drawable/image_placeholder"
+                android:visibility="invisible"
                 />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_card_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/l_card_item_body"
+                app:shimmer_auto_start="true"
+                >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/black_40"
+                    />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
             <LinearLayout
                 android:id="@+id/l_card_item_body"
