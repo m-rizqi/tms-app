@@ -42,4 +42,7 @@ interface ItemDao {
 
     @Query("SELECT * FROM Item WHERE Item.is_reminded = 1")
     fun getRemindedItems() : Flow<List<ItemWithPrices>>
+
+    @Query("SELECT * FROM Item WHERE Item.id = :id")
+    fun getItemById(id : Long) : Flow<ItemWithPrices>
 }

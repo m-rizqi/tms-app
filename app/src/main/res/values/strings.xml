@@ -126,6 +126,7 @@
     <string name="mark_all_read">Tandai semua telah dibaca</string>
     <string name="last_update_on">Terakhir diubah pada %1$s</string>
     <string name="no_reminded_item">Tidak ada barang yang perlu diingatkan</string>
+    <string name="item_not_found">Barang tidak ditemukan</string>
 
     <string-array name="months">
         <item>Januari</item>

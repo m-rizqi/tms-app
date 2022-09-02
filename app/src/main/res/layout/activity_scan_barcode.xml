@@ -30,8 +30,7 @@
             <SurfaceView
                 android:id="@+id/surface_view_scanner"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view_scanner_anim"
@@ -62,7 +61,6 @@
                 />
 
         </com.google.android.material.card.MaterialCardView>
-
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_scan_barcode_number"

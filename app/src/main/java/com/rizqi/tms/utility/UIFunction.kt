@@ -111,7 +111,7 @@ private fun getOutputMediaFile(context: Context): File? {
     }
     // Create a media file name
     val mediaFile: File
-    val mImageName = "IMG_${System.currentTimeMillis()}.jpg"
+    val mImageName = String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
     mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
     return mediaFile
 }

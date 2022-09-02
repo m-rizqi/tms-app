@@ -1,5 +1,6 @@
 package com.rizqi.tms.ui.dashboard.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemCardItemBinding
 import com.rizqi.tms.model.ItemWithPrices
+import com.rizqi.tms.ui.itemdetail.ItemDetailActivity
+import com.rizqi.tms.utility.ITEM_ID
 import com.rizqi.tms.utility.ThousandFormatter
 import com.rizqi.tms.utility.getBitmapFromPath
 import kotlinx.coroutines.CoroutineScope
@@ -60,5 +63,10 @@ class GridItemAdapter : ListAdapter<ItemWithPrices, GridItemAdapter.GridItemView
             binding.consumerPrice = context.getString(R.string.rp_, ThousandFormatter.format(it.consumerSubPrice.subPrice.price)) + "/${it.price.unitName}"
         }
         binding.itemName = itemWithPrices.item.name
+        binding.root.setOnClickListener {
+            val intent = Intent(it.context, ItemDetailActivity::class.java)
+            intent.putExtra(ITEM_ID, itemWithPrices.item.id)
+            it.context.startActivity(intent)
+        }
     }
 }

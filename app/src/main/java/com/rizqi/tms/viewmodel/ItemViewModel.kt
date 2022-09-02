@@ -103,4 +103,8 @@ class ItemViewModel @Inject constructor(
         return itemRepository.getRemindedItems().asLiveData()
     }
 
+    fun getItemById(id : Long) : LiveData<ItemWithPrices>{
+        return itemRepository.getItemById(id).asLiveData()
+    }
+
 }

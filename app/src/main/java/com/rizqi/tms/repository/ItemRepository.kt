@@ -36,4 +36,6 @@ class ItemRepository @Inject constructor(
 
     fun getRemindedItems() = itemDao.getRemindedItems()
 
+    fun getItemById(id : Long) = itemDao.getItemById(id)
+
 }
