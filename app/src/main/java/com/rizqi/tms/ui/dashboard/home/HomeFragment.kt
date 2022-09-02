@@ -47,9 +47,11 @@ class HomeFragment : Fragment() {
         }
         itemViewModel.getPopularItems().observe(viewLifecycleOwner){
             popularAdapter.submitList(it)
+            binding.lHomeEmptyStatePopular.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
         itemViewModel.getNonBarcodeItemsLimited().observe(viewLifecycleOwner){
             nonBarcodeItemAdapter.submitList(it)
+            binding.lHomeEmptyStateNonbarcode.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
 
         binding.apply {
