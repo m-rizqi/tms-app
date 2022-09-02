@@ -16,6 +16,7 @@ import android.widget.CheckBox
 import androidx.cardview.widget.CardView
 import androidx.core.animation.doOnEnd
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentHomeBinding
 import com.rizqi.tms.ui.createitem.CreateItemActivity
@@ -24,6 +25,8 @@ import com.rizqi.tms.utility.collapseAccordion
 import com.rizqi.tms.utility.expandAccordion
 import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -33,6 +36,7 @@ class HomeFragment : Fragment() {
     private val itemViewModel : ItemViewModel by viewModels()
     private val popularAdapter = GridItemAdapter()
     private val nonBarcodeItemAdapter = GridItemAdapter()
+    private val notificationAdapter = RemindedItemAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,6 +66,11 @@ class HomeFragment : Fragment() {
             nonBarcodeItemAdapter.submitList(it)
             binding.lHomeEmptyStateNonbarcode.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
         }
+        itemViewModel.getRemindedItems().observe(viewLifecycleOwner){
+            notificationAdapter.submitList(it)
+            binding.lNotificationDialog.lNotificationEmptyState.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            binding.cvHomeNotificationBadge.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+        }
 
         binding.apply {
             expandAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
@@ -77,6 +86,7 @@ class HomeFragment : Fragment() {
                 adapter = nonBarcodeItemAdapter
                 addItemDecoration(GridSpacingItemDecoration(2, 32, false))
             }
+            lNotificationDialog.rvNotificationRemindedItems.adapter = notificationAdapter
             srlHome.setOnRefreshListener { binding.srlHome.isRefreshing = false }
             fabHomeCreate.setOnClickListener {
                 startActivity(Intent(context, CreateItemActivity::class.java))
@@ -84,6 +94,17 @@ class HomeFragment : Fragment() {
             cbHomeNotification.setOnClickListener {
                 binding.cbHomeNotification.isChecked = !(it as CheckBox).isChecked
                 showNotificationDialog()
+            }
+            lNotificationDialog.tvNotificationMarkRead.setOnClickListener {
+                val remindedItems = notificationAdapter.currentList
+                remindedItems.forEach { itemWithPrices ->
+                    itemWithPrices.item.isReminded = false
+                    itemViewModel.viewModelScope.launch(Dispatchers.IO){
+                        itemViewModel.updateItem(itemWithPrices.item)
+                    }
+                }
+                notificationAdapter.submitList(mutableListOf())
+                binding.lNotificationDialog.lNotificationEmptyState.visibility = View.VISIBLE
             }
         }
 

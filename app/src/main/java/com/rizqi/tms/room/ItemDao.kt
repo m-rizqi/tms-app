@@ -22,6 +22,9 @@ interface ItemDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePrice(price: Price)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateItem(item: Item)
+
     @Query("SELECT COUNT(*) FROM Item")
     fun getItemCount() : Flow<Long>
 
@@ -36,4 +39,7 @@ interface ItemDao {
 
     @Query("SELECT * FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) < 1 ORDER BY Item.click_count DESC LIMIT :limit")
     fun getNonBarcodeItemsLimited(limit : Int) : Flow<List<ItemWithPrices>>
+
+    @Query("SELECT * FROM Item WHERE Item.is_reminded = 1")
+    fun getRemindedItems() : Flow<List<ItemWithPrices>>
 }

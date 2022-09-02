@@ -22,6 +22,8 @@ class ItemRepository @Inject constructor(
 
     suspend fun updatePrice(price: Price) = itemDao.updatePrice(price)
 
+    suspend fun updateItem(item: Item) = itemDao.updateItem(item)
+
     fun getItemCount() = itemDao.getItemCount()
 
     fun getBarcodeItemCount() = itemDao.getBarcodeItemCount()
@@ -31,5 +33,7 @@ class ItemRepository @Inject constructor(
     fun getPopularItems() = itemDao.getPopularItems()
 
     fun getNonBarcodeItemsLimited(limit : Int) = itemDao.getNonBarcodeItemsLimited(limit)
+
+    fun getRemindedItems() = itemDao.getRemindedItems()
 
 }

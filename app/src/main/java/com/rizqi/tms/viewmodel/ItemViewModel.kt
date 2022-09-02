@@ -77,6 +77,8 @@ class ItemViewModel @Inject constructor(
 
     suspend fun updatePrice(price: Price) = itemRepository.updatePrice(price)
 
+    suspend fun updateItem(item: Item) = itemRepository.updateItem(item)
+
     fun getItemCount(): LiveData<Long> {
         return itemRepository.getItemCount().asLiveData()
     }
@@ -95,6 +97,10 @@ class ItemViewModel @Inject constructor(
 
     fun getNonBarcodeItemsLimited(limit : Int = 10): LiveData<List<ItemWithPrices>> {
         return itemRepository.getNonBarcodeItemsLimited(limit).asLiveData()
+    }
+
+    fun getRemindedItems() : LiveData<List<ItemWithPrices>>{
+        return itemRepository.getRemindedItems().asLiveData()
     }
 
 }

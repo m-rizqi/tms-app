@@ -10,7 +10,7 @@ data class Item(
     @ColumnInfo(name = "image_path")
     val imagePath : String?,
     @ColumnInfo(name = "is_reminded")
-    val isReminded : Boolean,
+    var isReminded : Boolean,
     @ColumnInfo(name = "click_count")
     val clickCount : Long = 0,
     @ColumnInfo(name = "last_update")
