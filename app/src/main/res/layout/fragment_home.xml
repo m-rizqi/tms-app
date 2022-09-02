@@ -59,12 +59,12 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_bell"
                             android:layout_alignParentTop="true"
                             android:layout_alignParentEnd="true"
-                            />
+                            android:src="@drawable/ic_bell" />
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/cv_home_notification_badge"
                             android:layout_width="10dp"
                             android:layout_height="10dp"
                             android:layout_alignParentTop="true"
@@ -72,6 +72,16 @@
                             app:cardBackgroundColor="@color/accent_2"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="0dp" />
+
+                        <CheckBox
+                            android:id="@+id/cb_home_notification"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:button="@null"
+                            android:background="@android:color/transparent"
+                            android:checked="false"
+                            />
+
 
                     </RelativeLayout>
 
@@ -456,12 +466,11 @@
                             android:id="@+id/rv_home_nonbarcode_items"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:nestedScrollingEnabled="false"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            tools:listitem="@layout/item_card_item"
                             app:spanCount="2"
                             tools:itemCount="1"
-                            android:nestedScrollingEnabled="false"
-                            />
+                            tools:listitem="@layout/item_card_item" />
 
                         <LinearLayout
                             android:id="@+id/l_home_empty_state_nonbarcode"
@@ -516,6 +525,18 @@
                 app:backgroundTint="@color/primary_100"
                 android:src="@drawable/ic_plus"
                 app:tint="@null"
+                />
+
+            <include
+                android:id="@+id/l_notification_dialog"
+                layout="@layout/layout_notification_dialog"
+                android:visibility="gone"
+                android:layout_width="300dp"
+                android:layout_height="400dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="52dp"
+                android:layout_marginEnd="24dp"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -178,6 +179,13 @@ class DashboardActivity : AppCompatActivity() {
             setDashboardStateFragment(HOME).commit()
             binding.bnvDashboard.selectTabAt(0)
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (dashboardState == HOME){
+            homeFragment.onDispatchTouchEvent(ev)
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
     private enum class DashboardState {
