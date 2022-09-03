@@ -73,10 +73,10 @@ class HomeFragment : Fragment() {
         }
 
         binding.apply {
-            expandAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
+            expandAccordion(binding.lHomeRvAndEmpty, binding.ivHomeArrowPopular)
             cbHomePopularAccordian.setOnCheckedChangeListener { _, b ->
-                if (b) expandAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
-                else collapseAccordion(binding.rvHomeOftenUsedItems, binding.ivHomeArrowPopular)
+                if (b) expandAccordion(binding.lHomeRvAndEmpty, binding.ivHomeArrowPopular)
+                else collapseAccordion(binding.lHomeRvAndEmpty, binding.ivHomeArrowPopular)
             }
             rvHomeOftenUsedItems.apply {
                 adapter = popularAdapter

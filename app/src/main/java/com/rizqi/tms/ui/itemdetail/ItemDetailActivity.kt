@@ -44,7 +44,7 @@ class ItemDetailActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch{
                     val bitmap = it.item.imagePath?.let { it1 -> getBitmapFromPath(it1) }
                     withContext(Dispatchers.Main){
-                        Glide.with(this@ItemDetailActivity).load(bitmap).placeholder(R.drawable.image_placeholder).into(binding.ivItemDetailImage)
+                        Glide.with(this@ItemDetailActivity).load(bitmap).into(binding.ivItemDetailImage)
                         binding.ivItemDetailImage.visibility = View.VISIBLE
                         binding.shimmerItemDetailImage.apply {
                             stopShimmer()

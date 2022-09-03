@@ -116,6 +116,15 @@ private fun getOutputMediaFile(context: Context): File? {
     return mediaFile
 }
 
+fun deleteFile(path: String): Boolean {
+    return try {
+        val file = File(path)
+        file.delete()
+    }catch (e : Exception){
+        false
+    }
+}
+
 fun expandAccordion(v: View, arrow : View) {
     val matchParentMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(
         (v.parent as View).width,

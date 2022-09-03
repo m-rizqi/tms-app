@@ -25,6 +25,12 @@ interface ItemDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateItem(item: Item)
 
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateSubPrice(subPrice: SubPrice)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateSpecialPrice(specialPrice: SpecialPrice)
+
     @Query("SELECT COUNT(*) FROM Item")
     fun getItemCount() : Flow<Long>
 
@@ -48,4 +54,16 @@ interface ItemDao {
 
     @Delete
     suspend fun deleteItem(item: Item)
+
+    @Delete
+    suspend fun deletePrice(price: Price)
+
+    @Delete
+    suspend fun deleteSubPrice(price: SubPrice)
+
+    @Delete
+    suspend fun deleteSpecialPrice(specialPrice: SpecialPrice)
+
+    @Query("UPDATE Item SET click_count = click_count + 1 WHERE id = :itemId")
+    suspend fun incrementClickCount(itemId : Long)
 }

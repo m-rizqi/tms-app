@@ -115,7 +115,7 @@ class PriceDetailAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun deletePrice(position: Int){
+    fun deletePrice(isMainPrice : Boolean, position: Int){
         if (position < itemCount - 1){
             val posPrice = getPriceAt(position)
             val nextPrice = getPriceAt(position + 1)
@@ -124,11 +124,18 @@ class PriceDetailAdapter(
                 prevUnitName = posPrice.price.prevUnitName
             }
         }
+        if (isMainPrice){
+            priceAndSubPriceList.withIndex().firstOrNull { it.index != position }?.value?.let {
+                it.price.isMainPrice = true
+            }
+        }
         priceAndSubPriceList.removeAt(position)
         notifyDataSetChanged()
     }
 
     fun getPriceAt(index : Int) = priceAndSubPriceList[index]
+
+    fun getList() = priceAndSubPriceList
 
     private fun setMainPriceTheme(merchantSubPrice : SubPrice, consumerSubPrice: SubPrice, holder: PriceDetailViewHolder){
         val binding = holder.binding

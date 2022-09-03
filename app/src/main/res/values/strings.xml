@@ -134,6 +134,7 @@
     <string name="item_is_not_changed">Barang Tidak Jadi Diubah ?</string>
     <string name="are_you_sure_not_change_this_item">Apakah kamu yakin tidak jadi mengubah barang ini ?</string>
     <string name="set_main_price">Jadikan harga utama</string>
+    <string name="success_update_item"><![CDATA[<font color=#4641A7>%1$s</font> berhasil diubah]]></string>
 
     <string-array name="months">
         <item>Januari</item>

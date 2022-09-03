@@ -15,6 +15,7 @@ import com.rizqi.tms.databinding.ActivityUpdateItemBinding
 import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceBottomSheet
+import com.rizqi.tms.ui.dialog.success.SuccessDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.itemdetail.PriceDetailAdapter
 import com.rizqi.tms.ui.takeimage.TakeImageActivity
@@ -70,7 +71,7 @@ class UpdateItemActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch{
                     val bitmap = it.item.imagePath?.let { it1 -> getBitmapFromPath(it1) }
                     withContext(Dispatchers.Main){
-                        Glide.with(this@UpdateItemActivity).load(bitmap).placeholder(R.drawable.image_placeholder).into(binding.ivUpdateItemImage)
+                        Glide.with(this@UpdateItemActivity).load(bitmap).into(binding.ivUpdateItemImage)
                         binding.ivUpdateItemImage.visibility = View.VISIBLE
                         binding.shimmerUpdateItemImage.apply {
                             stopShimmer()
@@ -104,6 +105,49 @@ class UpdateItemActivity : AppCompatActivity() {
                 takeImageLauncher.launch(Intent(this@UpdateItemActivity, TakeImageActivity::class.java))
             }
             fabUpdateItemCreatePrice.setOnClickListener { showCreatePriceDialog() }
+            btnUpdateItemSave.setOnClickListener {
+                if(viewModel.name.value.isNullOrBlank()){
+                    binding.tilUpdateItemName.errorText = getString(R.string.field_must_be_filled, getString(R.string.item_name))
+                    return@setOnClickListener
+                }else{
+                    binding.tilUpdateItemName.errorText = null
+                }
+                if (priceAdapter.itemCount == 0){
+                    Toast.makeText(this@UpdateItemActivity, getString(R.string.create_min_1_price), Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                showLoading(binding.lUpdateItemLoading)
+                val previousImagePath = itemWithPrices?.item?.imagePath
+                itemWithPrices?.let { item ->
+                    item.item.name = viewModel.name.value!!
+                    item.item.isReminded = viewModel.isReminded.value!!
+                    if (viewModel.imageBitmap.value != null){
+                        val newPath = saveBitmapToFolder(viewModel.imageBitmap.value)
+                        item.item.imagePath = newPath
+                    }
+                }
+                itemViewModel.updateItem(itemWithPrices!!, priceAdapter.getList())
+                itemViewModel.updatedItemWithPrices.observe(this@UpdateItemActivity){res ->
+                    when(res){
+                        is Resource.Error -> {
+                            hideLoading(binding.lUpdateItemLoading)
+                            Toast.makeText(this@UpdateItemActivity, res.message?.asString(this@UpdateItemActivity), Toast.LENGTH_SHORT).show()
+                        }
+                        is Resource.Success -> {
+                            hideLoading(binding.lUpdateItemLoading)
+                            SuccessDialog(
+                                description = getString(R.string.success_update_item, itemWithPrices?.item?.name)
+                            , onDismissListener = {
+                                    previousImagePath?.let { path ->
+                                        com.rizqi.tms.utility.deleteFile(path)
+                                    }
+                                    finish()
+                                }
+                            ).show(supportFragmentManager, null)
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -140,7 +184,7 @@ class UpdateItemActivity : AppCompatActivity() {
             priceAdapter.updatePrice(updatedPriceSubPrice, position)
         }.apply {
             onDeleteListener = {
-                priceAdapter.deletePrice(position)
+                priceAdapter.deletePrice(priceAndSubPrice.price.isMainPrice, position)
             }
         }.show(supportFragmentManager, null)
     }
