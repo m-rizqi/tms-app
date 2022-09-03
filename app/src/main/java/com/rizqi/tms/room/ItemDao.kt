@@ -8,10 +8,16 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSpecialPrice(specialPrice: SpecialPrice) : Long
+    suspend fun insertMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) : Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSubPrice(subPrice: SubPrice) : Long
+    suspend fun insertConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice) : Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) : Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertConsumerSubPrice(merchantSubPrice: SubPrice.ConsumerSubPrice) : Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPrice(price: Price) : Long
@@ -26,10 +32,16 @@ interface ItemDao {
     suspend fun updateItem(item: Item)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateSubPrice(subPrice: SubPrice)
+    suspend fun updateMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateSpecialPrice(specialPrice: SpecialPrice)
+    suspend fun updateConsumerSubPrice(merchantSubPrice: SubPrice.ConsumerSubPrice)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice)
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun updateConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice)
 
     @Query("SELECT COUNT(*) FROM Item")
     fun getItemCount() : Flow<Long>
@@ -59,10 +71,16 @@ interface ItemDao {
     suspend fun deletePrice(price: Price)
 
     @Delete
-    suspend fun deleteSubPrice(price: SubPrice)
+    suspend fun deleteMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice)
 
     @Delete
-    suspend fun deleteSpecialPrice(specialPrice: SpecialPrice)
+    suspend fun deleteConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice)
+
+    @Delete
+    suspend fun deleteMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice)
+
+    @Delete
+    suspend fun deleteConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice)
 
     @Query("UPDATE Item SET click_count = click_count + 1 WHERE id = :itemId")
     suspend fun incrementClickCount(itemId : Long)

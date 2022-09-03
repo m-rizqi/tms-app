@@ -9,15 +9,15 @@ data class PriceAndSubPrice(
     @Relation(
         parentColumn = "id",
         entityColumn = "price_id",
-        entity = SubPrice::class
+        entity = SubPrice.MerchantSubPrice::class
     )
-    val merchantSubPrice: SubPriceWithSpecialPrice,
+    val merchantSubPrice: SubPriceWithSpecialPrice.MerchantSubPriceWithSpecialPrice,
     @Relation(
         parentColumn = "id",
         entityColumn = "price_id",
-        entity = SubPrice::class
+        entity = SubPrice.ConsumerSubPrice::class
     )
-    val consumerSubPrice: SubPriceWithSpecialPrice
+    val consumerSubPrice: SubPriceWithSpecialPrice.ConsumerSubPriceWithSpecialPrice
 ){
     @Ignore
     var unit : Unit? = null

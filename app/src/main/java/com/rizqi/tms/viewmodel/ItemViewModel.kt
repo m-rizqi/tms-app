@@ -39,9 +39,13 @@ class ItemViewModel @Inject constructor(
 
     suspend fun insertPrice(price: Price) = itemRepository.insertPrice(price)
 
-    suspend fun insertSubPrice(subPrice: SubPrice) = itemRepository.insertSubPrice(subPrice)
+    suspend fun insertMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) = itemRepository.insertMerchantSubPrice(merchantSubPrice)
 
-    suspend fun insertSpecialPrice(specialPrice: SpecialPrice) = itemRepository.insertSpecialPrice(specialPrice)
+    suspend fun insertConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice) = itemRepository.insertConsumerSubPrice(consumerSubPrice)
+
+    suspend fun insertMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) = itemRepository.insertMerchantSpecialPrice(merchantSpecialPrice)
+
+    suspend fun insertConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice) = itemRepository.insertConsumerSpecialPrice(consumerSpecialPrice)
 
     fun insertItemWithPrices(itemWithPrices: ItemWithPrices){
         _insertItemWithPrices.value = Resource.Loading()
@@ -56,18 +60,18 @@ class ItemViewModel @Inject constructor(
                     priceAndSubPrice.price.id = priceId
                     priceAndSubPrice.merchantSubPrice.subPrice.priceId = priceId
                     priceAndSubPrice.consumerSubPrice.subPrice.priceId = priceId
-                    val merchantSubPriceId = insertSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
-                    val consumerSubPriceId = insertSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
+                    val merchantSubPriceId = insertMerchantSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
+                    val consumerSubPriceId = insertConsumerSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
                     priceAndSubPrice.merchantSubPrice.subPrice.id = merchantSubPriceId
                     priceAndSubPrice.consumerSubPrice.subPrice.id = consumerSubPriceId
                     priceAndSubPrice.merchantSubPrice.specialPrices.forEach{specialPrice ->
                         specialPrice.subPriceId = merchantSubPriceId
-                        val specialPriceId = insertSpecialPrice(specialPrice)
+                        val specialPriceId = insertMerchantSpecialPrice(specialPrice)
                         specialPrice.id = specialPriceId
                     }
                     priceAndSubPrice.consumerSubPrice.specialPrices.forEach{specialPrice ->
                         specialPrice.subPriceId = consumerSubPriceId
-                        val specialPriceId = insertSpecialPrice(specialPrice)
+                        val specialPriceId = insertConsumerSpecialPrice(specialPrice)
                         specialPrice.id = specialPriceId
                     }
                 }
@@ -88,9 +92,13 @@ class ItemViewModel @Inject constructor(
 
     suspend fun updateItem(item: Item) = itemRepository.updateItem(item)
 
-    suspend fun updateSubPrice(subPrice: SubPrice) = itemRepository.updateSubPrice(subPrice)
+    suspend fun updateMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) = itemRepository.updateMerchantSubPrice(merchantSubPrice)
 
-    suspend fun updateSpecialPrice(specialPrice: SpecialPrice) = itemRepository.updateSpecialPrice(specialPrice)
+    suspend fun updateConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice) = itemRepository.updateConsumerSubPrice(consumerSubPrice)
+
+    suspend fun updateMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) = itemRepository.updateMerchantSpecialPrice(merchantSpecialPrice)
+
+    suspend fun updateConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice) = itemRepository.updateConsumerSpecialPrice(consumerSpecialPrice)
 
     fun getItemCount(): LiveData<Long> {
         return itemRepository.getItemCount().asLiveData()
@@ -139,12 +147,20 @@ class ItemViewModel @Inject constructor(
         itemRepository.deletePrice(price)
     }
 
-    suspend fun deleteSubPrice(subPrice: SubPrice){
-        itemRepository.deleteSubPrice(subPrice)
+    suspend fun deleteMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice){
+        itemRepository.deleteMerchantSubPrice(merchantSubPrice)
     }
 
-    suspend fun deleteSpecialPrice(specialPrice: SpecialPrice){
-        itemRepository.deleteSpecialPrice(specialPrice)
+    suspend fun deleteConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice){
+        itemRepository.deleteConsumerSubPrice(consumerSubPrice)
+    }
+
+    suspend fun deleteMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice){
+        itemRepository.deleteMerchantSpecialPrice(merchantSpecialPrice)
+    }
+
+    suspend fun deleteConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice){
+        itemRepository.deleteConsumerSpecialPrice(consumerSpecialPrice)
     }
 
     suspend fun incrementClickCount(itemId : Long){
@@ -170,19 +186,19 @@ class ItemViewModel @Inject constructor(
                     // Update
                     if (priceAndSubPrice.price.id != null){
                         updatePrice(priceAndSubPrice.price)
-                        updateSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
-                        updateSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
+                        updateMerchantSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
+                        updateConsumerSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
 
                         // Special Price
                         priceAndSubPrice.merchantSubPrice.specialPrices.forEach {specialPrice ->
                             // Create
                             if (specialPrice.id == null){
                                 specialPrice.subPriceId = priceAndSubPrice.merchantSubPrice.subPrice.id
-                                val specialPriceId = insertSpecialPrice(specialPrice)
+                                val specialPriceId = insertMerchantSpecialPrice(specialPrice)
                                 specialPrice.id = specialPriceId
                             }else{
                             // Update
-                                updateSpecialPrice(specialPrice)
+                                updateMerchantSpecialPrice(specialPrice)
                             }
                         }
 
@@ -190,11 +206,11 @@ class ItemViewModel @Inject constructor(
                             // Create
                             if (specialPrice.id == null){
                                 specialPrice.subPriceId = priceAndSubPrice.consumerSubPrice.subPrice.id
-                                val specialPriceId = insertSpecialPrice(specialPrice)
+                                val specialPriceId = insertConsumerSpecialPrice(specialPrice)
                                 specialPrice.id = specialPriceId
                             }else{
                                 // Update
-                                updateSpecialPrice(specialPrice)
+                                updateConsumerSpecialPrice(specialPrice)
                             }
                         }
 
@@ -205,18 +221,18 @@ class ItemViewModel @Inject constructor(
                         priceAndSubPrice.price.id = priceId
                         priceAndSubPrice.merchantSubPrice.subPrice.priceId = priceId
                         priceAndSubPrice.consumerSubPrice.subPrice.priceId = priceId
-                        val merchantSubPriceId = insertSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
-                        val consumerSubPriceId = insertSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
+                        val merchantSubPriceId = insertMerchantSubPrice(priceAndSubPrice.merchantSubPrice.subPrice)
+                        val consumerSubPriceId = insertConsumerSubPrice(priceAndSubPrice.consumerSubPrice.subPrice)
                         priceAndSubPrice.merchantSubPrice.subPrice.id = merchantSubPriceId
                         priceAndSubPrice.consumerSubPrice.subPrice.id = consumerSubPriceId
                         priceAndSubPrice.merchantSubPrice.specialPrices.forEach{specialPrice ->
                             specialPrice.subPriceId = merchantSubPriceId
-                            val specialPriceId = insertSpecialPrice(specialPrice)
+                            val specialPriceId = insertMerchantSpecialPrice(specialPrice)
                             specialPrice.id = specialPriceId
                         }
                         priceAndSubPrice.consumerSubPrice.specialPrices.forEach{specialPrice ->
                             specialPrice.subPriceId = consumerSubPriceId
-                            val specialPriceId = insertSpecialPrice(specialPrice)
+                            val specialPriceId = insertConsumerSpecialPrice(specialPrice)
                             specialPrice.id = specialPriceId
                         }
                     }
@@ -245,7 +261,10 @@ class ItemViewModel @Inject constructor(
                     updatedSpecialPriceList.addAll(it)
                 }
                 originalSpecialPriceList.filter { it.id !in updatedSpecialPriceList.map { it1 -> it1.id } }.forEach {deletedSpecialPrice ->
-                    deleteSpecialPrice(deletedSpecialPrice)
+                   when(deletedSpecialPrice){
+                       is SpecialPrice.ConsumerSpecialPrice -> deleteConsumerSpecialPrice(deletedSpecialPrice)
+                       is SpecialPrice.MerchantSpecialPrice -> deleteMerchantSpecialPrice(deletedSpecialPrice)
+                   }
                 }
 
                 _updateItemWithPrices.value = Resource.Success(itemWithPrices)

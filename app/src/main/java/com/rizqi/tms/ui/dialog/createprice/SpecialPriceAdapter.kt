@@ -14,7 +14,7 @@ import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.utility.ThousandTextWatcher
 
 class SpecialPriceAdapter(
-    private var specialPriceList : MutableList<SpecialPrice>
+    private var specialPriceList: MutableList<SpecialPrice>
 ) :
     RecyclerView.Adapter<SpecialPriceAdapter.SpecialPriceViewHolder>() {
     private var unitName : String = ""

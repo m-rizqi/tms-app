@@ -108,11 +108,11 @@ class CreatePriceViewModel : ViewModel(){
             Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.consumer_price))
     )
 
-    fun getPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice>, consumerSpecialPriceList: List<SpecialPrice>): PriceAndSubPrice {
-        val merchantSubPrice = SubPrice(_merchantPrice.value!!, _isMerchantEnabled.value!!)
-        val consumerSubPrice = SubPrice(_consumerPrice.value!!, _isConsumerEnabled.value!!)
-        val merchantSubPriceWithSpecialPrice = SubPriceWithSpecialPrice(merchantSubPrice, merchantSpecialPriceList)
-        val consumerSubPriceWithSpecialPrice = SubPriceWithSpecialPrice(consumerSubPrice, consumerSpecialPriceList)
+    fun getPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice.MerchantSpecialPrice>, consumerSpecialPriceList: List<SpecialPrice.ConsumerSpecialPrice>): PriceAndSubPrice {
+        val merchantSubPrice = SubPrice.MerchantSubPrice(_merchantPrice.value!!, _isMerchantEnabled.value!!, null, null)
+        val consumerSubPrice = SubPrice.ConsumerSubPrice(_consumerPrice.value!!, _isConsumerEnabled.value!!, null, null)
+        val merchantSubPriceWithSpecialPrice = SubPriceWithSpecialPrice.MerchantSubPriceWithSpecialPrice(merchantSubPrice, merchantSpecialPriceList)
+        val consumerSubPriceWithSpecialPrice = SubPriceWithSpecialPrice.ConsumerSubPriceWithSpecialPrice(consumerSubPrice, consumerSpecialPriceList)
         val price = Price(
             barcode = _barcode.value!!,
             prevQuantityConnector = _quantityConnector.value,
@@ -130,7 +130,7 @@ class CreatePriceViewModel : ViewModel(){
         }
     }
 
-    fun getUpdatedPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice>, consumerSpecialPriceList: List<SpecialPrice>): PriceAndSubPrice {
+    fun getUpdatedPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice.MerchantSpecialPrice>, consumerSpecialPriceList: List<SpecialPrice.ConsumerSpecialPrice>): PriceAndSubPrice {
         return _updatePriceAndSubPrice.value!!.apply {
             price.apply {
                 barcode = _barcode.value!!

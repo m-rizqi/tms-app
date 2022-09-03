@@ -16,17 +16,25 @@ class ItemRepository @Inject constructor(
 
     suspend fun insertPrice(price: Price) = itemDao.insertPrice(price)
 
-    suspend fun insertSubPrice(subPrice: SubPrice) = itemDao.insertSubPrice(subPrice)
+    suspend fun insertMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) = itemDao.insertMerchantSubPrice(merchantSubPrice)
 
-    suspend fun insertSpecialPrice(specialPrice: SpecialPrice) = itemDao.insertSpecialPrice(specialPrice)
+    suspend fun insertConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice) = itemDao.insertConsumerSubPrice(consumerSubPrice)
+
+    suspend fun insertMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) = itemDao.insertMerchantSpecialPrice(merchantSpecialPrice)
+
+    suspend fun insertConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice) = itemDao.insertConsumerSpecialPrice(consumerSpecialPrice)
 
     suspend fun updatePrice(price: Price) = itemDao.updatePrice(price)
 
     suspend fun updateItem(item: Item) = itemDao.updateItem(item)
 
-    suspend fun updateSubPrice(subPrice: SubPrice) = itemDao.updateSubPrice(subPrice)
+    suspend fun updateMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) = itemDao.updateMerchantSubPrice(merchantSubPrice)
 
-    suspend fun updateSpecialPrice(specialPrice: SpecialPrice) = itemDao.updateSpecialPrice(specialPrice)
+    suspend fun updateConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice) = itemDao.updateConsumerSubPrice(consumerSubPrice)
+
+    suspend fun updateMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) = itemDao.updateMerchantSpecialPrice(merchantSpecialPrice)
+
+    suspend fun updateConsumerSpecialPrice(consumerSpecialPrice: SpecialPrice.ConsumerSpecialPrice) = itemDao.updateConsumerSpecialPrice(consumerSpecialPrice)
 
     fun getItemCount() = itemDao.getItemCount()
 
@@ -46,9 +54,13 @@ class ItemRepository @Inject constructor(
 
     suspend fun deletePrice(price: Price) = itemDao.deletePrice(price)
 
-    suspend fun deleteSubPrice(subPrice: SubPrice) = itemDao.deleteSubPrice(subPrice)
+    suspend fun deleteMerchantSubPrice(merchantSubPrice: SubPrice.MerchantSubPrice) = itemDao.deleteMerchantSubPrice(merchantSubPrice)
 
-    suspend fun deleteSpecialPrice(specialPrice: SpecialPrice) = itemDao.deleteSpecialPrice(specialPrice)
+    suspend fun deleteConsumerSubPrice(consumerSubPrice: SubPrice.ConsumerSubPrice) = itemDao.deleteConsumerSubPrice(consumerSubPrice)
+
+    suspend fun deleteMerchantSpecialPrice(merchantSpecialPrice: SpecialPrice.MerchantSpecialPrice) = itemDao.deleteMerchantSpecialPrice(merchantSpecialPrice)
+
+    suspend fun deleteConsumerSpecialPrice(consumerSpecialPrice : SpecialPrice.ConsumerSpecialPrice) = itemDao.deleteConsumerSpecialPrice(consumerSpecialPrice)
 
     suspend fun incrementClickCount(itemId : Long) = itemDao.incrementClickCount(itemId)
 

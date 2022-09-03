@@ -4,11 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -191,10 +189,10 @@ class UpdatePriceBottomSheet(
                 scanBarcodeLauncher.launch(intent)
             }
             btnCreatePriceAddMerchantSpecial.setOnClickListener {
-                merchantSpecialPriceAdapter.addSpecialPrice(SpecialPrice())
+                merchantSpecialPriceAdapter.addSpecialPrice(SpecialPrice.MerchantSpecialPrice())
             }
             btnCreatePriceAddConsumerSpecial.setOnClickListener {
-                consumerSpecialPriceAdapter.addSpecialPrice(SpecialPrice())
+                consumerSpecialPriceAdapter.addSpecialPrice(SpecialPrice.ConsumerSpecialPrice())
             }
             tvCreatePriceAddUnit.setOnClickListener {
                 showCreateUnitDialog()
@@ -220,10 +218,12 @@ class UpdatePriceBottomSheet(
                     tilCreatePriceConsumer.errorText = priceValidity.consumerMessage?.asString(requireContext())
                 }
                 if (!merchantSpecialPriceValidity || !consumerSpecialPriceValidity || !priceValidity.isAllValid) return@setOnClickListener
+                val castedMerchantSpecialPriceList = castSpecialPriceToMerchant(merchantSpecialPriceList)
+                val castedConsumerSpecialPriceList = castSpecialPriceToConsumer(consumerSpecialPriceList)
                 val priceAndSubPrice = when(crudState){
-                    CrudState.CREATE -> viewModel.getPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                    CrudState.CREATE -> viewModel.getPriceAndSubPrice(castedMerchantSpecialPriceList, castedConsumerSpecialPriceList)
                     else -> {
-                        viewModel.getUpdatedPriceAndSubPrice(merchantSpecialPriceList, consumerSpecialPriceList)
+                        viewModel.getUpdatedPriceAndSubPrice(castedMerchantSpecialPriceList, castedConsumerSpecialPriceList)
                     }
                 }
                 onSaveListener(priceAndSubPrice)
