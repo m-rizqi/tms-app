@@ -166,6 +166,12 @@
             app:tint="@null"
             />
 
+        <include
+            android:id="@+id/l_item_detail_loading"
+            layout="@layout/layout_loading"
+            android:visibility="gone"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

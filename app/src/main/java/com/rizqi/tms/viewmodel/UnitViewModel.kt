@@ -18,9 +18,6 @@ class UnitViewModel @Inject constructor(
     private var _insertUnit = MutableLiveData<Resource<Long>>()
     val insertUnit : LiveData<Resource<Long>> = _insertUnit
 
-    private var _listUnit = MutableLiveData<Resource<List<Unit>>>()
-    val listUnit : LiveData<Resource<List<Unit>>> = _listUnit
-
     fun getUnitById(id : Long){
         _singleUnit.value = Resource.Loading()
         viewModelScope.launch {
@@ -39,13 +36,8 @@ class UnitViewModel @Inject constructor(
         }
     }
 
-    fun getListUnit(){
-        _listUnit.value = Resource.Loading()
-        viewModelScope.launch {
-            unitRepository.getAll().collect{
-                _listUnit.value = Resource.Success(it)
-            }
-        }
+    fun getListUnit(): LiveData<List<Unit>> {
+        return unitRepository.getAll().asLiveData()
     }
 
 }

@@ -127,6 +127,13 @@
     <string name="last_update_on">Terakhir diubah pada %1$s</string>
     <string name="no_reminded_item">Tidak ada barang yang perlu diingatkan</string>
     <string name="item_not_found">Barang tidak ditemukan</string>
+    <string name="failed_delete_item">Gagal menghapus barang</string>
+    <string name="edit_item">Edit Barang</string>
+    <string name="delete_this_item">Hapus Barang Ini?</string>
+    <string name="are_you_sure_delete_this_item">Apakah kamu yakin ingin menghapus barang ini ?</string>
+    <string name="item_is_not_changed">Barang Tidak Jadi Diubah ?</string>
+    <string name="are_you_sure_not_change_this_item">Apakah kamu yakin tidak jadi mengubah barang ini ?</string>
+    <string name="set_main_price">Jadikan harga utama</string>
 
     <string-array name="months">
         <item>Januari</item>

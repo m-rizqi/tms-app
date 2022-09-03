@@ -57,6 +57,37 @@
                     android:paddingTop="8dp"
                     android:paddingBottom="24dp">
 
+                    <RelativeLayout
+                        android:id="@+id/l_create_price_is_main_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:visibility="gone"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@id/switch_create_price_main_price"
+                            android:layout_alignBottom="@id/switch_create_price_main_price"
+                            android:layout_alignParentStart="true"
+                            style="@style/TextAppearance.Body2"
+                            android:textColor="@color/black_100"
+                            android:text="@string/set_main_price"
+                            />
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:id="@+id/switch_create_price_main_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:minHeight="0dp"
+                            android:checked="false"
+                            android:background="@null"
+                            />
+
+                    </RelativeLayout>
+
                     <include
                         android:id="@+id/l_create_price_connector_title"
                         layout="@layout/layout_title_with_help"
@@ -126,16 +157,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/l_create_price_unit_title"
-                            android:textColor="@color/danger_main"
-                            />
+                            android:textColor="@color/danger_main" />
 
                         <TextView
                             android:id="@+id/tv_create_price_add_unit"
                             style="@style/TextAppearance.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
+                            android:layout_alignParentEnd="true"
                             android:text="@string/add_unit"
                             android:textColor="@color/primary_100" />
 
@@ -154,42 +184,42 @@
                                 android:id="@+id/rv_create_item_units"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:orientation="horizontal"
-                                tools:listitem="@layout/chip_unit"
-                                tools:itemCount="0"/>
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:itemCount="0"
+                                tools:listitem="@layout/chip_unit" />
 
-                            <com.facebook.shimmer.ShimmerFrameLayout
-                                android:id="@+id/shimmer_create_price_units"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:shimmer_auto_start="true">
+<!--                            <com.facebook.shimmer.ShimmerFrameLayout-->
+<!--                                android:id="@+id/shimmer_create_price_units"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                app:shimmer_auto_start="true">-->
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal">-->
 
-                                    <include
-                                        layout="@layout/chip_unit"
-                                        android:layout_width="72dp"
-                                        android:layout_height="wrap_content" />
+<!--                                    <include-->
+<!--                                        layout="@layout/chip_unit"-->
+<!--                                        android:layout_width="72dp"-->
+<!--                                        android:layout_height="wrap_content" />-->
 
-                                    <include
-                                        layout="@layout/chip_unit"
-                                        android:layout_width="72dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp" />
+<!--                                    <include-->
+<!--                                        layout="@layout/chip_unit"-->
+<!--                                        android:layout_width="72dp"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginStart="10dp" />-->
 
-                                    <include
-                                        layout="@layout/chip_unit"
-                                        android:layout_width="72dp"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp" />
+<!--                                    <include-->
+<!--                                        layout="@layout/chip_unit"-->
+<!--                                        android:layout_width="72dp"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginStart="10dp" />-->
 
-                                </LinearLayout>
+<!--                                </LinearLayout>-->
 
-                            </com.facebook.shimmer.ShimmerFrameLayout>
+<!--                            </com.facebook.shimmer.ShimmerFrameLayout>-->
 
                         </RelativeLayout>
 
@@ -205,8 +235,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
 
                         <include
                             android:id="@+id/til_create_price_merchant"
@@ -217,20 +246,18 @@
                             android:layout_marginTop="4dp"
                             android:layout_toStartOf="@id/btn_create_price_merchant_visibility"
                             app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
-                            app:prefixText="@{@string/rp_hint}"
-                            />
+                            app:prefixText="@{@string/rp_hint}" />
 
                         <ImageButton
                             android:id="@+id/btn_create_price_merchant_visibility"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="24dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="8dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/ic_baseline_visibility_24"
-                            />
+                            android:src="@drawable/ic_baseline_visibility_24" />
 
                     </RelativeLayout>
 
@@ -271,8 +298,7 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        >
+                        android:layout_height="wrap_content">
 
                         <include
                             android:id="@+id/til_create_price_consumer"
@@ -289,13 +315,12 @@
                             android:id="@+id/btn_create_price_consumer_visibility"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="24dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginEnd="8dp"
                             android:background="@android:color/transparent"
-                            android:src="@drawable/ic_baseline_visibility_24"
-                            />
+                            android:src="@drawable/ic_baseline_visibility_24" />
 
                     </RelativeLayout>
 

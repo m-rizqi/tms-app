@@ -2,6 +2,7 @@ package com.rizqi.tms.utility
 
 import android.annotation.SuppressLint
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Build
 import android.text.Html
 import android.util.Log
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputLayout
 import com.rizqi.tms.R
 
@@ -77,5 +79,22 @@ fun setCheckedAdapter(
         checkbox.buttonTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
     }else {
         checkbox.buttonTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
+    }
+}
+
+@BindingAdapter(
+    "switchTheme"
+)
+fun setSwitchTheme(
+    switchMaterial: SwitchMaterial, isChecked : Boolean
+){
+    val resources = switchMaterial.resources
+    switchMaterial.isChecked = isChecked
+    if (isChecked) {
+        switchMaterial.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
+        switchMaterial.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
+    }else {
+        switchMaterial.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.white))
+        switchMaterial.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.black_20))
     }
 }

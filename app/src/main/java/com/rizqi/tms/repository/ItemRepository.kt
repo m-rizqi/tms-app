@@ -38,4 +38,6 @@ class ItemRepository @Inject constructor(
 
     fun getItemById(id : Long) = itemDao.getItemById(id)
 
+    suspend fun deleteItem(item: Item) = itemDao.deleteItem(item)
+
 }

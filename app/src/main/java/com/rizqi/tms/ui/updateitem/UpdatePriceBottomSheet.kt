@@ -1,4 +1,4 @@
-package com.rizqi.tms.ui.dialog.createprice
+package com.rizqi.tms.ui.updateitem
 
 import android.app.Dialog
 import android.content.Intent
@@ -22,6 +22,9 @@ import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceAndSubPrice
 import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.model.Unit
+import com.rizqi.tms.ui.dialog.createprice.CreatePriceViewModel
+import com.rizqi.tms.ui.dialog.createprice.SpecialPriceAdapter
+import com.rizqi.tms.ui.dialog.createprice.UnitsAdapter
 import com.rizqi.tms.ui.dialog.createunit.CreateUnitDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.scan.ScanBarcodeActivity
@@ -30,10 +33,11 @@ import com.rizqi.tms.viewmodel.UnitViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreatePriceBottomSheet(
+class UpdatePriceBottomSheet(
     private val isConnectorVisible : Boolean = false,
     private val prevUnit: Unit? = null,
     private val selectedUnitList: List<Unit?>,
+    private var isMainPrice : Boolean,
     private val updatePriceAndSubPrice: PriceAndSubPrice? = null,
     private val crudState: CrudState = CrudState.CREATE,
     private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit,
@@ -81,6 +85,8 @@ class CreatePriceBottomSheet(
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.maxHeight = Resources.getSystem().displayMetrics.heightPixels
 
+        binding.lCreatePriceIsMainPrice.visibility = View.VISIBLE
+
         viewModel.setPrevUnit(prevUnit)
         if (crudState == CrudState.UPDATE && updatePriceAndSubPrice != null){
             viewModel.setUpdatePriceAndSubPrice(updatePriceAndSubPrice)
@@ -94,6 +100,12 @@ class CreatePriceBottomSheet(
                 consumerSpecialPriceAdapter.setList(consumerSpecialPriceList)
                 btnCreatePriceCancelDelete.text = getString(R.string.delete_allcaps)
                 tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.prevQuantityConnector?.toFormattedString())
+                switchCreatePriceMainPrice.isChecked = isMainPrice
+                setSwitchTheme(binding.switchCreatePriceMainPrice, isMainPrice)
+                if (updatePriceAndSubPrice.price.isMainPrice) {
+                    binding.lCreatePriceIsMainPrice.visibility = View.GONE
+                }
+                viewModel.setIsMainPrice(updatePriceAndSubPrice.price.isMainPrice)
             }
         }
 
@@ -159,6 +171,10 @@ class CreatePriceBottomSheet(
         }
 
         binding.apply {
+            switchCreatePriceMainPrice.setOnCheckedChangeListener { _, b ->
+                viewModel.setIsMainPrice(b)
+                setSwitchTheme(binding.switchCreatePriceMainPrice, b)
+            }
             rvCreateItemUnits.adapter = unitsAdapter
             rvCreatePriceMerchantSpecial.adapter = merchantSpecialPriceAdapter
             rvCreatePriceConsumerSpecial.adapter = consumerSpecialPriceAdapter
@@ -170,7 +186,7 @@ class CreatePriceBottomSheet(
             tilCreatePriceBarcode.editText.doAfterTextChanged { viewModel.setBarcode(it.toString()) }
             tilCreatePriceMerchant.editText.doAfterTextChanged { viewModel.setMerchantPrice(it.toString()) }
             tilCreatePriceConsumer.editText.doAfterTextChanged { viewModel.setConsumerPrice(it.toString()) }
-            btnCreatePriceScan.setOnClickListener { 
+            btnCreatePriceScan.setOnClickListener {
                 val intent = Intent(context, ScanBarcodeActivity::class.java)
                 scanBarcodeLauncher.launch(intent)
             }
@@ -229,7 +245,7 @@ class CreatePriceBottomSheet(
 
     private fun showCreateUnitDialog(){
         CreateUnitDialog{
-//            unitsAdapter.addUnit(it)
+            unitsAdapter.addUnit(it)
         }.show(parentFragmentManager, null)
     }
 

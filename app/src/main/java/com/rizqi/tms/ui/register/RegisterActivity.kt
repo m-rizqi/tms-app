@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -28,7 +27,7 @@ import com.rizqi.tms.databinding.ActivityRegisterBinding
 import com.rizqi.tms.model.Unit
 import com.rizqi.tms.model.User
 import com.rizqi.tms.ui.dashboard.DashboardActivity
-import com.rizqi.tms.ui.dialog.skipalert.SkipAlertDialog
+import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.utility.Resource
 import com.rizqi.tms.utility.hideLoading
 import com.rizqi.tms.utility.showLoading
@@ -154,11 +153,13 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun showSkipAlertDialog(){
-        SkipAlertDialog {
-            setLogin(true)
-            setAnonymous(true)
-            goToDashboard()
-        }.show(supportFragmentManager, "SkipAlertDialog")
+        WarningDialog(
+            onPositiveClickListener = {
+                setLogin(true)
+                setAnonymous(true)
+                goToDashboard()
+            }
+        ).show(supportFragmentManager, "SkipAlertDialog")
     }
 
     private fun goToDashboard(){

@@ -26,6 +26,10 @@ class ItemViewModel @Inject constructor(
     val insertItemWithPrices : LiveData<Resource<ItemWithPrices>>
         get() = _insertItemWithPrices
 
+    private val _deleteItem = MutableLiveData<Resource<Boolean>>()
+    val deleteItem : LiveData<Resource<Boolean>>
+        get() = _deleteItem
+
     suspend fun insertItem(item: Item) = itemRepository.insertItem(item)
 
     suspend fun insertPrice(price: Price) = itemRepository.insertPrice(price)
@@ -105,6 +109,18 @@ class ItemViewModel @Inject constructor(
 
     fun getItemById(id : Long) : LiveData<ItemWithPrices>{
         return itemRepository.getItemById(id).asLiveData()
+    }
+
+    fun deleteItem(item: Item) {
+        _deleteItem.value = Resource.Loading()
+        viewModelScope.launch {
+            try {
+                itemRepository.deleteItem(item)
+                _deleteItem.value = Resource.Success(true)
+            }catch (e : Exception){
+                _deleteItem.value = Resource.Error(Message.StringResource(R.string.failed_delete_item), false)
+            }
+        }
     }
 
 }

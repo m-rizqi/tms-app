@@ -198,4 +198,9 @@
         <item name="android:background">@drawable/round_corner_shape</item>
     </style>
 
+    <style name="SwitchStyle" parent="Theme.MaterialComponents.Light">
+        <item name="colorOnSurface">@color/primary_100</item>
+        <item name="colorSecondary">@color/primary_20</item>
+    </style>
+
 </resources>

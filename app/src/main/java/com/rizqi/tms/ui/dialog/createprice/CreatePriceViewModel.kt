@@ -21,6 +21,7 @@ class CreatePriceViewModel : ViewModel(){
     private val _isMerchantEnabled = MutableLiveData(true)
     private val _isConsumerEnabled = MutableLiveData(true)
     private val _updatePriceAndSubPrice = MutableLiveData<PriceAndSubPrice?>(null)
+    private val _isMainPrice = MutableLiveData(false)
 
     val unit : LiveData<Unit?>
         get() = _unit
@@ -70,6 +71,10 @@ class CreatePriceViewModel : ViewModel(){
         }catch (e : Exception){}
     }
 
+    fun setIsMainPrice(value : Boolean){
+        _isMainPrice.value = value
+    }
+
     fun toggleMerchantEnabled(){
         _isMerchantEnabled.value = !_isMerchantEnabled.value!!
         if (!_isMerchantEnabled.value!!) _merchantPrice.value = -1.0 else _merchantPrice.value = 0.0
@@ -113,7 +118,8 @@ class CreatePriceViewModel : ViewModel(){
             prevQuantityConnector = _quantityConnector.value,
             unitId = _unit.value!!.id,
             unitName = _unit.value!!.name,
-            prevUnitName = _prevUnit.value?.name
+            prevUnitName = _prevUnit.value?.name,
+            isMainPrice = _isMainPrice.value!!
         )
         return PriceAndSubPrice(
             price,
@@ -132,6 +138,7 @@ class CreatePriceViewModel : ViewModel(){
                 unitId = _unit.value!!.id
                 unitName = _unit.value!!.name
                 prevUnitName = _prevUnit.value?.name
+                isMainPrice = _isMainPrice.value!!
             }
             merchantSubPrice.subPrice.apply {
                 price = _merchantPrice.value!!

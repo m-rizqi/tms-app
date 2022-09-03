@@ -1,5 +1,7 @@
 package com.rizqi.tms.ui.itemdetail
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +20,7 @@ import com.rizqi.tms.utility.dp
 class PriceDetailAdapter(
     private var priceAndSubPriceList: MutableList<PriceAndSubPrice>
 ) : RecyclerView.Adapter<PriceDetailAdapter.PriceDetailViewHolder>(){
+    var onItemClickListener : ((PriceAndSubPrice, Int) -> Unit)? = null
 
     class PriceDetailViewHolder(val binding : ItemPriceBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -37,10 +40,13 @@ class PriceDetailAdapter(
         val resources = context.resources
 
         binding.apply {
+            root.setOnClickListener {
+                onItemClickListener?.invoke(priceAndSubPrice, position)
+            }
             isConnectorVisible = price.prevQuantityConnector != null
             barcode = price.barcode
             unitName = price.unitName
-            connectorText = String.format(CONNECTOR_TEXT_FORMAT, "${price.prevQuantityConnector} ${price.prevUnitName}", price.unitName)
+            connectorText = String.format(CONNECTOR_TEXT_FORMAT, "${price.prevQuantityConnector?.toFormattedString()} ${price.prevUnitName}", price.unitName)
         }
         if (price.isMainPrice){
             setMainPriceTheme(merchantSubPrice, consumerSubPrice, holder)
@@ -52,8 +58,10 @@ class PriceDetailAdapter(
         if (position == 0){
             rootParams.topMargin = 16.dp(context)
         }
-        if (position == itemCount-1){
+        if (position == priceAndSubPriceList.lastIndex){
             rootParams.bottomMargin = 80.dp(context)
+        }else {
+            rootParams.bottomMargin = 16.dp(context)
         }
         binding.root.apply {
             layoutParams = rootParams
@@ -77,6 +85,50 @@ class PriceDetailAdapter(
     }
 
     override fun getItemCount() = priceAndSubPriceList.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setList(list: MutableList<PriceAndSubPrice>){
+        priceAndSubPriceList = list
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updatePrice(priceAndSubPrice: PriceAndSubPrice, position: Int){
+        if (priceAndSubPrice.price.isMainPrice){
+            priceAndSubPriceList.forEachIndexed { index, price ->
+                if (index != position) price.price.isMainPrice = false
+            }
+        }
+        priceAndSubPriceList[position] = priceAndSubPrice
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun addPrice(priceAndSubPrice: PriceAndSubPrice){
+        if (priceAndSubPrice.price.isMainPrice){
+            priceAndSubPriceList.forEach {
+                it.price.isMainPrice = false
+            }
+        }
+        priceAndSubPriceList.add(priceAndSubPrice)
+        notifyDataSetChanged()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun deletePrice(position: Int){
+        if (position < itemCount - 1){
+            val posPrice = getPriceAt(position)
+            val nextPrice = getPriceAt(position + 1)
+            nextPrice.price.apply {
+                prevQuantityConnector = posPrice.price.prevQuantityConnector
+                prevUnitName = posPrice.price.prevUnitName
+            }
+        }
+        priceAndSubPriceList.removeAt(position)
+        notifyDataSetChanged()
+    }
+
+    fun getPriceAt(index : Int) = priceAndSubPriceList[index]
 
     private fun setMainPriceTheme(merchantSubPrice : SubPrice, consumerSubPrice: SubPrice, holder: PriceDetailViewHolder){
         val binding = holder.binding

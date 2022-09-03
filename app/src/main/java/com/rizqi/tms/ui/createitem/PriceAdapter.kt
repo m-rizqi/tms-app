@@ -47,7 +47,7 @@ class PriceAdapter(
             barcode = price.barcode
             unitName = price.unitName
 //            connectorText = "${price.prevQuantityConnector} ${price.prevUnitName} = 1 ${price.unitName}"
-            connectorText = String.format(CONNECTOR_TEXT_FORMAT, "${price.prevQuantityConnector} ${price.prevUnitName}", price.unitName)
+            connectorText = String.format(CONNECTOR_TEXT_FORMAT, "${price.prevQuantityConnector?.toFormattedString()} ${price.prevUnitName}", price.unitName)
             root.setOnClickListener { onItemClickListener?.invoke(priceAndSubPrice, position) }
         }
         if (price.prevQuantityConnector != null){

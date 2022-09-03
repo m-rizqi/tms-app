@@ -92,7 +92,7 @@ class Step2CreateItemFragment : Fragment() {
         activity?.let {
             CreatePriceBottomSheet(
                 priceAndSubPrice.price.prevQuantityConnector != null,
-                priceAndSubPriceList.find { priceSubPrice ->  priceSubPrice.price.prevUnitName == priceAndSubPrice.price.prevUnitName}?.unit,
+                priceAndSubPriceList.find { priceSubPrice ->  priceSubPrice.price.unitName == priceAndSubPrice.price.prevUnitName}?.unit,
                 priceAndSubPriceList.map { priceSubPrice ->  priceSubPrice.unit}.filter { unit -> unit?.name != priceAndSubPrice.price.unitName  },
                 priceAndSubPrice,
                 CrudState.UPDATE

@@ -181,3 +181,9 @@ fun collapseAccordion(v: View, arrow : View) {
         start()
     }
 }
+
+fun Double.toFormattedString() : String{
+    val mantissa = this - this.toInt()
+    if (mantissa == 0.0) return this.toInt().toString()
+    return this.toString()
+}

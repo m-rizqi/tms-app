@@ -1,5 +1,6 @@
 package com.rizqi.tms.ui.itemdetail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,10 +9,11 @@ import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityItemDetailBinding
+import com.rizqi.tms.databinding.DialogSkipAlertBinding
 import com.rizqi.tms.model.ItemWithPrices
-import com.rizqi.tms.utility.ITEM_ID
-import com.rizqi.tms.utility.getBitmapFromPath
-import com.rizqi.tms.utility.getDateString
+import com.rizqi.tms.ui.dialog.warning.WarningDialog
+import com.rizqi.tms.ui.updateitem.UpdateItemActivity
+import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -57,5 +59,34 @@ class ItemDetailActivity : AppCompatActivity() {
             binding.fabItemDetailEdit.visibility = View.GONE
         }
         binding.cvItemDetailBack.setOnClickListener { onBackPressed() }
+        binding.fabItemDetailEdit.setOnClickListener{
+            val intent = Intent(this, UpdateItemActivity::class.java)
+            intent.putExtra(ITEM_ID, itemId)
+            startActivity(intent)
+        }
+        binding.cvItemDetailDelete.setOnClickListener {
+            WarningDialog(
+                onPositiveClickListener = {
+                    itemWithPrices?.let { item ->
+                        showLoading(binding.lItemDetailLoading)
+                        itemViewModel.deleteItem(item.item)
+                        itemViewModel.deleteItem.observe(this){res ->
+                            when(res){
+                                is Resource.Error -> {
+                                    hideLoading(binding.lItemDetailLoading)
+                                    Toast.makeText(this, res.message?.asString(this), Toast.LENGTH_SHORT).show()
+                                }
+                                is Resource.Success -> {
+                                    hideLoading(binding.lItemDetailLoading)
+                                    finish()
+                                }
+                            }
+                        }
+                    }
+            },
+                title = getString(R.string.delete_this_item),
+                description = getString(R.string.are_you_sure_delete_this_item)
+            ).show(supportFragmentManager, null)
+        }
     }
 }

@@ -26,7 +26,7 @@ import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityLoginBinding
 import com.rizqi.tms.model.User
 import com.rizqi.tms.ui.dashboard.DashboardActivity
-import com.rizqi.tms.ui.dialog.skipalert.SkipAlertDialog
+import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.register.RegisterActivity
 import com.rizqi.tms.utility.Resource
 import com.rizqi.tms.utility.hideLoading
@@ -118,11 +118,13 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun showSkipAlertDialog(){
-        SkipAlertDialog {
-            setLogin(true)
-            setAnonymous(true)
-            goToDashboard()
-        }.show(supportFragmentManager, "SkipAlertDialog")
+        WarningDialog(
+            onPositiveClickListener = {
+                setLogin(true)
+                setAnonymous(true)
+                goToDashboard()
+            }
+        ).show(supportFragmentManager, "SkipAlertDialog")
     }
 
     private fun goToDashboard(){

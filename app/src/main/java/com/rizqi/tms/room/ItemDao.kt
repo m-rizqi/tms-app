@@ -45,4 +45,7 @@ interface ItemDao {
 
     @Query("SELECT * FROM Item WHERE Item.id = :id")
     fun getItemById(id : Long) : Flow<ItemWithPrices>
+
+    @Delete
+    suspend fun deleteItem(item: Item)
 }
