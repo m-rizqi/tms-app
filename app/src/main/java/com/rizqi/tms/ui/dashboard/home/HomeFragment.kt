@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentHomeBinding
+import com.rizqi.tms.ui.barcodesearch.BarcodeSearchActivity
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.utility.GridSpacingItemDecoration
 import com.rizqi.tms.utility.collapseAccordion
@@ -105,6 +106,9 @@ class HomeFragment : Fragment() {
                 }
                 notificationAdapter.submitList(mutableListOf())
                 binding.lNotificationDialog.lNotificationEmptyState.visibility = View.VISIBLE
+            }
+            mcvHomeScan.setOnClickListener {
+                startActivity(Intent(context, BarcodeSearchActivity::class.java))
             }
         }
 

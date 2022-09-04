@@ -52,6 +52,7 @@
     <string name="main_price">Harga Utama</string>
     <string name="scan_barcode">Scan Barcode</string>
     <string name="barcode_explanation"><![CDATA[Arahkan kamera ke barcode yang ada pada barang. Jika barang <font color=#4641A7>tidak memiliki barcode, klik “Barang tanpa barcode”</font>]]></string>
+    <string name="barcode_search_explanation">Arahkan kamera ke barcode yang ada pada barang.</string>
     <string name="item_no_barcode">Barang tanpa barcode</string>
     <string name="barcode_number"><![CDATA[Barcode: <font color=#4641A7>%1$s</font>]]></string>
     <string name="permision_denied">Permission Denied</string>
@@ -135,6 +136,7 @@
     <string name="are_you_sure_not_change_this_item">Apakah kamu yakin tidak jadi mengubah barang ini ?</string>
     <string name="set_main_price">Jadikan harga utama</string>
     <string name="success_update_item"><![CDATA[<font color=#4641A7>%1$s</font> berhasil diubah]]></string>
+    <string name="search">Cari</string>
 
     <string-array name="months">
         <item>Januari</item>

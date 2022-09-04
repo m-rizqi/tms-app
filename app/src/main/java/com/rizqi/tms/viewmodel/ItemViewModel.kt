@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -279,4 +280,8 @@ class ItemViewModel @Inject constructor(
             }
         }
     }
+
+    suspend fun getItemIdByBarcode(barcode : String) = try {
+        itemRepository.getItemIdByBarcode(barcode)
+    }catch (e : NullPointerException){ null }
 }

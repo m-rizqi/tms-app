@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="barcode_number"
+            type="String" />
+        <variable
+            name="isEnabled"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.barcodesearch.BarcodeSearchActivity"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/l_barcode_search_main"
+            android:layout_marginBottom="-24dp">
+
+            <SurfaceView
+                android:id="@+id/surface_view_scanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/view_scanner_anim"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#EBEBF2"
+                />
+
+        </RelativeLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_barcode_search_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="100dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_gravity="center"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_barcode_search_barcode_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/l_barcode_search_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="24dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="48dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                style="@style/TextAppearance.Body2"
+                app:htmlText="@{@string/barcode_number(barcode_number)}"
+                android:paddingVertical="8dp"
+                android:paddingHorizontal="20dp"
+                tools:text="@string/barcode_number"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/l_barcode_search_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:background="@drawable/round_corner_shape"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="24dp"
+            android:paddingTop="32dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.RubikMedium14"
+                android:textColor="@color/black_100"
+                android:text="@string/scan_barcode"
+                />
+
+            <TextView
+                android:id="@+id/tv_barcode_search_explanation"
+                style="@style/TextAppearance.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/barcode_search_explanation"
+                android:textColor="@color/black_80" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_barcode_search_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Default"
+                android:text="@string/search"
+                android:layout_marginTop="32dp"
+                app:toggleEnabledButton="@{isEnabled}"
+                />
+
+        </LinearLayout>
+
+        <include
+            android:id="@+id/l_barcode_search_loading"
+            layout="@layout/layout_loading"
+            android:visibility="gone"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

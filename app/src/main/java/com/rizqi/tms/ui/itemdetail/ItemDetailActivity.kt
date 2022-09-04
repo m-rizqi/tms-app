@@ -36,6 +36,9 @@ class ItemDetailActivity : AppCompatActivity() {
         itemId = intent?.getLongExtra(ITEM_ID, -1)
         if (itemId != null){
             itemViewModel.getItemById(itemId!!).observe(this){
+                if (it == null) {
+                    return@observe
+                }
                 itemWithPrices = it
                 binding.itemName = it.item.name
                 binding.dateString = getDateString(it.item.lastUpdate)

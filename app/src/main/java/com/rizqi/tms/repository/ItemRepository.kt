@@ -64,4 +64,6 @@ class ItemRepository @Inject constructor(
 
     suspend fun incrementClickCount(itemId : Long) = itemDao.incrementClickCount(itemId)
 
+    suspend fun getItemIdByBarcode(barcode : String) = itemDao.getItemIdByBarcode(barcode)
+
 }

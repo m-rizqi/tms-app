@@ -84,4 +84,7 @@ interface ItemDao {
 
     @Query("UPDATE Item SET click_count = click_count + 1 WHERE id = :itemId")
     suspend fun incrementClickCount(itemId : Long)
+
+    @Query("SELECT Item.id From Item, Price WHERE Price.barcode = :barcode AND Price.item_id = Item.id")
+    suspend fun getItemIdByBarcode(barcode : String) : Long
 }
