@@ -12,6 +12,7 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemSpecialPriceBinding
 import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.utility.ThousandTextWatcher
+import com.rizqi.tms.utility.toFormattedString
 
 class SpecialPriceAdapter(
     private var specialPriceList: MutableList<SpecialPrice>
@@ -50,7 +51,7 @@ class SpecialPriceAdapter(
             binding.tilSpecialPrice.editText.setText(specialPrice.price.toLong().toString())
         }
         if (specialPrice.quantity != 0.0){
-            binding.tilSpecialPriceQuantity.editText.setText(specialPrice.quantity.toString())
+            binding.tilSpecialPriceQuantity.editText.setText(specialPrice.quantity.toFormattedString())
         }
 
         binding.btnSpecialPriceDelete.setOnClickListener {
@@ -75,9 +76,12 @@ class SpecialPriceAdapter(
     @SuppressLint("NotifyDataSetChanged")
     private fun removeAt(position: Int){
         specialPriceList.removeAt(position)
+        specialPriceHolderList[position].binding.apply {
+            tilSpecialPrice.editText.setText("")
+            tilSpecialPriceQuantity.editText.setText("")
+        }
         specialPriceHolderList.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, itemCount - position)
+        notifyDataSetChanged()
     }
 
     fun validate(): Boolean {

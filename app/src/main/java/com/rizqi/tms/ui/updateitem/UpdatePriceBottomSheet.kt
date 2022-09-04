@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -92,9 +93,9 @@ class UpdatePriceBottomSheet(
                 tilCreatePriceBarcode.editText.setText(updatePriceAndSubPrice.price.barcode)
                 tilCreatePriceMerchant.editText.setText(ThousandFormatter.format(updatePriceAndSubPrice.merchantSubPrice.subPrice.price))
                 tilCreatePriceConsumer.editText.setText(ThousandFormatter.format(updatePriceAndSubPrice.consumerSubPrice.subPrice.price))
-                merchantSpecialPriceList = updatePriceAndSubPrice.merchantSubPrice.specialPrices.toMutableList()
+                merchantSpecialPriceList.addAll( updatePriceAndSubPrice.merchantSubPrice.specialPrices )
                 merchantSpecialPriceAdapter.setList(merchantSpecialPriceList)
-                consumerSpecialPriceList = updatePriceAndSubPrice.consumerSubPrice.specialPrices.toMutableList()
+                consumerSpecialPriceList.addAll(updatePriceAndSubPrice.consumerSubPrice.specialPrices)
                 consumerSpecialPriceAdapter.setList(consumerSpecialPriceList)
                 btnCreatePriceCancelDelete.text = getString(R.string.delete_allcaps)
                 tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.prevQuantityConnector?.toFormattedString())

@@ -52,7 +52,7 @@ class GridItemAdapter : ListAdapter<ItemWithPrices, GridItemAdapter.GridItemView
             CoroutineScope(Dispatchers.IO).launch {
                 val bitmap = context.getBitmapFromPath(it)
                 withContext(Dispatchers.Main){
-                    Glide.with(binding.root.context).load(bitmap).placeholder(R.drawable.image_placeholder).into(binding.ivCardItemImage)
+                    Glide.with(binding.root.context).load(bitmap).into(binding.ivCardItemImage)
                     binding.ivCardItemImage.visibility = View.VISIBLE
                     binding.shimmerCardItemImage.visibility = View.GONE
                 }

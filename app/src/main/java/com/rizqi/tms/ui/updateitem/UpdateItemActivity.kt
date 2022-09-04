@@ -55,31 +55,33 @@ class UpdateItemActivity : AppCompatActivity() {
 
         itemId = intent?.getLongExtra(ITEM_ID, -1)
         if (itemId != null){
-            itemViewModel.getItemById(itemId!!).observe(this){
-                itemWithPrices = it
-                binding.tilUpdateItemName.editText.setText(it.item.name)
-                setCheckedAdapter(binding.cbUpdateItemRemindMe, it.item.isReminded)
-                viewModel.setReminded(it.item.isReminded)
+            val itemById = itemViewModel.getItemById(itemId!!)
+            itemById.observe(this){
+                if (it != null){
+                    itemWithPrices = it.copy()
+                    binding.tilUpdateItemName.editText.setText(it.item.name)
+                    setCheckedAdapter(binding.cbUpdateItemRemindMe, it.item.isReminded)
+                    viewModel.setReminded(it.item.isReminded)
+                    priceList.addAll(it.prices.copy())
+                    priceAdapter.setList(priceList)
+                    priceAdapter.onItemClickListener = {priceAndSubPrice, i ->
+                        showUpdatePriceDialog(priceAndSubPrice, i)
+                    }
+                    binding.rvItemDetailPriceList.adapter = priceAdapter
 
-                priceList = it.prices.toMutableList()
-                priceAdapter.setList(priceList)
-                priceAdapter.onItemClickListener = {priceAndSubPrice, i ->
-                    showUpdatePriceDialog(priceAndSubPrice, i)
-                }
-                binding.rvItemDetailPriceList.adapter = priceAdapter
-
-                CoroutineScope(Dispatchers.IO).launch{
-                    val bitmap = it.item.imagePath?.let { it1 -> getBitmapFromPath(it1) }
-                    withContext(Dispatchers.Main){
-                        Glide.with(this@UpdateItemActivity).load(bitmap).into(binding.ivUpdateItemImage)
-                        binding.ivUpdateItemImage.visibility = View.VISIBLE
-                        binding.shimmerUpdateItemImage.apply {
-                            stopShimmer()
-                            visibility = View.GONE
+                    CoroutineScope(Dispatchers.IO).launch{
+                        val bitmap = it.item.imagePath?.let { it1 -> getBitmapFromPath(it1) }
+                        withContext(Dispatchers.Main){
+                            Glide.with(this@UpdateItemActivity).load(bitmap).into(binding.ivUpdateItemImage)
+                            binding.ivUpdateItemImage.visibility = View.VISIBLE
+                            binding.shimmerUpdateItemImage.apply {
+                                stopShimmer()
+                                visibility = View.GONE
+                            }
                         }
                     }
+                    itemById.removeObservers(this)
                 }
-
             }
         }else{
             Toast.makeText(this, getString(R.string.item_not_found), Toast.LENGTH_SHORT).show()

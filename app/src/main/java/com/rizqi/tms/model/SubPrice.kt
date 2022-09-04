@@ -4,9 +4,13 @@ import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 
 sealed class SubPrice(
+    @Transient
     open var price : Double = 0.0,
+    @Transient
     open var isEnabled: Boolean = true,
+    @Transient
     open var priceId : Long? = null,
+    @Transient
     open var id : Long? = null
 ){
     @Entity(

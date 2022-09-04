@@ -7,9 +7,13 @@ import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
 sealed class SpecialPrice(
+    @Transient
     open var quantity: Double,
+    @Transient
     open var price : Double,
+    @Transient
     open var subPriceId: Long?,
+    @Transient
     open var id : Long?
 ){
     @Entity(

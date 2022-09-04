@@ -2,6 +2,7 @@ package com.rizqi.tms.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.*
 import com.rizqi.tms.R
 import com.rizqi.tms.model.*
@@ -12,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 import javax.inject.Inject
 
@@ -169,9 +171,10 @@ class ItemViewModel @Inject constructor(
 
     fun updateItem(itemWithPrices: ItemWithPrices, updatedPriceAndSubPriceList: MutableList<PriceAndSubPrice>){
         _updateItemWithPrices.value = Resource.Loading()
-        viewModelScope.launch {
+        viewModelScope.launch() {
             try {
                 // Update Item
+                itemWithPrices.item.lastUpdate = System.currentTimeMillis()
                 itemRepository.updateItem(itemWithPrices.item)
 
                 // Update Price Connector
@@ -246,29 +249,32 @@ class ItemViewModel @Inject constructor(
                     }
 
                 // Special Price
-                val originalSpecialPriceList = mutableListOf<SpecialPrice>()
+                val originalMerchantSpecialPriceList = mutableListOf<SpecialPrice.MerchantSpecialPrice>()
+                val originalConsumerSpecialPriceList = mutableListOf<SpecialPrice.ConsumerSpecialPrice>()
                 itemWithPrices.prices.map { it.merchantSubPrice.specialPrices }.forEach {
-                    originalSpecialPriceList.addAll(it)
+                    originalMerchantSpecialPriceList.addAll(it)
                 }
                 itemWithPrices.prices.map { it.consumerSubPrice.specialPrices }.forEach {
-                    originalSpecialPriceList.addAll(it)
+                    originalConsumerSpecialPriceList.addAll(it)
                 }
-                val updatedSpecialPriceList = mutableListOf<SpecialPrice>()
+                val updatedMerchantSpecialPriceList = mutableListOf<SpecialPrice.MerchantSpecialPrice>()
+                val updatedConsumerSpecialPriceList = mutableListOf<SpecialPrice.ConsumerSpecialPrice>()
                 updatedPriceAndSubPriceList.map { it.merchantSubPrice.specialPrices }.forEach {
-                    updatedSpecialPriceList.addAll(it)
+                    updatedMerchantSpecialPriceList.addAll(it)
                 }
                 updatedPriceAndSubPriceList.map { it.consumerSubPrice.specialPrices }.forEach {
-                    updatedSpecialPriceList.addAll(it)
+                    updatedConsumerSpecialPriceList.addAll(it)
                 }
-                originalSpecialPriceList.filter { it.id !in updatedSpecialPriceList.map { it1 -> it1.id } }.forEach {deletedSpecialPrice ->
-                   when(deletedSpecialPrice){
-                       is SpecialPrice.ConsumerSpecialPrice -> deleteConsumerSpecialPrice(deletedSpecialPrice)
-                       is SpecialPrice.MerchantSpecialPrice -> deleteMerchantSpecialPrice(deletedSpecialPrice)
-                   }
+                originalMerchantSpecialPriceList.filter { it.id !in updatedMerchantSpecialPriceList.map { it1 -> it1.id } }.forEach { deletedSpecialPrice ->
+                    deleteMerchantSpecialPrice(deletedSpecialPrice)
+                }
+                originalConsumerSpecialPriceList.filter { it.id !in updatedConsumerSpecialPriceList.map { it1 -> it1.id } }.forEach { deletedSpecialPrice ->
+                    deleteConsumerSpecialPrice(deletedSpecialPrice)
                 }
 
                 _updateItemWithPrices.value = Resource.Success(itemWithPrices)
             }catch (e : Exception){
+                e.printStackTrace()
                 _updateItemWithPrices.value = Resource.Error(Message.DynamicString(e.message.toString()))
             }
         }

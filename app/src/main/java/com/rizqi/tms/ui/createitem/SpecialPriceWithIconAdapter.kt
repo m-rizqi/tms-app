@@ -11,6 +11,7 @@ import com.rizqi.tms.databinding.ItemSpecialPriceWithIconBinding
 import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.model.SpecialPriceWithIcon
 import com.rizqi.tms.utility.ThousandFormatter
+import com.rizqi.tms.utility.toFormattedString
 
 class SpecialPriceWithIconAdapter(
     private var specialPriceList: List<SpecialPriceWithIcon>,
@@ -31,7 +32,7 @@ class SpecialPriceWithIconAdapter(
         val binding = holder.binding
         val context = binding.root.context
 
-        binding.text = context.getString(R.string.special_price_format, "${specialPrice.quantity} $unitName", ThousandFormatter.format(specialPrice.price))
+        binding.text = context.getString(R.string.special_price_format, "${specialPrice.quantity.toFormattedString()} $unitName", ThousandFormatter.format(specialPrice.price))
         binding.ivSpecialPriceIconType.setImageDrawable(
             context.resources.getDrawable(iconType.iconRes)
         )
