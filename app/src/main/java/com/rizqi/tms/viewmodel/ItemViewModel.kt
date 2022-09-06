@@ -284,4 +284,8 @@ class ItemViewModel @Inject constructor(
     suspend fun getItemIdByBarcode(barcode : String) = try {
         itemRepository.getItemIdByBarcode(barcode)
     }catch (e : NullPointerException){ null }
+
+    fun getAllItem(): LiveData<List<ItemWithPrices>> {
+        return itemRepository.getAllItem().asLiveData()
+    }
 }

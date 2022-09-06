@@ -66,4 +66,6 @@ class ItemRepository @Inject constructor(
 
     suspend fun getItemIdByBarcode(barcode : String) = itemDao.getItemIdByBarcode(barcode)
 
+    fun getAllItem() = itemDao.getAllItem()
+
 }

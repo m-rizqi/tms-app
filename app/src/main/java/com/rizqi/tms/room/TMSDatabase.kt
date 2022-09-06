@@ -9,7 +9,16 @@ import com.rizqi.tms.model.Unit
 import com.rizqi.tms.utility.TMS_DATABASE
 
 @Database(
-    entities = [User::class, Unit::class, SpecialPrice.MerchantSpecialPrice::class, SpecialPrice.ConsumerSpecialPrice::class, SubPrice.MerchantSubPrice::class, SubPrice.ConsumerSubPrice::class, Price::class, Item::class],
+    entities = [
+        User::class, Unit::class,
+        SpecialPrice.MerchantSpecialPrice::class,
+        SpecialPrice.ConsumerSpecialPrice::class,
+        SubPrice.MerchantSubPrice::class,
+        SubPrice.ConsumerSubPrice::class,
+        Price::class,
+        Item::class,
+        SearchHistory::class
+               ],
     version = 1,
     exportSchema = false
 )
@@ -17,6 +26,7 @@ abstract class TMSDatabase : RoomDatabase(){
     abstract fun userDao() : UserDao
     abstract fun unitDao() : UnitDao
     abstract fun itemDao() : ItemDao
+    abstract fun searchHistoryDao() : SearchHistoryDao
 
     companion object {
         @Volatile

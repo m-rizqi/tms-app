@@ -125,7 +125,7 @@ fun deleteFile(path: String): Boolean {
     }
 }
 
-fun expandAccordion(v: View, arrow : View) {
+fun expandAccordion(v: View, arrow : View?) {
     val matchParentMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(
         (v.parent as View).width,
         View.MeasureSpec.EXACTLY
@@ -155,13 +155,13 @@ fun expandAccordion(v: View, arrow : View) {
     ValueAnimator.ofFloat(-180f, 0f).apply {
         duration = a.duration
         addUpdateListener {
-            arrow.rotation = it.animatedValue as Float
+            arrow?.rotation = it.animatedValue as Float
         }
         start()
     }
 }
 
-fun collapseAccordion(v: View, arrow : View) {
+fun collapseAccordion(v: View, arrow : View?) {
     val initialHeight: Int = v.measuredHeight
     val a: Animation = object : Animation() {
         override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
@@ -185,7 +185,7 @@ fun collapseAccordion(v: View, arrow : View) {
     ValueAnimator.ofFloat(0f, -180f).apply {
         duration = a.duration
         addUpdateListener {
-            arrow.rotation = it.animatedValue as Float
+            arrow?.rotation = it.animatedValue as Float
         }
         start()
     }

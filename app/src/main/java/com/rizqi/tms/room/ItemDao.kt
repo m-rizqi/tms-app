@@ -87,4 +87,7 @@ interface ItemDao {
 
     @Query("SELECT Item.id From Item, Price WHERE Price.barcode = :barcode AND Price.item_id = Item.id")
     suspend fun getItemIdByBarcode(barcode : String) : Long
+
+    @Query("SELECT * FROM Item")
+    fun getAllItem() : Flow<List<ItemWithPrices>>
 }

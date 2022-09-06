@@ -21,6 +21,7 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentHomeBinding
 import com.rizqi.tms.ui.barcodesearch.BarcodeSearchActivity
 import com.rizqi.tms.ui.createitem.CreateItemActivity
+import com.rizqi.tms.ui.search.SearchActivity
 import com.rizqi.tms.utility.GridSpacingItemDecoration
 import com.rizqi.tms.utility.collapseAccordion
 import com.rizqi.tms.utility.expandAccordion
@@ -109,6 +110,9 @@ class HomeFragment : Fragment() {
             }
             mcvHomeScan.setOnClickListener {
                 startActivity(Intent(context, BarcodeSearchActivity::class.java))
+            }
+            mcvHomeSearch.setOnClickListener {
+                startActivity(Intent(context, SearchActivity::class.java))
             }
         }
 
