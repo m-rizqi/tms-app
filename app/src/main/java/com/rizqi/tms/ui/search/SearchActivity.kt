@@ -19,7 +19,9 @@ import com.rizqi.tms.databinding.ChipUnitBinding
 import com.rizqi.tms.model.SearchFilter
 import com.rizqi.tms.model.SearchHistory
 import com.rizqi.tms.model.Unit
+import com.rizqi.tms.ui.dialog.searchfilter.SearchFilterBottomSheet
 import com.rizqi.tms.utility.SEARCH_FILTER
+import com.rizqi.tms.utility.insertUnitIntoChipGroup
 import com.rizqi.tms.utility.setChipStyle
 import com.rizqi.tms.viewmodel.ItemViewModel
 import com.rizqi.tms.viewmodel.SearchHistoryViewModel
@@ -73,7 +75,10 @@ class SearchActivity : AppCompatActivity() {
             binding.lSearchHistory.tvSearchHistoryLoadMoreHistory.visibility = if (it) View.GONE else View.VISIBLE
         }
         searchHistoryViewModel.unitPaginate.observe(this){
-            insertUnitIntoChipGroup(it, binding.lSearchHistory.chipGroupSearchHistory)
+            insertUnitIntoChipGroup(layoutInflater, it, searchViewModel.searchFilter.value?.units, binding.lSearchHistory.chipGroupSearchHistory){b, u ->
+                if (b) searchViewModel.addUnitToSearchFilter(u)
+                else searchViewModel.removeUnitFromSearchFilter(u)
+            }
         }
         searchHistoryViewModel.isUnitMaxPage.observe(this){
             binding.lSearchHistory.tvSearchHistoryLoadMoreUnit.visibility = if (it) View.GONE else View.VISIBLE
@@ -117,6 +122,7 @@ class SearchActivity : AppCompatActivity() {
             })
             lSearchHistory.tvSearchHistoryLoadMoreHistory.setOnClickListener { searchHistoryViewModel.getHistoryWithPaginate() }
             lSearchHistory.tvSearchHistoryLoadMoreUnit.setOnClickListener { searchHistoryViewModel.getUnitWithPaginate() }
+            btnSearchFilter.setOnClickListener { showFilterBottomSheet() }
         }
 
     }
@@ -135,18 +141,15 @@ class SearchActivity : AppCompatActivity() {
         searchViewModel.search(binding.tieSearch.text.toString())
     }
 
-    private fun insertUnitIntoChipGroup(unitList: List<Unit>, chipGroup: ChipGroup){
-        chipGroup.removeAllViews()
-        unitList.forEach {
-            val chip = ChipUnitBinding.inflate(layoutInflater)
-            chip.chip.text = it.name
-            chip.chip.setOnCheckedChangeListener { _, b ->
-                setChipStyle(chip.chip, b)
-                if (b) searchViewModel.addUnitToSearchFilter(it)
-                else searchViewModel.removeUnitFromSearchFilter(it)
+    private fun showFilterBottomSheet(){
+        SearchFilterBottomSheet(
+            searchViewModel.searchFilter.value?.copy(),
+            searchHistoryViewModel
+        ){
+            if (it != null) {
+                searchViewModel.setSearchFilter(it)
             }
-            chipGroup.addView(chip.root)
-        }
+        }.show(supportFragmentManager, null)
     }
 }
 

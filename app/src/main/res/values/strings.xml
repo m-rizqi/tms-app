@@ -143,6 +143,11 @@
     <string name="by_item_type">Berdasarkan Tipe Barang</string>
     <string name="without_barcode">Tanpa Barcode</string>
     <string name="by_unit">Berdasarkan Satuan</string>
+    <string name="filter">Filter</string>
+    <string name="by_price_range">Berdasarkan Rentang Harga</string>
+    <string name="from">Dari</string>
+    <string name="to">Sampai</string>
+    <string name="apply">Terapkan</string>
 
     <string-array name="months">
         <item>Januari</item>

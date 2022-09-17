@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Environment
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.Animation
@@ -15,7 +16,9 @@ import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import com.rizqi.tms.R
+import com.rizqi.tms.databinding.ChipUnitBinding
 import com.rizqi.tms.databinding.LayoutLoadingBinding
 import java.io.File
 import java.io.FileNotFoundException
@@ -208,6 +211,7 @@ private fun setCheckedChip(chip: Chip){
         chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
         chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
         setTextColor(resources.getColor(R.color.black_100))
+        isChecked = true
     }
 }
 
@@ -217,5 +221,26 @@ private fun setUnCheckedChip(chip: Chip){
         chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.black_10))
         chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black_20))
         setTextColor(resources.getColor(R.color.black_80))
+        isChecked = false
+    }
+}
+
+fun insertUnitIntoChipGroup(
+    layoutInflater : LayoutInflater,
+    unitList: List<com.rizqi.tms.model.Unit>,
+    checkedUnits: List<com.rizqi.tms.model.Unit>?,
+    chipGroup: ChipGroup,
+    onCheckedChangedListener : (Boolean, com.rizqi.tms.model.Unit) -> Unit
+){
+    chipGroup.removeAllViews()
+    unitList.forEach {
+        val chip = ChipUnitBinding.inflate(layoutInflater)
+        chip.chip.text = it.name
+        chip.chip.setOnCheckedChangeListener { _, b ->
+            setChipStyle(chip.chip, b)
+            onCheckedChangedListener(b, it)
+        }
+        chip.chip.isChecked = it.id in (checkedUnits?.map { u -> u.id } ?: mutableListOf())
+        chipGroup.addView(chip.root)
     }
 }
