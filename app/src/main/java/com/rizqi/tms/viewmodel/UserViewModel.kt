@@ -18,13 +18,17 @@ class UserViewModel @Inject constructor(
     private var _insertUser = MutableLiveData<Resource<Long>>()
     val insertUser : LiveData<Resource<Long>> = _insertUser
 
-    fun getUserById(id : Long){
-        _singleUser.value = Resource.Loading()
-        viewModelScope.launch {
-            userRepository.getUser(id).collect{
-                _singleUser.value = Resource.Success(it)
-            }
-        }
+//    fun getUserById(id : Long){
+//        _singleUser.value = Resource.Loading()
+//        viewModelScope.launch {
+//            userRepository.getUser(id).collect{
+//                _singleUser.value = Resource.Success(it)
+//            }
+//        }
+//    }
+
+    fun getUserById(id : Long): LiveData<User> {
+        return userRepository.getUser(id).asLiveData()
     }
 
     fun insertUser(user: User){

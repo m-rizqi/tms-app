@@ -142,6 +142,8 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showFilterBottomSheet(){
+        binding.tilSearch.clearFocus()
+        binding.lSearchHistory.root.visibility = View.GONE
         SearchFilterBottomSheet(
             searchViewModel.searchFilter.value?.copy(),
             searchHistoryViewModel

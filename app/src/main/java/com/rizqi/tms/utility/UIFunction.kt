@@ -3,8 +3,9 @@ package com.rizqi.tms.utility
 import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import android.view.animation.Transformation
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.rizqi.tms.R
@@ -243,4 +245,37 @@ fun insertUnitIntoChipGroup(
         chip.chip.isChecked = it.id in (checkedUnits?.map { u -> u.id } ?: mutableListOf())
         chipGroup.addView(chip.root)
     }
+}
+
+fun Context.getInitialBitmap(name : String, height : Float = 72f.dp(this), width : Float = 72f.dp(this), fontSize : Float = 29f.dp(this)) : Bitmap {
+    var initials = ""
+    name.uppercase().split(" ").forEach {
+        if (initials.length < 2 && it.isNotEmpty()){
+            initials += it[0]
+        }
+    }
+    val textPaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+        textSize = fontSize
+        color = Color.WHITE
+        typeface = ResourcesCompat.getFont(this@getInitialBitmap, R.font.rubik_regular)
+    }
+    val circlePaint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+        color = ResourcesCompat.getColor(resources, R.color.primary_100, null)
+    }
+    val b = Bitmap.createBitmap(width.toInt(), height.toInt(), Bitmap.Config.ARGB_8888)
+    val c = Canvas(b)
+    c.drawColor(Color.WHITE)
+    c.drawCircle(width/2, height/2, width/2, circlePaint)
+    val textBound = Rect()
+    textPaint.getTextBounds(initials, 0, initials.length, textBound)
+    c.drawText(initials, width/2 - (textPaint.measureText(initials) / 2), height/2 + textBound.height()/2, textPaint)
+    return b
+}
+
+fun Context.getInitialPlaceholder(name : String, height : Float = 72f.dp(this), width : Float = 72f.dp(this), fontSize : Float = 29f.dp(this)) : Drawable {
+    return BitmapDrawable(resources, getInitialBitmap(name, height, width, fontSize))
 }

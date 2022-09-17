@@ -5,56 +5,61 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.rizqi.tms.R
+import com.rizqi.tms.TMSPreferences.Companion.getUserId
+import com.rizqi.tms.TMSPreferences.Companion.isAnonymous
+import com.rizqi.tms.databinding.FragmentProfileBinding
+import com.rizqi.tms.model.Setting
+import com.rizqi.tms.utility.getInitialBitmap
+import com.rizqi.tms.utility.getInitialPlaceholder
+import com.rizqi.tms.viewmodel.UserViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding : FragmentProfileBinding? = null
+    private val binding : FragmentProfileBinding
+        get() = _binding!!
+    private val userViewModel : UserViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+    ): View {
+        _binding =  FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (context?.isAnonymous() == true){
+            binding.tvProfileUsername.text = getString(R.string.anonymous)
+            binding.tvProfileEdit.visibility = View.GONE
+            Glide.with(binding.root).load(context?.getInitialBitmap(getString(R.string.anonymous))).into(binding.ivProfileImage)
+        }else{
+            userViewModel.getUserById(context?.getUserId() ?: -1).observe(viewLifecycleOwner){
+                binding.apply {
+                    tvProfileUsername.text = it.name
+                    tvProfileEmail.text = it.email
                 }
+                Glide.with(binding.root)
+                    .load(Firebase.auth.currentUser?.photoUrl).
+                    placeholder(context?.getInitialPlaceholder(it.name))
+                    .into(binding.ivProfileImage)
             }
+        }
+
+        val settingAdapter = SettingsAdapter{
+
+        }
+        settingAdapter.submitList(Setting.getSettings(resources))
+        binding.rvProfileSettings.adapter = settingAdapter
+
     }
+
 }

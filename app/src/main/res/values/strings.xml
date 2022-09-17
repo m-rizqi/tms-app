@@ -148,6 +148,21 @@
     <string name="from">Dari</string>
     <string name="to">Sampai</string>
     <string name="apply">Terapkan</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="settings">Pengaturan</string>
+    <string name="unit_setting_description">Lihat, tambah, ubah dan hapus satuan</string>
+    <string name="backup">Backup</string>
+    <string name="backup_setting_description">Upload data untuk restore saat login</string>
+    <string name="printer">Printer</string>
+    <string name="printer_setting_description">Sambungkan dan tes printer</string>
+    <string name="bill">Nota</string>
+    <string name="bill_setting_description">Atur tampilan nota</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_setting_description">Baca kebijakan pribadi kami</string>
+    <string name="help">Bantuan</string>
+    <string name="help_setting_description">Apabila kamu mendapatkan masalah</string>
+    <string name="logout">Keluar</string>
+    <string name="anonymous">Anonim</string>
 
     <string-array name="months">
         <item>Januari</item>
