@@ -1,14 +1,12 @@
 package com.rizqi.tms.model
 
-data class SearchFilter(
-    val search : String,
-    val itemType: ItemType? = null,
-    val unit: Unit? = null,
-    val priceFrom : Double? = null,
-    val priceTo : Double? = null
-){
-    enum class ItemType {
-        NONBARCODE, BARCODE
-    }
+import java.io.Serializable
 
-}
+data class SearchFilter(
+    var search : String,
+    var isBarcodeItem : Boolean = true,
+    var isNonBarcodeItem : Boolean = true,
+    var units: MutableList<Unit> = mutableListOf(),
+    var priceFrom : Double? = null,
+    var priceTo : Double? = null
+) : Serializable

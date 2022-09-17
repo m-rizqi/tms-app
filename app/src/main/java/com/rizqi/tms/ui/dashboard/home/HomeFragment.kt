@@ -19,10 +19,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.FragmentHomeBinding
+import com.rizqi.tms.model.SearchFilter
 import com.rizqi.tms.ui.barcodesearch.BarcodeSearchActivity
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.search.SearchActivity
 import com.rizqi.tms.utility.GridSpacingItemDecoration
+import com.rizqi.tms.utility.SEARCH_FILTER
 import com.rizqi.tms.utility.collapseAccordion
 import com.rizqi.tms.utility.expandAccordion
 import com.rizqi.tms.viewmodel.ItemViewModel
@@ -113,6 +115,12 @@ class HomeFragment : Fragment() {
             }
             mcvHomeSearch.setOnClickListener {
                 startActivity(Intent(context, SearchActivity::class.java))
+            }
+            tvHomeMoreNonbarcode.setOnClickListener {
+                val searchIntent = Intent(context, SearchActivity::class.java).apply {
+                    putExtra(SEARCH_FILTER, SearchFilter("", isBarcodeItem = false, isNonBarcodeItem = true))
+                }
+                startActivity(searchIntent)
             }
         }
 

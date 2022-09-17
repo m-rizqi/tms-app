@@ -12,6 +12,7 @@ import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.login.LoginActivity
 import com.rizqi.tms.ui.onboarding.OnBoardingActivity
 import com.rizqi.tms.ui.register.RegisterActivity
+import com.rizqi.tms.ui.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

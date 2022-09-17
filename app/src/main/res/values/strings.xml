@@ -142,7 +142,7 @@
     <string name="load_more">Muat lebih banyak</string>
     <string name="by_item_type">Berdasarkan Tipe Barang</string>
     <string name="without_barcode">Tanpa Barcode</string>
-    <string name="by_unit">Berdasarkan Harga</string>
+    <string name="by_unit">Berdasarkan Satuan</string>
 
     <string-array name="months">
         <item>Januari</item>

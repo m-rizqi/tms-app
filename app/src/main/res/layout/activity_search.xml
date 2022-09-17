@@ -42,6 +42,7 @@
                 style="@style/TextInputEditText.Default"
                 android:hint="@string/type_the_item_name_you_search"
                 android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:maxLines="1"
                 />
 

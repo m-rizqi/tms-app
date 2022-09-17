@@ -13,6 +13,8 @@ class SearchHistoryRepository @Inject constructor(
 
     fun getAll() = searchHistoryDao.getAll()
 
+    fun getWithPaginate(pageIndex : Long) = searchHistoryDao.getWithPaginate(pageIndex)
+
     suspend fun update(searchHistory: SearchHistory) = searchHistoryDao.update(searchHistory)
 
 }

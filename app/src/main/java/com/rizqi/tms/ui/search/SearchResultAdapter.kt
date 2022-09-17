@@ -14,6 +14,7 @@ import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.ui.itemdetail.ItemDetailActivity
 import com.rizqi.tms.utility.ITEM_ID
 import com.rizqi.tms.utility.ThousandFormatter
+import com.rizqi.tms.utility.dp
 import com.rizqi.tms.utility.getBitmapFromPath
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,6 +72,12 @@ class SearchResultAdapter : ListAdapter<ItemWithPrices, SearchResultAdapter.Sear
             val intent = Intent(it.context, ItemDetailActivity::class.java)
             intent.putExtra(ITEM_ID, itemWithPrices.item.id)
             it.context.startActivity(intent)
+        }
+        val rootParams = binding.root.layoutParams as RecyclerView.LayoutParams
+        rootParams.topMargin = if (position == 0) 16.dp(context) else 0
+        binding.root.apply {
+            layoutParams = rootParams
+            requestLayout()
         }
     }
 }

@@ -196,3 +196,26 @@ fun Double.toFormattedString() : String{
     if (mantissa == 0.0) return this.toInt().toString()
     return this.toString()
 }
+
+fun setChipStyle(chip: Chip, isChecked : Boolean){
+    if (isChecked) setCheckedChip(chip)
+    else setUnCheckedChip(chip)
+}
+
+private fun setCheckedChip(chip: Chip){
+    val resources = chip.resources
+    chip.apply {
+        chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
+        chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
+        setTextColor(resources.getColor(R.color.black_100))
+    }
+}
+
+private fun setUnCheckedChip(chip: Chip){
+    val resources = chip.resources
+    chip.apply {
+        chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.black_10))
+        chipStrokeColor = ColorStateList.valueOf(resources.getColor(R.color.black_20))
+        setTextColor(resources.getColor(R.color.black_80))
+    }
+}

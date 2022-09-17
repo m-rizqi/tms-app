@@ -31,7 +31,7 @@ class DashboardActivity : AppCompatActivity() {
     private val financeFragment = FinanceFragment()
     private val profileFragment = ProfileFragment()
     private val dashboardFragmentList = mutableListOf(
-        homeFragment, cashierFragment, financeFragment, profileFragment
+        homeFragment, cashierFragment, profileFragment
     )
     private var menuIndex = 0
     private var dashboardState = HOME
@@ -69,7 +69,7 @@ class DashboardActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .add(R.id.fcv_dashboard, homeFragment)
             .add(R.id.fcv_dashboard, cashierFragment)
-            .add(R.id.fcv_dashboard, financeFragment)
+//            .add(R.id.fcv_dashboard, financeFragment)
             .add(R.id.fcv_dashboard, profileFragment)
             .commit()
         savedInstanceState?.getInt(MENU_INDEX)?.let { menuIndex = it }
@@ -111,7 +111,21 @@ class DashboardActivity : AppCompatActivity() {
                 menuIndex = 1
                 dashboardState = CASHIER
             }
-            FINANCE -> {
+//            FINANCE -> {
+//                dashboardFragmentList.forEachIndexed { index, fragment ->
+//                    if (index == 2) {
+//                        transaction.show(fragment)
+//                        try {
+//                            fragment.onResume()
+//                        }catch (e : Exception){}
+//                    }else{
+//                        transaction.hide(fragment)
+//                    }
+//                }
+//                menuIndex = 2
+//                dashboardState = FINANCE
+//            }
+            PROFILE -> {
                 dashboardFragmentList.forEachIndexed { index, fragment ->
                     if (index == 2) {
                         transaction.show(fragment)
@@ -123,20 +137,6 @@ class DashboardActivity : AppCompatActivity() {
                     }
                 }
                 menuIndex = 2
-                dashboardState = FINANCE
-            }
-            PROFILE -> {
-                dashboardFragmentList.forEachIndexed { index, fragment ->
-                    if (index == 3) {
-                        transaction.show(fragment)
-                        try {
-                            fragment.onResume()
-                        }catch (e : Exception){}
-                    }else{
-                        transaction.hide(fragment)
-                    }
-                }
-                menuIndex = 3
                 dashboardState = PROFILE
             }
         }
@@ -153,8 +153,8 @@ class DashboardActivity : AppCompatActivity() {
             ) {
                 when(newIndex){
                     1 -> setDashboardStateFragment(CASHIER).commit()
-                    2 -> setDashboardStateFragment(FINANCE).commit()
-                    3 -> setDashboardStateFragment(PROFILE).commit()
+//                    2 -> setDashboardStateFragment(FINANCE).commit()
+                    2 -> setDashboardStateFragment(PROFILE).commit()
                     else -> setDashboardStateFragment(HOME).commit()
                 }
             }
@@ -169,11 +169,11 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
-            if (!isExitApp){
-                Toast.makeText(this, getString(R.string.press_again_to_exit_the_app), Toast.LENGTH_SHORT).show()
-                isExitApp = true
-                return
-            }
+//            if (!isExitApp){
+//                Toast.makeText(this, getString(R.string.press_again_to_exit_the_app), Toast.LENGTH_SHORT).show()
+//                isExitApp = true
+//                return
+//            }
             finishAffinity()
         } else {
             setDashboardStateFragment(HOME).commit()
@@ -189,6 +189,6 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private enum class DashboardState {
-        HOME, CASHIER, FINANCE, PROFILE
+        HOME, CASHIER, PROFILE
     }
 }

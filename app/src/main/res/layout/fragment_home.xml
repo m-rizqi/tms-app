@@ -445,14 +445,14 @@
                             />
 
                         <TextView
+                            android:id="@+id/tv_home_more_nonbarcode"
+                            style="@style/TextAppearance.Caption"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            style="@style/TextAppearance.Caption"
-                            android:textColor="@color/primary_100"
                             android:text="@string/more_info"
-                            />
+                            android:textColor="@color/primary_100" />
 
                     </RelativeLayout>
 

@@ -10,12 +10,11 @@
         android:icon="@drawable/ic_cashier"
         android:title="@string/cashier"
         />
-    <item
-        android:id="@+id/im_finance"
-
-        android:icon="@drawable/ic_finance"
-        android:title="@string/finance"
-        />
+<!--    <item-->
+<!--        android:id="@+id/im_finance"-->
+<!--        android:icon="@drawable/ic_finance"-->
+<!--        android:title="@string/finance"-->
+<!--        />-->
     <item
         android:id="@+id/im_profile"
         android:icon="@drawable/ic_profile"
