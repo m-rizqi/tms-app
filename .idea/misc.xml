@@ -6,6 +6,7 @@
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/bg_primary.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/bg_splash.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/home_indicator.xml" value="0.1" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_backup.xml" value="0.1035" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_baseline_visibility_24.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_baseline_visibility_off_24.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_bell.xml" value="0.172" />
@@ -17,6 +18,7 @@
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_p.xml" value="0.172" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_privacy_policy.xml" value="0.114" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_scan_barcode.xml" value="0.172" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/ic_trash_light.xml" value="0.1865" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/image_placeholder.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/image_placeholder_backgrounf.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/drawable/round_corner_shape.xml" value="0.1045" />
@@ -41,6 +43,7 @@
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_scan_barcode.xml" value="0.18611111111111112" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_search.xml" value="0.12" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_take_image.xml" value="0.1897644927536232" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_unit_list.xml" value="0.20052083333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/activity_update_item.xml" value="0.20052083333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/bottom_sheet_create_price.xml" value="0.2506510416666667" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/bottom_sheet_search_filter.xml" value="0.20052083333333334" />
@@ -69,6 +72,7 @@
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/item_setting.xml" value="0.48125" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/item_special_price.xml" value="0.16452991452991453" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/item_special_price_with_icon.xml" value="0.4466666666666667" />
+        <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/item_unit.xml" value="0.4134007585335019" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_divider_or.xml" value="0.7333333333333334" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_input_layout.xml" value="0.1" />
         <entry key="..\:/TMS/V2/Toko-Management-System/app/src/main/res/layout/layout_input_layout_default.xml" value="0.34814814814814815" />

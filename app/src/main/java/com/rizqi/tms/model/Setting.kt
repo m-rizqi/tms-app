@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import com.rizqi.tms.R
+import com.rizqi.tms.ui.unit.UnitListActivity
 
 data class Setting(
     val name: String,
@@ -18,7 +19,8 @@ data class Setting(
             Setting(
                 resources.getString(R.string.unit),
                 resources.getString(R.string.unit_setting_description),
-                resources.getDrawable(R.drawable.ic_unit, null)
+                resources.getDrawable(R.drawable.ic_unit, null),
+                UnitListActivity::class.java
             ),
             Setting(
                 resources.getString(R.string.backup),

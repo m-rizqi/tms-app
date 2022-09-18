@@ -16,14 +16,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.DialogCreateUnitBinding
-import com.rizqi.tms.databinding.DialogSkipAlertBinding
 import com.rizqi.tms.utility.Resource
 import com.rizqi.tms.viewmodel.UnitViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateUnitDialog(
-    private val onNewUnitCreated : (com.rizqi.tms.model.Unit) -> Unit
+class CreateUpdateUnitDialog(
+    private val onNewUnitCreated : (com.rizqi.tms.model.Unit) -> Unit,
+    private val requestUnit : com.rizqi.tms.model.Unit? = null
 ) : DialogFragment() {
     private val unitViewModel : UnitViewModel by viewModels()
     private var _binding : DialogCreateUnitBinding? = null
@@ -54,6 +54,11 @@ class CreateUnitDialog(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (requestUnit != null) {
+            binding.tilCreateUnitName.editText.setText(requestUnit.name)
+            binding.tvCreateUnitTitle.text = getString(R.string.edit_unit)
+        }
+
         binding.btnCreateUnitCancel.setOnClickListener { dismiss() }
         binding.btnCreateUnitSave.setOnClickListener {
             val name = binding.tilCreateUnitName.editText.text.toString()
@@ -61,7 +66,9 @@ class CreateUnitDialog(
                 resources.getString(R.string.field_must_be_filled, resources.getString(R.string.name))
             }
             if (name.isBlank()) return@setOnClickListener
-            val newUnit = com.rizqi.tms.model.Unit(name)
+            val resultUnit = requestUnit?.apply {
+                this.name = name
+            } ?: com.rizqi.tms.model.Unit(name)
             showLoading()
             val createUnitObserver = Observer<Resource<Long>>{res ->
                 when(res){
@@ -71,12 +78,12 @@ class CreateUnitDialog(
                     }
                     is Resource.Success -> {
                         hideLoading()
-                        onNewUnitCreated(newUnit.copy(id = res.data))
+                        onNewUnitCreated(resultUnit.copy(id = res.data))
                         dismiss()
                     }
                 }
             }
-            unitViewModel.insertUnit(newUnit)
+            unitViewModel.insertUnit(resultUnit)
             unitViewModel.insertUnit.observe(viewLifecycleOwner, createUnitObserver)
         }
     }

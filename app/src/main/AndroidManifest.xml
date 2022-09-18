@@ -26,6 +26,9 @@
         android:theme="@style/Theme.TokoManagementSystem.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.unit.UnitListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.search.SearchActivity"
             android:exported="false" />
         <activity

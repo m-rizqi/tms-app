@@ -163,6 +163,8 @@
     <string name="help_setting_description">Apabila kamu mendapatkan masalah</string>
     <string name="logout">Keluar</string>
     <string name="anonymous">Anonim</string>
+    <string name="item_unit">Satuan Barang</string>
+    <string name="edit_unit">Ubah Satuan</string>
 
     <string-array name="months">
         <item>Januari</item>

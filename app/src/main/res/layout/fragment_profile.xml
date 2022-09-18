@@ -77,7 +77,7 @@
                     android:layout_marginTop="16dp"
                     style="@style/TextAppearance.Button"
                     android:textColor="@color/primary_100"
-                    tools:text="@string/edit_profile"
+                    android:text="@string/edit_profile"
                     />
 
                 <TextView

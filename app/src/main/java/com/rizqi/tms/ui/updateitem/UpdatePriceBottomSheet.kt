@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ import com.rizqi.tms.model.Unit
 import com.rizqi.tms.ui.dialog.createprice.CreatePriceViewModel
 import com.rizqi.tms.ui.dialog.createprice.SpecialPriceAdapter
 import com.rizqi.tms.ui.dialog.createprice.UnitsAdapter
-import com.rizqi.tms.ui.dialog.createunit.CreateUnitDialog
+import com.rizqi.tms.ui.dialog.createunit.CreateUpdateUnitDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.scan.ScanBarcodeActivity
 import com.rizqi.tms.utility.*
@@ -245,9 +244,11 @@ class UpdatePriceBottomSheet(
     }
 
     private fun showCreateUnitDialog(){
-        CreateUnitDialog{
-            unitsAdapter.addUnit(it)
-        }.show(parentFragmentManager, null)
+        CreateUpdateUnitDialog(
+            {
+                unitsAdapter.addUnit(it)
+            }
+        ).show(parentFragmentManager, null)
     }
 
     override fun onDestroyView() {

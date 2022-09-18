@@ -40,4 +40,10 @@ class UnitViewModel @Inject constructor(
         return unitRepository.getAll().asLiveData()
     }
 
+    fun deleteUnit(unit: Unit){
+        viewModelScope.launch {
+            unitRepository.delete(unit)
+        }
+    }
+
 }
