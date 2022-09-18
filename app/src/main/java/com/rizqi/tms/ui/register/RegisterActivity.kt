@@ -21,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rizqi.tms.R
 import com.rizqi.tms.TMSPreferences.Companion.setAnonymous
+import com.rizqi.tms.TMSPreferences.Companion.setFirebaseUserId
 import com.rizqi.tms.TMSPreferences.Companion.setLogin
 import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityRegisterBinding
@@ -100,6 +101,7 @@ class RegisterActivity : AppCompatActivity() {
                                             res.data?.let { it1 -> setUserId(it1) }
                                             setLogin(true)
                                             setAnonymous(false)
+                                            setFirebaseUserId(fUser.uid)
                                             // Create initial unit
                                             val insertUnitObserver = Observer<Resource<Long>>{unitRes ->
                                                 when(unitRes){
@@ -197,6 +199,7 @@ class RegisterActivity : AppCompatActivity() {
                                                         res.data?.let { it1 -> setUserId(it1) }
                                                         setLogin(true)
                                                         setAnonymous(false)
+                                                        setFirebaseUserId(fUser.uid)
                                                         // Create initial unit
                                                         val insertUnitObserver = Observer<Resource<Long>>{unitRes ->
                                                             when(unitRes){

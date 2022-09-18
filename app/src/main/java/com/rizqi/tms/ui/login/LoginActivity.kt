@@ -21,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.rizqi.tms.R
 import com.rizqi.tms.TMSPreferences.Companion.setAnonymous
+import com.rizqi.tms.TMSPreferences.Companion.setFirebaseUserId
 import com.rizqi.tms.TMSPreferences.Companion.setLogin
 import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityLoginBinding
@@ -98,6 +99,7 @@ class LoginActivity : AppCompatActivity(){
                                         is Resource.Success -> {
                                             hideLoading(binding.lLoginLoading)
                                             res.data?.let { it1 -> setUserId(it1) }
+                                            setFirebaseUserId(fUser.uid)
                                             setLogin(true)
                                             setAnonymous(false)
                                             goToDashboard()
@@ -179,6 +181,7 @@ class LoginActivity : AppCompatActivity(){
                                                     is Resource.Success -> {
                                                         hideLoading(binding.lLoginLoading)
                                                         res.data?.let { it1 -> setUserId(it1) }
+                                                        setFirebaseUserId(fUser.uid)
                                                         setLogin(true)
                                                         setAnonymous(false)
                                                         goToDashboard()

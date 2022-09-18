@@ -14,3 +14,6 @@ const val IMAGE_NAME_FORMAT = "IMG_%d.jpg"
 const val ITEM_NO_BARCODE = "\'Barang tanpa barcode\'"
 const val ITEM_ID = "item_id"
 const val SEARCH_FILTER = "search_filter"
+const val BACKUP_NOTIFICATION_CHANNEL_ID = "backup_notification"
+const val BACKUP_NOTIFICATION_CHANNEL_NAME = "Backup"
+const val BACKUP_NOTIFICATION_ID = 4243

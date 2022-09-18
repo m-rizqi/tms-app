@@ -165,6 +165,19 @@
     <string name="anonymous">Anonim</string>
     <string name="item_unit">Satuan Barang</string>
     <string name="edit_unit">Ubah Satuan</string>
+    <string name="last_backup">Backup Terakhir</string>
+    <string name="date_">Tanggal : %1$s</string>
+    <string name="size_">Ukuran : %1$s</string>
+    <string name="backup_schedule">Jadwal Backup</string>
+    <string name="every_day">Tiap Hari</string>
+    <string name="every_week">Tiap Minggu</string>
+    <string name="every_month">Tiap Bulan</string>
+    <string name="never">Jangan Pernah</string>
+    <string name="include_image">Termasuk Gambar</string>
+    <string name="backup_notification_channel_description">Notification for backup database</string>
+    <string name="uploading">Uploading</string>
+    <string name="backup_success">Backup Berhasil</string>
+    <string name="backup_failed">Backup Gagal</string>
 
     <string-array name="months">
         <item>Januari</item>

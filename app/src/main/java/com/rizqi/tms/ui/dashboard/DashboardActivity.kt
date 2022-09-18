@@ -58,6 +58,13 @@ class DashboardActivity : AppCompatActivity() {
             arrayPermission.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
 
+        if (ContextCompat.checkSelfPermission(
+                this, android.Manifest.permission.FOREGROUND_SERVICE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            arrayPermission.add(android.Manifest.permission.FOREGROUND_SERVICE)
+        }
+
         if (arrayPermission.isNotEmpty()){
             ActivityCompat.requestPermissions(
                 this,

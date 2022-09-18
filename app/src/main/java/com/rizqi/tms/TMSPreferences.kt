@@ -15,6 +15,7 @@ class TMSPreferences {
         private const val IS_LOGIN = "is_login"
         private const val IS_ANONYMOUS = "is_anonymous"
         private const val USER_ID = "user_id"
+        private const val FIREBASE_USER_ID = "firebase_user_id"
 
         fun Context.isLogin() : Boolean = pref(this).getBoolean(IS_LOGIN, false)
 
@@ -40,5 +41,13 @@ class TMSPreferences {
         }
 
         fun Context.getUserId() : Long = pref(this).getLong(USER_ID, -1)
+
+        fun Context.setFirebaseUserId(value : String){
+            val editor = pref(this).edit()
+            editor.putString(FIREBASE_USER_ID, value)
+            editor.apply()
+        }
+
+        fun Context.getFirebaseUserId() : String = pref(this).getString(FIREBASE_USER_ID, "") ?: ""
     }
 }

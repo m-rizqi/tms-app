@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.rizqi.tms.TMSPreferences.Companion.isLogin
+import com.rizqi.tms.room.TMSDatabase
+import com.rizqi.tms.ui.backup.BackupActivity
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.login.LoginActivity
@@ -18,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Initialize Database
+        TMSDatabase.getDatabase(this)
         if (isLogin()) {
             startActivity(Intent(this, DashboardActivity::class.java))
             return
