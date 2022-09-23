@@ -90,4 +90,7 @@ interface ItemDao {
 
     @Query("SELECT * FROM Item")
     fun getAllItem() : Flow<List<ItemWithPrices>>
+
+    @Query("UPDATE Item SET image_path = :path WHERE id = :itemId")
+    suspend fun updateItemImagePath(itemId : Long, path : String)
 }

@@ -21,4 +21,5 @@ data class PriceAndSubPrice(
 ){
     @Ignore
     var unit : Unit? = null
+    constructor() : this(Price(), SubPriceWithSpecialPrice.MerchantSubPriceWithSpecialPrice(), SubPriceWithSpecialPrice.ConsumerSubPriceWithSpecialPrice())
 }

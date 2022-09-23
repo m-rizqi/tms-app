@@ -178,6 +178,12 @@
     <string name="uploading">Uploading</string>
     <string name="backup_success">Backup Berhasil</string>
     <string name="backup_failed">Backup Gagal</string>
+    <string name="restore_file_not_found">File untuk restore tidak ditemukan</string>
+    <string name="downloading">Downloading</string>
+    <string name="restore_failed">Restore Gagal</string>
+    <string name="restore_success">Restore Berhasil</string>
+    <string name="failed_get_items">Gagal mengambil data barang</string>
+    <string name="failed_get_units">Gagal mengambil data satuan</string>
 
     <string-array name="months">
         <item>Januari</item>

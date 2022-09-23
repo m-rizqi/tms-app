@@ -13,7 +13,9 @@ sealed class SubPriceWithSpecialPrice(
             entityColumn = "sub_price_id"
         )
         var specialPrices: List<SpecialPrice.MerchantSpecialPrice>
-    ) : SubPriceWithSpecialPrice()
+    ) : SubPriceWithSpecialPrice(){
+        constructor() : this(SubPrice.MerchantSubPrice(), mutableListOf())
+    }
 
     data class ConsumerSubPriceWithSpecialPrice(
         @Embedded
@@ -23,5 +25,7 @@ sealed class SubPriceWithSpecialPrice(
             entityColumn = "sub_price_id"
         )
         var specialPrices: List<SpecialPrice.ConsumerSpecialPrice>
-    ) : SubPriceWithSpecialPrice()
+    ) : SubPriceWithSpecialPrice(){
+        constructor() : this(SubPrice.ConsumerSubPrice(), mutableListOf())
+    }
 }

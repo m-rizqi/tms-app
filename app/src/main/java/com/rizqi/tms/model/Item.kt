@@ -6,11 +6,11 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Item(
-    var name : String,
+    var name : String = "",
     @ColumnInfo(name = "image_path")
-    var imagePath : String?,
+    var imagePath : String? = "",
     @ColumnInfo(name = "is_reminded")
-    var isReminded : Boolean,
+    var isReminded : Boolean = false,
     @ColumnInfo(name = "click_count")
     val clickCount : Long = 0,
     @ColumnInfo(name = "last_update")

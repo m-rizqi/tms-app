@@ -12,4 +12,6 @@ data class ItemWithPrices(
         entity = Price::class
     )
     val prices : List<PriceAndSubPrice>
-)
+){
+    constructor() : this(Item(), mutableListOf())
+}

@@ -6,8 +6,6 @@ import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.os.Environment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -23,8 +21,10 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ChipUnitBinding
 import com.rizqi.tms.databinding.LayoutLoadingBinding
 import java.io.File
-import java.io.FileNotFoundException
+import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
+import java.nio.channels.FileChannel
 
 
 private fun disableScreen(appCompatActivity: AppCompatActivity){
@@ -278,4 +278,25 @@ fun Context.getInitialBitmap(name : String, height : Float = 72f.dp(this), width
 
 fun Context.getInitialPlaceholder(name : String, height : Float = 72f.dp(this), width : Float = 72f.dp(this), fontSize : Float = 29f.dp(this)) : Drawable {
     return BitmapDrawable(resources, getInitialBitmap(name, height, width, fontSize))
+}
+
+@Throws(IOException::class)
+fun copyFile(fromFile: FileInputStream, toFile: FileOutputStream) {
+    var fromChannel: FileChannel? = null
+    var toChannel: FileChannel? = null
+    try {
+        fromChannel = fromFile.getChannel()
+        toChannel = toFile.channel
+        fromChannel.transferTo(0, fromChannel.size(), toChannel)
+    } finally {
+        try {
+            if (fromChannel != null) {
+                fromChannel.close()
+            }
+        } finally {
+            if (toChannel != null) {
+                toChannel.close()
+            }
+        }
+    }
 }

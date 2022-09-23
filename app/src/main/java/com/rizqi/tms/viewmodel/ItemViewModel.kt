@@ -288,4 +288,6 @@ class ItemViewModel @Inject constructor(
     fun getAllItem(): LiveData<List<ItemWithPrices>> {
         return itemRepository.getAllItem().asLiveData()
     }
+
+    suspend fun updateItemImagePath(itemId: Long, path : String) = itemRepository.updateItemImagePath(itemId, path)
 }

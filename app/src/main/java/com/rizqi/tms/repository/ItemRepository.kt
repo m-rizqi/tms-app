@@ -68,4 +68,6 @@ class ItemRepository @Inject constructor(
 
     fun getAllItem() = itemDao.getAllItem()
 
+    suspend fun updateItemImagePath(itemId: Long, path : String) = itemDao.updateItemImagePath(itemId, path)
+
 }

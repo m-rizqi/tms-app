@@ -25,13 +25,13 @@ sealed class SubPrice(
         ]
     )
     data class MerchantSubPrice(
-        override var price: Double,
+        override var price: Double = 0.0,
         @ColumnInfo(name = "is_enabled")
-        override var isEnabled: Boolean,
+        override var isEnabled: Boolean = true,
         @ColumnInfo(name = "price_id")
-        override var priceId: Long?,
+        override var priceId: Long? = null,
         @PrimaryKey(autoGenerate = true)
-        override var id : Long?
+        override var id : Long? = null
     ) : SubPrice(price, isEnabled, priceId, id)
 
     @Entity(
@@ -46,12 +46,12 @@ sealed class SubPrice(
         ]
     )
     data class ConsumerSubPrice(
-        override var price: Double,
+        override var price: Double = 0.0,
         @ColumnInfo(name = "is_enabled")
-        override var isEnabled: Boolean,
+        override var isEnabled: Boolean = true,
         @ColumnInfo(name = "price_id")
-        override var priceId: Long?,
+        override var priceId: Long? = null,
         @PrimaryKey(autoGenerate = true)
-        override var id : Long?
+        override var id : Long? = null
     ) : SubPrice(price, isEnabled, priceId, id)
 }
