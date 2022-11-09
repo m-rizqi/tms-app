@@ -98,7 +98,7 @@ class BarcodeSearchActivity : AppCompatActivity() {
 
     private fun setupControls() {
         barcodeDetector =
-            BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.EAN_13).build()
+            BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.ALL_FORMATS).build()
 
         cameraSource = CameraSource.Builder(this, barcodeDetector)
             .setRequestedPreviewSize(1920, 1080)

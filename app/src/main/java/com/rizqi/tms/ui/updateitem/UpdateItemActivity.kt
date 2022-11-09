@@ -3,7 +3,6 @@ package com.rizqi.tms.ui.updateitem
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,6 +36,7 @@ class UpdateItemActivity : AppCompatActivity() {
     private val viewModel : UpdateItemViewModel by viewModels()
     private val unitViewModel : UnitViewModel by viewModels()
     private var priceList = mutableListOf<PriceAndSubPrice>()
+    private var unitList : List<com.rizqi.tms.model.Unit> = listOf()
     private val priceAdapter = PriceDetailAdapter(priceList)
 
     private val takeImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
@@ -89,6 +89,7 @@ class UpdateItemActivity : AppCompatActivity() {
         }
 
         unitViewModel.getListUnit().observe(this){unitList ->
+            this.unitList = unitList
             priceList.forEach { priceSubPrice ->
                 priceSubPrice.unit = unitList.firstOrNull{ u -> u.id == priceSubPrice.price.unitId}
             }
@@ -141,7 +142,7 @@ class UpdateItemActivity : AppCompatActivity() {
                                 description = getString(R.string.success_update_item, itemWithPrices?.item?.name)
                             , onDismissListener = {
                                     previousImagePath?.let { path ->
-                                        com.rizqi.tms.utility.deleteFile(path)
+                                        deleteFile(this@UpdateItemActivity, path)
                                     }
                                     finish()
                                 }
@@ -164,26 +165,27 @@ class UpdateItemActivity : AppCompatActivity() {
     }
 
     private fun showCreatePriceDialog(){
-        UpdatePriceBottomSheet(
+        CreatePriceBottomSheet(
             priceList.isNotEmpty(),
             priceList.lastOrNull()?.unit,
             priceList.map { priceAndSubPrice ->  priceAndSubPrice.unit},
-            false
+            null,
+            CrudState.CREATE
         ){priceAndSubPrice ->
             priceAdapter.addPrice(priceAndSubPrice)
         }.show(supportFragmentManager, null)
     }
 
     private fun showUpdatePriceDialog(priceAndSubPrice: PriceAndSubPrice, position : Int){
-        UpdatePriceBottomSheet(
+        CreatePriceBottomSheet(
             priceAndSubPrice.price.prevQuantityConnector != null,
-            priceList.find { priceSubPrice ->  priceSubPrice.price.unitName == priceAndSubPrice.price.prevUnitName}?.unit,
+            unitList.find { unit ->  unit.name == priceAndSubPrice.price.prevUnitName},
             priceList.map { priceSubPrice ->  priceSubPrice.unit}.filter { unit -> unit?.name != priceAndSubPrice.price.unitName  },
-            priceAndSubPrice.price.isMainPrice,
             priceAndSubPrice,
-            CrudState.UPDATE
+            CrudState.UPDATE,
+            priceAndSubPrice.price.isMainPrice,
         ){updatedPriceSubPrice ->
-            priceAdapter.updatePrice(updatedPriceSubPrice, position)
+            priceAdapter.updatePriceAndSubPrice(updatedPriceSubPrice, position)
         }.apply {
             onDeleteListener = {
                 priceAdapter.deletePrice(priceAndSubPrice.price.isMainPrice, position)

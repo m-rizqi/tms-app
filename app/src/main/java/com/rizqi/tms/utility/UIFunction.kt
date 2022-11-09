@@ -85,23 +85,25 @@ fun Chip.setOnCheckedListener(onCheckedListener : (CompoundButton, Boolean) -> U
 }
 
 fun Context.saveBitmapToFolder(bitmap: Bitmap?) : String?{
-    val imageFile = getOutputMediaFile(this)
+    val mImageName = String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
+    val imageFile = getOutputMediaFile(this, mImageName)
     try {
         val fos = FileOutputStream(imageFile)
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
         fos.close()
     }catch (e : Exception){
         e.printStackTrace()
+        return null
     }
-    return imageFile?.path
+    return mImageName
 }
 
 fun Context.getBitmapFromPath(path: String): Bitmap? {
     val bmOptions = BitmapFactory.Options()
-    return BitmapFactory.decodeFile(path, bmOptions)
+    return BitmapFactory.decodeFile(getOutputMediaFile(this, path)?.absolutePath, bmOptions)
 }
 
-private fun getOutputMediaFile(context: Context): File? {
+private fun getOutputMediaFile(context: Context, path: String): File? {
     val mediaStorageDir = File(
         context.getExternalFilesDir(null)
             .toString() + ANDROID_DATA
@@ -115,16 +117,13 @@ private fun getOutputMediaFile(context: Context): File? {
         }
     }
     // Create a media file name
-    val mediaFile: File
-    val mImageName = String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
-    mediaFile = File(mediaStorageDir.path + File.separator + mImageName)
-    return mediaFile
+    return File(mediaStorageDir.path + File.separator, path)
 }
 
-fun deleteFile(path: String): Boolean {
+fun deleteFile(context: Context,path: String): Boolean {
     return try {
-        val file = File(path)
-        file.delete()
+        val file = getOutputMediaFile(context, path)
+        file?.delete() ?: false
     }catch (e : Exception){
         false
     }

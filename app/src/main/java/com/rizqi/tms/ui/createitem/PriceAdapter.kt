@@ -1,20 +1,15 @@
 package com.rizqi.tms.ui.createitem
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemPriceBinding
 import com.rizqi.tms.model.PriceAndSubPrice
-import com.rizqi.tms.model.SpecialPrice
 import com.rizqi.tms.model.SpecialPriceWithIcon
 import com.rizqi.tms.model.SubPriceIconType
 import com.rizqi.tms.utility.*
@@ -115,7 +110,19 @@ class PriceAdapter(
 
     fun updatePriceAndSubPrice(priceAndSubPrice: PriceAndSubPrice, position: Int){
         priceAndSubPriceList[position] = priceAndSubPrice
-        notifyItemChanged(position)
+        if (position != itemCount-1){
+            val nextPriceAndSubPrice = priceAndSubPriceList[position+1]
+            nextPriceAndSubPrice.price.apply {
+                prevUnitName = priceAndSubPrice.unit?.name
+            }
+        }
+        if (position != 0){
+            val prevPriceAndSubPrice = priceAndSubPriceList[position-1]
+            prevPriceAndSubPrice.price.apply {
+                nextQuantityConnector = priceAndSubPrice.price.prevQuantityConnector
+            }
+        }
+        notifyItemRangeChanged(position-1, 3)
     }
 
     @SuppressLint("NotifyDataSetChanged")

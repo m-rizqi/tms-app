@@ -96,7 +96,7 @@
     <string name="non_active">Dinonaktifkan</string>
     <string name="special_price_format">%1$s = Rp. %2$s,-</string>
     <string name="quantity">Kuantitas</string>
-    <string name="this_unit_has_been_selected">Satuan ini telah dipilih</string>
+    <string name="this_unit_has_been_selected">Satuan ini telah dipilih, sebaiknya tidak dipilih lagi</string>
     <string name="close">Tutup</string>
     <string name="what_is_connector">Apa Itu Penghubung Antar Harga ?</string>
     <string name="connector_description">Penghubung antar harga adalah kuantitas(seberapa banyak) satuan sebelumnya sama dengan satu satuan harga ini. Contoh, 12 buah sama dengan 1 lusin, maka masukkan 12 pada input yang disediakan.</string>
@@ -184,6 +184,7 @@
     <string name="restore_success">Restore Berhasil</string>
     <string name="failed_get_items">Gagal mengambil data barang</string>
     <string name="failed_get_units">Gagal mengambil data satuan</string>
+    <string name="connector_unit_equals_this_unit">Disarankan satuan penghubung tidak sama dengan satuan untuk harga ini</string>
 
     <string-array name="months">
         <item>Januari</item>

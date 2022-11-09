@@ -26,6 +26,9 @@ class CreatePriceViewModel : ViewModel(){
     val unit : LiveData<Unit?>
         get() = _unit
 
+    val prevUnit : LiveData<Unit?>
+        get() = _prevUnit
+
     val isMerchantEnabled : LiveData<Boolean>
         get() = _isMerchantEnabled
 
@@ -140,6 +143,7 @@ class CreatePriceViewModel : ViewModel(){
                 prevUnitName = _prevUnit.value?.name
                 isMainPrice = _isMainPrice.value!!
             }
+            unit = _unit.value
             merchantSubPrice.subPrice.apply {
                 price = _merchantPrice.value!!
                 isEnabled = _isMerchantEnabled.value!!

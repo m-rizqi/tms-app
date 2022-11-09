@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -86,15 +87,15 @@ fun setCheckedAdapter(
     "switchTheme"
 )
 fun setSwitchTheme(
-    switchMaterial: SwitchMaterial, isChecked : Boolean
+    switchCompat: SwitchCompat, isChecked : Boolean
 ){
-    val resources = switchMaterial.resources
-    switchMaterial.isChecked = isChecked
+    val resources = switchCompat.resources
+    switchCompat.isChecked = isChecked
     if (isChecked) {
-        switchMaterial.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
-        switchMaterial.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
+        switchCompat.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_100))
+        switchCompat.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.primary_20))
     }else {
-        switchMaterial.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.white))
-        switchMaterial.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.black_20))
+        switchCompat.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.white))
+        switchCompat.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.black_20))
     }
 }

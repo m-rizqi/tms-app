@@ -88,11 +88,11 @@ class UnitsAdapter(
 
     private fun onChipCheckedChanged(holder: UnitViewHolder, position: Int, isChecked : Boolean, unit: Unit){
         if (isInSelectedUnit(unit)){
-            holder.binding.chip.isChecked = false
-            setDisableChip(holder.binding.chip)
+//            holder.binding.chip.isChecked = false
+//            setDisableChip(holder.binding.chip)
             val context = holder.binding.root.context
             Toast.makeText(holder.binding.root.context, context.getString(R.string.this_unit_has_been_selected), Toast.LENGTH_SHORT).show()
-            return
+//            return
         }
         if (!isChecked){
             holder.binding.chip.isChecked = true
@@ -100,7 +100,7 @@ class UnitsAdapter(
         }
         setCheckedChip(holder.binding.chip)
         unitViewHolderList.forEachIndexed { index, viewHolder ->
-            if (isInSelectedUnit(unitList[index])){
+            if (index != position && isInSelectedUnit(unitList[index])){
                 viewHolder.binding.chip.isChecked = false
                 setDisableChip(viewHolder.binding.chip)
             }

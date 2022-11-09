@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -114,6 +116,20 @@ class UpdatePriceBottomSheet(
 
         unitsAdapter.onUnitChangedListener = {unit ->
             viewModel.setUnit(unit)
+            val unitArrayAdapter = ArrayAdapter<String>(requireContext(), R.layout.item_auto_complete, R.id.tv_item_auto_complete, unitList?.map { otherUnit ->  String.format(CONNECTOR_TEXT_FORMAT, otherUnit.name, unit.name) } ?: listOf())
+            binding.actvCreatePriceUnitConnector.apply {
+                setAdapter(unitArrayAdapter)
+//                hint = String.format(CONNECTOR_TEXT_FORMAT, viewModel.prevUnit.value?.name, unit.name)
+//                setHintTextColor(resources.getColor(R.color.black_100, null))
+                setOnItemClickListener { _, _, i, _ ->
+                    viewModel.setPrevUnit(
+                        unitList?.get(i)
+                    )
+                    if (unitList?.get(i)?.name == viewModel.prevUnit.value?.name){
+                        Toast.makeText(context, context.getString(R.string.connector_unit_equals_this_unit), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
         viewModel.unit.value?.let {

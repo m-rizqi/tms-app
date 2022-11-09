@@ -1,7 +1,6 @@
 package com.rizqi.tms.ui.itemdetail
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -93,13 +92,25 @@ class PriceDetailAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updatePrice(priceAndSubPrice: PriceAndSubPrice, position: Int){
+    fun updatePriceAndSubPrice(priceAndSubPrice: PriceAndSubPrice, position: Int){
         if (priceAndSubPrice.price.isMainPrice){
             priceAndSubPriceList.forEachIndexed { index, price ->
                 if (index != position) price.price.isMainPrice = false
             }
         }
         priceAndSubPriceList[position] = priceAndSubPrice
+        if (position != itemCount-1){
+            val nextPriceAndSubPrice = priceAndSubPriceList[position+1]
+            nextPriceAndSubPrice.price.apply {
+                prevUnitName = priceAndSubPrice.unit?.name
+            }
+        }
+        if (position != 0){
+            val prevPriceAndSubPrice = priceAndSubPriceList[position-1]
+            prevPriceAndSubPrice.price.apply {
+                nextQuantityConnector = priceAndSubPrice.price.prevQuantityConnector
+            }
+        }
         notifyDataSetChanged()
     }
 

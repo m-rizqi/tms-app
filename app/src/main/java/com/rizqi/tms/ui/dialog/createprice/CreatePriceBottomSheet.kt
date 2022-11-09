@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
@@ -31,9 +33,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class CreatePriceBottomSheet(
     private val isConnectorVisible : Boolean = false,
     private val prevUnit: Unit? = null,
-    private val selectedUnitList: List<Unit?>,
+    selectedUnitList: List<Unit?>,
     private val updatePriceAndSubPrice: PriceAndSubPrice? = null,
     private val crudState: CrudState = CrudState.CREATE,
+    private var isMainPrice : Boolean? = null,
     private val onSaveListener : (PriceAndSubPrice) -> kotlin.Unit,
 ) : BottomSheetDialogFragment(){
     private var _binding : BottomSheetCreatePriceBinding? = null
@@ -92,6 +95,14 @@ class CreatePriceBottomSheet(
                 consumerSpecialPriceAdapter.setList(consumerSpecialPriceList)
                 btnCreatePriceCancelDelete.text = getString(R.string.delete_allcaps)
                 tilCreatePriceConnector.editText.setText(updatePriceAndSubPrice.price.prevQuantityConnector?.toFormattedString())
+                if (isMainPrice != null){
+                    binding.lCreatePriceIsMainPrice.visibility = View.VISIBLE
+                    setSwitchTheme(binding.switchCreatePriceMainPrice, isMainPrice!!)
+                    if (updatePriceAndSubPrice.price.isMainPrice) {
+                        binding.lCreatePriceIsMainPrice.visibility = View.GONE
+                    }
+                    viewModel.setIsMainPrice(updatePriceAndSubPrice.price.isMainPrice)
+                }
             }
         }
 
@@ -102,6 +113,27 @@ class CreatePriceBottomSheet(
 
         unitsAdapter.onUnitChangedListener = {unit ->
             viewModel.setUnit(unit)
+            binding.actvCreatePriceUnitConnector.setAdapter(null)
+            binding.actvCreatePriceUnitConnector.setText("")
+            val copyUnitList = unitList?.copy()?.toMutableList() ?: mutableListOf()
+            copyUnitList.removeIf { it.name == prevUnit?.name }
+            val connectorUnits = if (prevUnit != null) mutableListOf(prevUnit) else mutableListOf()
+            connectorUnits.addAll(copyUnitList)
+            val unitArrayAdapter = ArrayAdapter<String>(requireContext(), R.layout.item_auto_complete, R.id.tv_item_auto_complete, connectorUnits.map { otherUnit ->  String.format(CONNECTOR_TEXT_FORMAT, otherUnit.name, unit.name) } )
+            binding.actvCreatePriceUnitConnector.apply {
+                setAdapter(unitArrayAdapter)
+                hint = String.format(CONNECTOR_TEXT_FORMAT, viewModel.prevUnit.value?.name, unit.name)
+                setHintTextColor(resources.getColor(R.color.black_100, null))
+                setOnItemClickListener { _, _, i, _ ->
+                    viewModel.setPrevUnit(
+                        connectorUnits.get(i)
+                    )
+                    if (connectorUnits.get(i).name == viewModel.unit.value?.name){
+                        Toast.makeText(context, context.getString(R.string.connector_unit_equals_this_unit), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
         }
 
         viewModel.unit.value?.let {
@@ -153,15 +185,19 @@ class CreatePriceBottomSheet(
         }
 
         viewModel.connectorText.observe(this){
-            binding.tilCreatePriceConnector.suffixText = it
+//            binding.actvCreatePriceUnitConnector.hint = it
         }
 
         binding.apply {
+            switchCreatePriceMainPrice.setOnCheckedChangeListener { _, b ->
+                viewModel.setIsMainPrice(b)
+                setSwitchTheme(binding.switchCreatePriceMainPrice, b)
+            }
             rvCreateItemUnits.adapter = unitsAdapter
             rvCreatePriceMerchantSpecial.adapter = merchantSpecialPriceAdapter
             rvCreatePriceConsumerSpecial.adapter = consumerSpecialPriceAdapter
             lCreatePriceConnectorTitle.root.visibility = if (isConnectorVisible) View.VISIBLE else View.GONE
-            tilCreatePriceConnector.root.visibility = if (isConnectorVisible) View.VISIBLE else View.GONE
+            lCreatePriceConnector.visibility = if (isConnectorVisible) View.VISIBLE else View.GONE
             tilCreatePriceMerchant.editText.addTextChangedListener(ThousandTextWatcher(binding.tilCreatePriceMerchant.editText))
             tilCreatePriceConsumer.editText.addTextChangedListener(ThousandTextWatcher(binding.tilCreatePriceConsumer.editText))
             tilCreatePriceConnector.editText.doAfterTextChanged { viewModel.setQuantityConnector(it.toString()) }

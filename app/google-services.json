@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "443213232021",
+    "firebase_url": "https://toko-management-system-default-rtdb.firebaseio.com",
     "project_id": "toko-management-system",
     "storage_bucket": "toko-management-system.appspot.com"
   },
@@ -14,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "443213232021-ogjb6619v7nlqbhmu83rqolnpeqnrsuv.apps.googleusercontent.com",
+          "client_id": "443213232021-kck2526dldr0hsm417ia0lmcu25m0aab.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.rizqi.tms",
-            "certificate_hash": "68b4a86c59ad40e9891c7ec0a63d9bc664c597e0"
+            "certificate_hash": "2e0433f774b7a57555e258ea4312bc26fa9758c9"
           }
         },
         {
