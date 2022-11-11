@@ -23,6 +23,8 @@ import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.onboarding.OnBoardingActivity
 import com.rizqi.tms.utility.getInitialBitmap
 import com.rizqi.tms.utility.getInitialPlaceholder
+import com.rizqi.tms.viewmodel.ItemViewModel
+import com.rizqi.tms.viewmodel.UnitViewModel
 import com.rizqi.tms.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +34,8 @@ class ProfileFragment : Fragment() {
     private val binding : FragmentProfileBinding
         get() = _binding!!
     private val userViewModel : UserViewModel by viewModels()
+    private val itemViewModel : ItemViewModel by viewModels()
+    private val unitViewModel : UnitViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +54,7 @@ class ProfileFragment : Fragment() {
             Glide.with(binding.root).load(context?.getInitialBitmap(getString(R.string.anonymous))).into(binding.ivProfileImage)
         }else{
             userViewModel.getUserById(context?.getUserId() ?: -1).observe(viewLifecycleOwner){
+                if (it == null) return@observe
                 binding.apply {
                     tvProfileUsername.text = it.name
                     tvProfileEmail.text = it.email
@@ -67,6 +72,9 @@ class ProfileFragment : Fragment() {
             context?.setAnonymous(false)
             context?.setFirebaseUserId("")
             context?.setUserId(0)
+            userViewModel.deleteAllUser()
+            itemViewModel.deleteAllItem()
+            unitViewModel.deleteAll()
             val intent = Intent(context, OnBoardingActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)

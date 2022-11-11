@@ -2,6 +2,7 @@ package com.rizqi.tms.model
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
+import com.rizqi.tms.network.model._SubPrice
 
 sealed class SubPrice(
     @Transient
@@ -54,4 +55,8 @@ sealed class SubPrice(
         @PrimaryKey(autoGenerate = true)
         override var id : Long? = null
     ) : SubPrice(price, isEnabled, priceId, id)
+
+    fun toNetworkSubPrice() : _SubPrice {
+        return _SubPrice(id, price, isEnabled, priceId, listOf())
+    }
 }

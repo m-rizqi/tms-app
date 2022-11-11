@@ -37,8 +37,10 @@ import com.rizqi.tms.TMSPreferences.Companion.setLogin
 import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityLoginBinding
 import com.rizqi.tms.di.NotificationModule
+import com.rizqi.tms.model.Item
 import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.model.User
+import com.rizqi.tms.network.model._Item
 import com.rizqi.tms.room.TMSDatabase
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
@@ -50,6 +52,8 @@ import com.rizqi.tms.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 import java.io.*
 import javax.inject.Inject
 
@@ -255,6 +259,8 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun restoreDatabase(firebaseUserId : String, onCompleteListener : () -> Unit){
+        Toast.makeText(this, getString(R.string.restoring_database), Toast.LENGTH_SHORT).show()
+        showLoading(binding.lLoginLoading)
         val database = Firebase.database
         val backupRef = database.getReference("backup/${firebaseUserId}")
         backupRef.child("items").get()
@@ -263,17 +269,21 @@ class LoginActivity : AppCompatActivity(){
                     Toast.makeText(this, getString(R.string.failed_get_items), Toast.LENGTH_SHORT).show()
                 }else{
                     task.result.children.forEach { itemSnapshot ->
-                        itemSnapshot.getValue(ItemWithPrices::class.java)?.let { itemWithPrices ->
-                            itemViewModel.insertItemWithPrices(itemWithPrices)
-                            itemWithPrices.item.imagePath?.let { path ->
+                        itemSnapshot.getValue(_Item::class.java)?.let { item ->
+                            itemViewModel.insertItemWithPrices(item.toLocalItemWithPrices())
+                            item.imagePath?.let { path ->
                                 val storage = Firebase.storage
-                                val storageRef = storage.reference.child("backup/${path.replace("%2E", "/")}")
+                                val storageRef = storage.reference.child("backup/${firebaseUserId}/${path}")
                                 val imageFile = File.createTempFile("image", null)
-                                storageRef.getFile(imageFile).addOnSuccessListener {
-                                    val bitmap = BitmapFactory.decodeFile(imageFile.path)
-                                    saveBitmapToFolder(bitmap)?.let { newPath ->
-                                        itemViewModel.viewModelScope.launch {
-                                            itemViewModel.updateItemImagePath(itemWithPrices.item.id!!, newPath)
+                                runBlocking {
+                                    itemViewModel.viewModelScope.launch(Dispatchers.IO){
+                                        val imageTask = storageRef.getFile(imageFile).await()
+                                        if (imageTask.task.isSuccessful){
+                                            val bitmap = BitmapFactory.decodeFile(imageFile.path)
+                                            saveBitmapToFolder(bitmap, path)
+//                                                ?.let { newPath ->
+//                                                itemViewModel.updateItemImagePath(item.id!!, newPath)
+//                                            }
                                         }
                                     }
                                 }
@@ -292,6 +302,7 @@ class LoginActivity : AppCompatActivity(){
                                 }
                             }
                         }
+                        hideLoading(binding.lLoginLoading)
                         onCompleteListener()
                     }
             }

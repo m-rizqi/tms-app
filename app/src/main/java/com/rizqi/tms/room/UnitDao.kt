@@ -23,4 +23,7 @@ interface UnitDao {
 
     @Query("SELECT * FROM Unit LIMIT 1 OFFSET :pageIndex")
     fun getWithPaginate(pageIndex : Long) : List<Unit>
+
+    @Query("DELETE FROM Unit")
+    suspend fun deleteAll()
 }

@@ -175,7 +175,7 @@
     <string name="never">Jangan Pernah</string>
     <string name="include_image">Termasuk Gambar</string>
     <string name="backup_notification_channel_description">Notification for backup database</string>
-    <string name="uploading">Uploading</string>
+    <string name="uploading_image">Uploading images</string>
     <string name="backup_success">Backup Berhasil</string>
     <string name="backup_failed">Backup Gagal</string>
     <string name="restore_file_not_found">File untuk restore tidak ditemukan</string>
@@ -185,6 +185,9 @@
     <string name="failed_get_items">Gagal mengambil data barang</string>
     <string name="failed_get_units">Gagal mengambil data satuan</string>
     <string name="connector_unit_equals_this_unit">Disarankan satuan penghubung tidak sama dengan satuan untuk harga ini</string>
+    <string name="uploading_items">Uploading items</string>
+    <string name="uploading_units">Uploading units</string>
+    <string name="restoring_database">Restoring database</string>
 
     <string-array name="months">
         <item>Januari</item>

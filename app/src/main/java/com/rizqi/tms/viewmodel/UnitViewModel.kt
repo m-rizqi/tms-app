@@ -46,4 +46,10 @@ class UnitViewModel @Inject constructor(
         }
     }
 
+    fun deleteAll() {
+        viewModelScope.launch {
+            unitRepository.deleteAll()
+        }
+    }
+
 }

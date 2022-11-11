@@ -21,4 +21,6 @@ class UnitRepository @Inject constructor(
 
     fun getWithPaginate(pageIndex : Long) = unitDao.getWithPaginate(pageIndex)
 
+    suspend fun deleteAll() = unitDao.deleteAll()
+
 }

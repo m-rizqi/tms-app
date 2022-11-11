@@ -2,9 +2,11 @@ package com.rizqi.tms.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.rizqi.tms.network.model._SubPrice
 
 sealed class SubPriceWithSpecialPrice(
 ){
+    abstract fun toNetworkSubPrice() : _SubPrice
     data class MerchantSubPriceWithSpecialPrice(
         @Embedded
         val subPrice: SubPrice.MerchantSubPrice,
@@ -15,6 +17,12 @@ sealed class SubPriceWithSpecialPrice(
         var specialPrices: List<SpecialPrice.MerchantSpecialPrice>
     ) : SubPriceWithSpecialPrice(){
         constructor() : this(SubPrice.MerchantSubPrice(), mutableListOf())
+
+        override fun toNetworkSubPrice(): _SubPrice {
+            val tempSubPrice = subPrice.toNetworkSubPrice()
+            tempSubPrice.specialPrices = specialPrices.map { it.toNetworkSpecialPrice() }
+            return tempSubPrice
+        }
     }
 
     data class ConsumerSubPriceWithSpecialPrice(
@@ -27,5 +35,11 @@ sealed class SubPriceWithSpecialPrice(
         var specialPrices: List<SpecialPrice.ConsumerSpecialPrice>
     ) : SubPriceWithSpecialPrice(){
         constructor() : this(SubPrice.ConsumerSubPrice(), mutableListOf())
+
+        override fun toNetworkSubPrice(): _SubPrice {
+            val tempSubPrice = subPrice.toNetworkSubPrice()
+            tempSubPrice.specialPrices = specialPrices.map { it.toNetworkSpecialPrice() }
+            return tempSubPrice
+        }
     }
 }

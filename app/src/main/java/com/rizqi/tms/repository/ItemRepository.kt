@@ -70,4 +70,6 @@ class ItemRepository @Inject constructor(
 
     suspend fun updateItemImagePath(itemId: Long, path : String) = itemDao.updateItemImagePath(itemId, path)
 
+    suspend fun deleteAllItem() = itemDao.deleteAllItem()
+
 }

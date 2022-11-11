@@ -39,4 +39,10 @@ class UserViewModel @Inject constructor(
             )
         }
     }
+
+    fun deleteAllUser() {
+        viewModelScope.launch {
+            userRepository.deleteAllUser()
+        }
+    }
 }

@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.rizqi.tms.TMSPreferences.Companion.getLastBackupDate
 import com.rizqi.tms.databinding.ActivityBackupBinding
+import com.rizqi.tms.utility.getDateString
 
 class BackupActivity : AppCompatActivity() {
     private lateinit var binding : ActivityBackupBinding
@@ -15,7 +17,10 @@ class BackupActivity : AppCompatActivity() {
         binding = ActivityBackupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val lastBackupDate = getLastBackupDate()
+
         binding.apply {
+            lastBackup = if (lastBackupDate != null) getDateString(lastBackupDate) else "-"
             btnBackupBack.setOnClickListener { onBackPressed() }
             btnBackup.setOnClickListener {
                 if (!foregroundServiceRunning()){

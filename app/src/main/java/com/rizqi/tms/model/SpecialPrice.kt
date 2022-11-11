@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
+import com.rizqi.tms.network.model._SpecialPrice
 
 sealed class SpecialPrice(
     @Transient
@@ -51,4 +52,8 @@ sealed class SpecialPrice(
         @PrimaryKey(autoGenerate = true)
         override var id : Long? = null
     ) : SpecialPrice(quantity, price, subPriceId, id)
+
+    fun toNetworkSpecialPrice() : _SpecialPrice {
+        return _SpecialPrice(quantity, price, subPriceId, id)
+    }
 }

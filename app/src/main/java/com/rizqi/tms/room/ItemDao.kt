@@ -93,4 +93,7 @@ interface ItemDao {
 
     @Query("UPDATE Item SET image_path = :path WHERE id = :itemId")
     suspend fun updateItemImagePath(itemId : Long, path : String)
+
+    @Query("DELETE FROM Item")
+    suspend fun deleteAllItem()
 }

@@ -290,4 +290,10 @@ class ItemViewModel @Inject constructor(
     }
 
     suspend fun updateItemImagePath(itemId: Long, path : String) = itemRepository.updateItemImagePath(itemId, path)
+
+    fun deleteAllItem(){
+        viewModelScope.launch {
+            itemRepository.deleteAllItem()
+        }
+    }
 }

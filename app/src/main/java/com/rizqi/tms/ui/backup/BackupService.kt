@@ -4,6 +4,8 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.IBinder
+import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.database.ktx.database
@@ -11,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.rizqi.tms.R
 import com.rizqi.tms.TMSPreferences.Companion.getFirebaseUserId
+import com.rizqi.tms.TMSPreferences.Companion.setLastBackupDate
 import com.rizqi.tms.di.NotificationModule
 import com.rizqi.tms.repository.ItemRepository
 import com.rizqi.tms.repository.UnitRepository
@@ -22,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
@@ -101,24 +105,52 @@ class BackupService : Service() {
         val backupRef = database.getReference("backup/${getFirebaseUserId()}")
         CoroutineScope(Dispatchers.Main).launch {
             itemRepository.getAllItem().collect() {
-                val itemTask = backupRef.child("items").setValue(it)
-                it.forEach { itemWithPrices ->
+                notificationManager.notify(
+                    BACKUP_NOTIFICATION_ID,
+                    backupNotificationBuilder
+                        .setContentTitle(getString(R.string.uploading_items))
+                        .clearActions()
+                        .setContentText("")
+                        .setProgress(0,0, false)
+                        .build()
+                )
+                val itemTask = backupRef.child("items").setValue(it.map { it1 -> it1.toNetworkItem() })
+                it.forEachIndexed { index, itemWithPrices ->
                     itemWithPrices.item.imagePath?.let { path ->
                         val storage = Firebase.storage
-                        val storageRef = storage.reference.child("backup/${path.replace("/", "%2E")}")
+                        val storageRef = storage.reference.child("backup/${getFirebaseUserId()}/${path}")
                         getBitmapFromPath(path)?.let {bitmap ->
                             val baos = ByteArrayOutputStream()
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                             val data: ByteArray = baos.toByteArray()
-                            storageRef.putBytes(data)
+                            val uploadTask = storageRef.putBytes(data).await()
                         }
                     }
+                    val progress = index / it.size * 100
+                    notificationManager.notify(
+                        BACKUP_NOTIFICATION_ID,
+                        backupNotificationBuilder
+                            .setContentTitle(getString(R.string.uploading_image))
+                            .setContentText("${index}/${it.size}")
+                            .setProgress(100, progress, true)
+                            .build()
+                    )
                 }
                 itemTask.addOnCompleteListener {
                     CoroutineScope(Dispatchers.Main).launch {
+                        notificationManager.notify(
+                            BACKUP_NOTIFICATION_ID,
+                            backupNotificationBuilder
+                                .setContentTitle(getString(R.string.uploading_units))
+                                .clearActions()
+                                .setContentText("")
+                                .setProgress(0,0, false)
+                                .build()
+                        )
                         unitRepository.getAll().collect() {units ->
                             backupRef.child("units").setValue(units)
                                 .addOnCompleteListener {
+                                    setLastBackupDate()
                                     stopForeground(true)
                                     stopSelf()
                                     notificationManager.notify(

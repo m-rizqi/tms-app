@@ -40,7 +40,7 @@ object NotificationModule {
             .setContentTitle(BACKUP_NOTIFICATION_CHANNEL_NAME)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            notificationBuilder.setSmallIcon(R.drawable.ic_logo)
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
         }
         return notificationBuilder
     }

@@ -84,8 +84,8 @@ fun Chip.setOnCheckedListener(onCheckedListener : (CompoundButton, Boolean) -> U
     }
 }
 
-fun Context.saveBitmapToFolder(bitmap: Bitmap?) : String?{
-    val mImageName = String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
+fun Context.saveBitmapToFolder(bitmap: Bitmap?, imageName : String? = null) : String?{
+    val mImageName = if (imageName != null) imageName else String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
     val imageFile = getOutputMediaFile(this, mImageName)
     try {
         val fos = FileOutputStream(imageFile)
