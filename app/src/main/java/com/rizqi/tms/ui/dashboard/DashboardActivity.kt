@@ -11,7 +11,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.rizqi.tms.R
+import com.rizqi.tms.TMSPreferences.Companion.getBackupSchedule
+import com.rizqi.tms.TMSPreferences.Companion.getNextBackupDate
 import com.rizqi.tms.databinding.ActivityDashboardBinding
+import com.rizqi.tms.model.BackupSchedule
 import com.rizqi.tms.ui.dashboard.DashboardActivity.DashboardState.*
 import com.rizqi.tms.ui.dashboard.cashier.CashierFragment
 import com.rizqi.tms.ui.dashboard.finance.FinanceFragment

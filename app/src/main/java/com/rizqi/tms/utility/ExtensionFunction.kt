@@ -1,12 +1,14 @@
 package com.rizqi.tms.utility
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
 import androidx.core.content.res.ResourcesCompat
 import com.google.gson.Gson
 import com.rizqi.tms.R
 import com.rizqi.tms.model.SpecialPrice
+import com.rizqi.tms.ui.backup.BackupService
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,4 +63,14 @@ inline fun <reified E>List<E>.copy(): List<E> {
         list.add(Gson().fromJson(gson, E::class.java))
     }
     return list.toList()
+}
+
+fun Context.checkServiceRunning(serviceName : String): Boolean {
+    val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for(service in activityManager.getRunningServices(Int.MAX_VALUE)){
+        if (serviceName.equals(service.service.className)){
+            return true
+        }
+    }
+    return false
 }

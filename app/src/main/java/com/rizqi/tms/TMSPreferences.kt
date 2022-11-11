@@ -2,6 +2,9 @@ package com.rizqi.tms
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.rizqi.tms.TMSPreferences.Companion.isBackupWithImage
+import com.rizqi.tms.TMSPreferences.Companion.setBackupSchedule
+import com.rizqi.tms.model.BackupSchedule
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -18,6 +21,9 @@ class TMSPreferences {
         private const val USER_ID = "user_id"
         private const val FIREBASE_USER_ID = "firebase_user_id"
         private const val LAST_BACKUP_DATE = "last_backup_date"
+        private const val BACKUP_WITH_IMAGE = "backup_with_image"
+        private const val BACKUP_SCHEDULE = "backup_schedule"
+        private const val NEXT_BACKUP_DATE = "next_backup_date"
 
         fun Context.isLogin() : Boolean = pref(this).getBoolean(IS_LOGIN, false)
 
@@ -63,5 +69,36 @@ class TMSPreferences {
             val lastBackupDate = pref(this).getLong(LAST_BACKUP_DATE, 0)
             return if (lastBackupDate == 0L) null else lastBackupDate
         }
+
+        fun Context.isBackupWithImage() : Boolean = pref(this).getBoolean(BACKUP_WITH_IMAGE, false)
+
+        fun Context.setBackupWithImage(value: Boolean) {
+            pref(this).edit().apply{
+                putBoolean(BACKUP_WITH_IMAGE, value)
+                apply()
+            }
+        }
+
+        fun Context.setBackupSchedule(value : BackupSchedule){
+            val editor = pref(this).edit()
+            editor.putInt(BACKUP_SCHEDULE, value.ordinal)
+            editor.apply()
+        }
+
+        fun Context.getBackupSchedule() : BackupSchedule = when(pref(this).getInt(BACKUP_SCHEDULE, BackupSchedule.EVERY_MONTH.ordinal)){
+            BackupSchedule.EVERY_DAY.ordinal -> BackupSchedule.EVERY_DAY
+            BackupSchedule.EVERY_WEEK.ordinal -> BackupSchedule.EVERY_WEEK
+            BackupSchedule.EVERY_MONTH.ordinal -> BackupSchedule.EVERY_MONTH
+            else -> BackupSchedule.NEVER
+        }
+
+        fun Context.getNextBackupDate() : Long = pref(this).getLong(NEXT_BACKUP_DATE, 0)
+
+        fun Context.setNextBackupDate(value : Long) {
+            val editor = pref(this).edit()
+            editor.putLong(NEXT_BACKUP_DATE, value)
+            editor.apply()
+        }
+
     }
 }

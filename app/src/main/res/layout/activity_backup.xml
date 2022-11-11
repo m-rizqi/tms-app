@@ -98,6 +98,7 @@
                     style="@style/TextAppearance.Body2"
                     android:textColor="@color/black_100"
                     android:text="@{@string/size_(size)}"
+                    android:visibility="gone"
                     />
 
                 <com.google.android.material.button.MaterialButton
