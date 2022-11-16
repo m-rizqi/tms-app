@@ -195,7 +195,7 @@
     <string name="set_all_item_to">Atur Semua Barang Jadi</string>
     <string name="item_list">List Item</string>
     <string name="total">Total</string>
-    <string name="total_rp"><![CDATA[Total Rp. <font color=#4641A7>%1$s</font>,-]]></string>
+    <string name="total_rp"><![CDATA[Total <font color=#4641A7>Rp. %1$s,-</font>]]></string>
     <string name="cancel_this_transaction">Batalkan Transaksi Ini ?</string>
     <string name="are_you_sure_cancel_this_transaction">Apakah kamu yakin ingin membatalkan transaksi ini ?</string>
     <string name="set_items_to_price_title">Atur Semua Barang Jadi Harga . . .</string>

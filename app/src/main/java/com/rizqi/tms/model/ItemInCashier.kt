@@ -1,14 +1,14 @@
 package com.rizqi.tms.model
 
 data class ItemInCashier(
-    val quantity : Double,
-    val total : Long,
+    var quantity : Double,
+    var total : Long,
     val itemWithPrices: ItemWithPrices,
-    val usedSubPrice: SubPriceWithSpecialPrice,
+    var usedSubPrice: SubPriceWithSpecialPrice,
     val itemId : Long? = null,
-    val priceId : Long? = null,
+    var priceId : Long? = null,
     val barcode : String? = null,
-    val subPriceId : Long? = null,
+    var subPriceId : Long? = null,
     val id : Long? = null
 ){
     override fun equals(other: Any?): Boolean {
@@ -21,6 +21,7 @@ data class ItemInCashier(
         if (total != other.total) return false
         if (itemWithPrices != other.itemWithPrices) return false
         if (usedSubPrice != other.usedSubPrice) return false
+        if (usedSubPrice.getSubPrice().price != other.usedSubPrice.getSubPrice().price) return false
         if (itemId != other.itemId) return false
         if (priceId != other.priceId) return false
         if (barcode != other.barcode) return false

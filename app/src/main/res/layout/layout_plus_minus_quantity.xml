@@ -50,7 +50,8 @@
                 tool:text="123"
                 android:text="@{quantity}"
                 android:maxLines="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionDone"
                 />
 
         </com.google.android.material.textfield.TextInputLayout>

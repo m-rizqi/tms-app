@@ -14,9 +14,14 @@ import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.SubPrice
 import com.rizqi.tms.model.SubPriceWithSpecialPrice
 import com.rizqi.tms.utility.ThousandFormatter
+import com.rizqi.tms.utility.hideKeyboard
 import kotlin.math.ceil
 
 class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.ItemInCashierViewHolder>(DiffCallback){
+
+    var onSubPriceChangedListener : ((ItemInCashier, SubPriceWithSpecialPrice, Int) -> ItemInCashier?)? = null
+    var onIncrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
+    var onDecrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
 
     companion object DiffCallback : DiffUtil.ItemCallback<ItemInCashier>(){
         override fun areItemsTheSame(oldItem: ItemInCashier, newItem: ItemInCashier): Boolean {
@@ -30,13 +35,30 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
     }
 
     inner class ItemInCashierViewHolder(val binding : ItemCashierBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(itemInCashier: ItemInCashier){
+        fun bind(itemInCashier: ItemInCashier, position: Int){
             val context = binding.root.context
             binding.apply {
                 itemName = itemInCashier.itemWithPrices.item.name
                 quantity = formatQuantity(itemInCashier.quantity)
                 total = ThousandFormatter.format(itemInCashier.total)
+                lItemCashierQuantity.tieAmount.setOnEditorActionListener { _, _, _ ->
+                    hideKeyboard(binding.lItemCashierQuantity.tieAmount)
+                    true
+                }
+                lItemCashierQuantity.btnMinus.setOnClickListener {
+                    onDecrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
+                        binding.quantity = formatQuantity(updatedItemCashier.quantity)
+                        binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                    }
+                }
+                lItemCashierQuantity.btnPlus.setOnClickListener {
+                    onIncrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
+                        binding.quantity = formatQuantity(updatedItemCashier.quantity)
+                        binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                    }
+                }
             }
+
             val possibleSubPrice = mutableListOf<SubPriceWithSpecialPrice>()
             itemInCashier.itemWithPrices.prices.forEach { priceAndSubPrice ->
                 possibleSubPrice.add(priceAndSubPrice.merchantSubPrice)
@@ -64,7 +86,15 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                     }
                 })"
                 setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
+                setOnItemClickListener { _, _, i, _ ->
+                    val changedSubPrice = possibleSubPrice[i]
+                    onSubPriceChangedListener?.invoke(itemInCashier, changedSubPrice, position)?.let { updatedItemCashier ->
+                        binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                    }
+
+                }
             }
+
         }
     }
 
@@ -73,13 +103,13 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
     }
 
     override fun onBindViewHolder(holder: ItemInCashierViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     private fun formatQuantity(value : Double): String {
         var valueString = value.toString()
-        val dotIndex = valueString.indexOf(".")
-        if (dotIndex >= 0 && dotIndex <= valueString.lastIndex && valueString.substring(dotIndex).all { it == '0' }){
+        val dotIndex = valueString.indexOf('.')
+        if (dotIndex >= 0 && dotIndex <= valueString.lastIndex && valueString.substring(dotIndex).split("").all { it == "0" }){
             valueString = valueString.substring(0, dotIndex)
         }
         return valueString

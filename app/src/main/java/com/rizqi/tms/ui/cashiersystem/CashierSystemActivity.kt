@@ -22,6 +22,8 @@ import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceType
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
+import com.rizqi.tms.utility.ThousandFormatter
+import com.rizqi.tms.utility.hideKeyboard
 import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
@@ -61,11 +63,23 @@ class CashierSystemActivity : AppCompatActivity() {
         }
         viewModel.itemInCashierList.observe(this){
             itemInCashierAdapter.submitList(it)
-            binding.rvCashierSystemItems.invalidate()
+            binding.rvCashierSystemItems.requestLayout()
+        }
+        viewModel.total.observe(this){
+            binding.total = ThousandFormatter.format(it)
+        }
+
+        itemInCashierAdapter.onSubPriceChangedListener = {itemInCashier, changedSubPrice, position ->
+            viewModel.updateItemInCashier(itemInCashier, changedSubPrice, position)
+        }
+        itemInCashierAdapter.onDecrementQuantityListener = {itemInCashier, position ->
+            viewModel.decrementQuantityItemInCashier(itemInCashier, position)
+        }
+        itemInCashierAdapter.onIncrementQuantityListener = {itemInCashier, position ->
+            viewModel.incrementQuantityItemInCashier(itemInCashier, position)
         }
 
         binding.apply {
-            total = "0"
             rvCashierSystemItems.adapter = itemInCashierAdapter
             radioCashierSystemSetToMerchant.setOnClickListener {
                 viewModel.setPriceType(PriceType.Merchant)
