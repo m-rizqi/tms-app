@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.rizqi.tms.R
 import com.rizqi.tms.model.SpecialPrice
@@ -73,4 +74,8 @@ fun Context.checkServiceRunning(serviceName : String): Boolean {
         }
     }
     return false
+}
+
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }

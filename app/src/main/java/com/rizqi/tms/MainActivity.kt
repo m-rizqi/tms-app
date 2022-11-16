@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.rizqi.tms.TMSPreferences.Companion.isLogin
 import com.rizqi.tms.room.TMSDatabase
 import com.rizqi.tms.ui.backup.BackupActivity
+import com.rizqi.tms.ui.cashiersystem.CashierSystemActivity
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.login.LoginActivity
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize Database
         TMSDatabase.getDatabase(this)
         if (isLogin()) {
-            startActivity(Intent(this, DashboardActivity::class.java))
+            startActivity(Intent(this, CashierSystemActivity::class.java))
             return
         }
         startActivity(Intent(this, LoginActivity::class.java))

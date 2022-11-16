@@ -188,6 +188,20 @@
     <string name="uploading_items">Uploading items</string>
     <string name="uploading_units">Uploading units</string>
     <string name="restoring_database">Restoring database</string>
+    <string name="transaction_history">Riwayat Transaksi</string>
+    <string name="create_transaction">Buat Transaksi</string>
+    <string name="cashier_system">Sistem Kasir</string>
+    <string name="finish">Selesai</string>
+    <string name="set_all_item_to">Atur Semua Barang Jadi</string>
+    <string name="item_list">List Item</string>
+    <string name="total">Total</string>
+    <string name="total_rp"><![CDATA[Total Rp. <font color=#4641A7>%1$s</font>,-]]></string>
+    <string name="cancel_this_transaction">Batalkan Transaksi Ini ?</string>
+    <string name="are_you_sure_cancel_this_transaction">Apakah kamu yakin ingin membatalkan transaksi ini ?</string>
+    <string name="set_items_to_price_title">Atur Semua Barang Jadi Harga . . .</string>
+    <string name="set_items_to_price_description">Klik harga pedagang agar semua barang dalam perhitungan menggunakan harga pedagang. Klik harga konsumenr agar semua barang dalam perhintungan menggunakan harga konsumern. Kamu tetap bisa menggunakan kedua jenis harga tersebut bersamaan dengan cara mengubahnya pada barang yang diinginkan.</string>
+    <string name="consumer">Konsumen</string>
+    <string name="merchant">Pedagang</string>
 
     <string-array name="months">
         <item>Januari</item>

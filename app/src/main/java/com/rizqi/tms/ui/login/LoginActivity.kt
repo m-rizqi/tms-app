@@ -276,15 +276,10 @@ class LoginActivity : AppCompatActivity(){
                                 val storageRef = storage.reference.child("backup/${firebaseUserId}/${path}")
                                 val imageFile = File.createTempFile("image", null)
                                 runBlocking {
-                                    itemViewModel.viewModelScope.launch(Dispatchers.IO){
-                                        val imageTask = storageRef.getFile(imageFile).await()
-                                        if (imageTask.task.isSuccessful){
-                                            val bitmap = BitmapFactory.decodeFile(imageFile.path)
-                                            saveBitmapToFolder(bitmap, path)
-//                                                ?.let { newPath ->
-//                                                itemViewModel.updateItemImagePath(item.id!!, newPath)
-//                                            }
-                                        }
+                                    val imageTask = storageRef.getFile(imageFile).await()
+                                    if (imageTask.task.isSuccessful){
+                                        val bitmap = BitmapFactory.decodeFile(imageFile.path)
+                                        val fileName = saveBitmapToFolder(bitmap, path)
                                     }
                                 }
                             }

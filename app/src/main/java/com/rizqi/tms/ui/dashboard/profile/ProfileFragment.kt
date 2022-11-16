@@ -80,7 +80,7 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
             activity?.finish()
         }
-        settingAdapter.submitList(Setting.getSettings(resources))
+        settingAdapter.submitList(Setting.getSettings(requireContext()))
         binding.rvProfileSettings.adapter = settingAdapter
 
     }

@@ -85,8 +85,11 @@ fun Chip.setOnCheckedListener(onCheckedListener : (CompoundButton, Boolean) -> U
 }
 
 fun Context.saveBitmapToFolder(bitmap: Bitmap?, imageName : String? = null) : String?{
-    val mImageName = if (imageName != null) imageName else String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
+    val mImageName = imageName ?: String.format(IMAGE_NAME_FORMAT, System.currentTimeMillis())
     val imageFile = getOutputMediaFile(this, mImageName)
+//    if (imageFile == null || !imageFile.exists()){
+//        imageFile?.mkdir()
+//    }
     try {
         val fos = FileOutputStream(imageFile)
         bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, fos)
@@ -100,15 +103,15 @@ fun Context.saveBitmapToFolder(bitmap: Bitmap?, imageName : String? = null) : St
 
 fun Context.getBitmapFromPath(path: String): Bitmap? {
     val bmOptions = BitmapFactory.Options()
-    return BitmapFactory.decodeFile(getOutputMediaFile(this, path)?.absolutePath, bmOptions)
+    return BitmapFactory.decodeFile(getOutputMediaFile(this, path)?.path, bmOptions)
 }
 
 private fun getOutputMediaFile(context: Context, path: String): File? {
     val mediaStorageDir = File(
-        context.getExternalFilesDir(null)
-            .toString() + ANDROID_DATA
-                + context.applicationContext.packageName
-                + FILES
+        context.getExternalFilesDir(null).toString()
+//                + ANDROID_DATA
+//                + context.applicationContext.packageName
+//                + FILES
     )
 
     if (!mediaStorageDir.exists()) {
