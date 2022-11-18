@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         // Initialize Database
         TMSDatabase.getDatabase(this)
         if (isLogin()) {
-            startActivity(Intent(this, CashierSystemActivity::class.java))
+            startActivity(Intent(this, DashboardActivity::class.java))
             return
         }
         startActivity(Intent(this, LoginActivity::class.java))

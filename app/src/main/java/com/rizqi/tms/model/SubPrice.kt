@@ -10,6 +10,8 @@ sealed class SubPrice(
     @Transient
     open var isEnabled: Boolean = true,
     @Transient
+    open var isMerchant : Boolean = true,
+    @Transient
     open var priceId : Long? = null,
     @Transient
     open var id : Long? = null
@@ -29,11 +31,13 @@ sealed class SubPrice(
         override var price: Double = 0.0,
         @ColumnInfo(name = "is_enabled")
         override var isEnabled: Boolean = true,
+        @ColumnInfo(name = "is_merchant")
+        override var isMerchant: Boolean = true,
         @ColumnInfo(name = "price_id")
         override var priceId: Long? = null,
         @PrimaryKey(autoGenerate = true)
         override var id : Long? = null
-    ) : SubPrice(price, isEnabled, priceId, id)
+    ) : SubPrice(price, isEnabled, isMerchant, priceId, id)
 
     @Entity(
         foreignKeys = [
@@ -50,13 +54,15 @@ sealed class SubPrice(
         override var price: Double = 0.0,
         @ColumnInfo(name = "is_enabled")
         override var isEnabled: Boolean = true,
+        @ColumnInfo(name = "is_merchant")
+        override var isMerchant: Boolean = true,
         @ColumnInfo(name = "price_id")
         override var priceId: Long? = null,
         @PrimaryKey(autoGenerate = true)
         override var id : Long? = null
-    ) : SubPrice(price, isEnabled, priceId, id)
+    ) : SubPrice(price, isEnabled, isMerchant, priceId, id)
 
     fun toNetworkSubPrice() : _SubPrice {
-        return _SubPrice(id, price, isEnabled, priceId, listOf())
+        return _SubPrice(id, price, isEnabled, isMerchant, priceId, listOf())
     }
 }

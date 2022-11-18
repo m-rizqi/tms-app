@@ -16,6 +16,7 @@ import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.android.material.snackbar.Snackbar
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityCashierSystemBinding
 import com.rizqi.tms.model.Info
@@ -53,8 +54,14 @@ class CashierSystemActivity : AppCompatActivity() {
         }
         viewModel.priceType.observe(this){
             when(it){
-                PriceType.Merchant -> binding.radioCashierSystemSetToMerchant.isChecked = true
-                PriceType.Consumer -> binding.radioCashierSystemSetToConsumer.isChecked = true
+                PriceType.Merchant -> {
+                    binding.radioCashierSystemSetToMerchant.isChecked = true
+                    binding.radioCashierSystemSetToConsumer.isChecked = false
+                }
+                PriceType.Consumer -> {
+                    binding.radioCashierSystemSetToMerchant.isChecked = false
+                    binding.radioCashierSystemSetToConsumer.isChecked = true
+                }
                 PriceType.None -> {
                     binding.radioCashierSystemSetToMerchant.isChecked = false
                     binding.radioCashierSystemSetToConsumer.isChecked = false
@@ -73,7 +80,7 @@ class CashierSystemActivity : AppCompatActivity() {
             viewModel.updateItemInCashier(itemInCashier, changedSubPrice, position)
         }
         itemInCashierAdapter.onDecrementQuantityListener = {itemInCashier, position ->
-            viewModel.decrementQuantityItemInCashier(itemInCashier, position)
+            viewModel.decrementQuantityItemInCashier(itemInCashier, position, ::showDeletedItemSnackBar)
         }
         itemInCashierAdapter.onIncrementQuantityListener = {itemInCashier, position ->
             viewModel.incrementQuantityItemInCashier(itemInCashier, position)
@@ -82,10 +89,14 @@ class CashierSystemActivity : AppCompatActivity() {
         binding.apply {
             rvCashierSystemItems.adapter = itemInCashierAdapter
             radioCashierSystemSetToMerchant.setOnClickListener {
-                viewModel.setPriceType(PriceType.Merchant)
+                viewModel.setPriceType(PriceType.Merchant){
+                    itemInCashierAdapter.notifyDataSetChanged()
+                }
             }
             radioCashierSystemSetToConsumer.setOnClickListener {
-                viewModel.setPriceType(PriceType.Consumer)
+                viewModel.setPriceType(PriceType.Consumer){
+                    itemInCashierAdapter.notifyDataSetChanged()
+                }
             }
             btnCashierSystemBack.setOnClickListener {
                 onBackPressed()
@@ -205,7 +216,9 @@ class CashierSystemActivity : AppCompatActivity() {
                     val currentValue = barcodes.valueAt(0).rawValue
                     if ((scanTime == 0L || viewModel.scannedValue.value != currentValue) && currentValue !=  "0"){
                         runOnUiThread {
-                            viewModel.setScannedValue(currentValue)
+                            viewModel.setScannedValue(currentValue){
+                                itemInCashierAdapter.notifyItemChanged(it)
+                            }
                         }
                         scanTime = System.currentTimeMillis()
                     } else if (viewModel.scannedValue.value == currentValue && scanTime > (System.currentTimeMillis() - PAUSE_SCAN_TIME)){
@@ -217,6 +230,18 @@ class CashierSystemActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun showDeletedItemSnackBar(itemName : String, barcode : String){
+       Snackbar.make(binding.root, getString(R.string.item_removed_from_cashier, itemName), Toast.LENGTH_SHORT)
+            .setAction(getString(R.string.undo)){
+                viewModel.setScannedValue(barcode){
+                    itemInCashierAdapter.notifyItemChanged(it)
+                }
+            }
+           .also {
+               it.show()
+           }
     }
 
 }

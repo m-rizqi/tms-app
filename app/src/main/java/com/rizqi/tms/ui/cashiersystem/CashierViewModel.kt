@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.rizqi.tms.model.*
 import com.rizqi.tms.model.PriceType.*
 import com.rizqi.tms.utility.notifyObserver
@@ -29,8 +30,16 @@ class CashierViewModel : ViewModel() {
     val itemInCashierList : LiveData<MutableList<ItemInCashier>>
         get() = _itemInCashierList
 
-    fun setScannedValue(value : String){
+    fun setScannedValue(value : String, onDuplicateItemListener : (Int) -> kotlin.Unit){
         _scannedValue.value = value
+
+        val duplicateItem = _itemInCashierList.value?.withIndex()?.find { it.value.barcode == value }
+        if (duplicateItem != null){
+            incrementQuantityItemInCashier(duplicateItem.value, duplicateItem.index)
+            onDuplicateItemListener(duplicateItem.index)
+            return
+        }
+
         val selectedItemWithPricesList = _allItems.value?.filter {itemWithPrices ->
             itemWithPrices.prices.map { priceAndSubPrice ->
                 priceAndSubPrice.price.barcode
@@ -38,7 +47,7 @@ class CashierViewModel : ViewModel() {
         }
         if (selectedItemWithPricesList != null && selectedItemWithPricesList.isNotEmpty()){
             val selectedItemWithPrices = selectedItemWithPricesList.first()
-            val selectedPriceAndSubPrice = selectedItemWithPrices.prices.find { it.price.isMainPrice } ?: selectedItemWithPrices.prices.first()
+            val selectedPriceAndSubPrice = selectedItemWithPrices.prices.find { it.price.barcode == value } ?: selectedItemWithPrices.prices.find { it.price.isMainPrice } ?:selectedItemWithPrices.prices.first()
             val selectedSubPrice = when(_priceType.value){
                 Merchant -> selectedPriceAndSubPrice.merchantSubPrice
                 Consumer -> selectedPriceAndSubPrice.consumerSubPrice
@@ -58,18 +67,41 @@ class CashierViewModel : ViewModel() {
         _allItems.value = value
     }
 
-    fun setPriceType(value : PriceType){
+    fun setPriceType(value : PriceType, onDataSetChangedListener : () -> kotlin.Unit){
         _priceType.value = value
+        when(value){
+            Merchant -> {
+                _itemInCashierList.value?.forEach {
+                    val priceAndSubPrice = it.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.barcode == it.barcode }
+                    it.usedSubPrice = priceAndSubPrice?.merchantSubPrice ?: it.usedSubPrice
+                    it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
+                    it.subPriceId = priceAndSubPrice?.merchantSubPrice?.subPrice?.id ?: it.subPriceId
+                }
+            }
+            Consumer -> {
+                _itemInCashierList.value?.forEach {
+                    val priceAndSubPrice = it.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.barcode == it.barcode }
+                    it.usedSubPrice = priceAndSubPrice?.consumerSubPrice ?: it.usedSubPrice
+                    it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
+                    it.subPriceId = priceAndSubPrice?.consumerSubPrice?.subPrice?.id ?: it.subPriceId
+                }
+            }
+            None -> {}
+        }
+        calculateTotal()
+        _itemInCashierList.notifyObserver()
+        onDataSetChangedListener()
     }
 
     fun updateItemInCashier(itemInCashier: ItemInCashier, changedSubPrice : SubPriceWithSpecialPrice, position : Int): ItemInCashier? {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.usedSubPrice = changedSubPrice
         itemCashier?.subPriceId = changedSubPrice.getSubPrice().id
-        itemCashier?.priceId = itemCashier?.itemWithPrices?.prices?.find { it.price.id == changedSubPrice.getSubPrice().priceId }?.price?.id
+        itemCashier?.priceId = changedSubPrice.getSubPrice().priceId
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * changedSubPrice.getSubPrice().price).toLong()
         _itemInCashierList.notifyObserver()
         calculateTotal()
+        calculatePriceType()
         return itemCashier
     }
 
@@ -79,15 +111,20 @@ class CashierViewModel : ViewModel() {
         _itemInCashierList.notifyObserver()
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
         calculateTotal()
+        calculatePriceType()
         return itemCashier
     }
 
-    fun decrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int): ItemInCashier? {
-        val itemCashier = _itemInCashierList.value?.get(position)
-//        if (itemCashier?.quantity != null && itemCashier.quantity >= 1.0){
+    fun decrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int, showSnackBar: (String, String) -> kotlin.Unit): ItemInCashier? {
+        var itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) - 1.0
-//        }
-        itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
+        if ((itemCashier?.quantity ?: 1.0) <= 0.0){
+            showSnackBar(itemCashier?.itemWithPrices?.item?.name ?: "", itemCashier?.barcode ?: "")
+            _itemInCashierList.value?.removeAt(position)
+            itemCashier = null
+        }else{
+            itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
+        }
         _itemInCashierList.notifyObserver()
         calculateTotal()
         return itemCashier
@@ -96,10 +133,26 @@ class CashierViewModel : ViewModel() {
     private fun calculateTotal(){
         var tempTotal = 0L
         _itemInCashierList.value?.forEach { itemInCashier ->
-            Log.d("ItemInCashier", itemInCashier.usedSubPrice.getSubPrice().price.toString())
+            itemInCashier.total = ceil(itemInCashier.quantity * itemInCashier.usedSubPrice.getSubPrice().price).toLong()
             tempTotal += itemInCashier.total
         }
         _total.value = tempTotal
+    }
+
+    private fun calculatePriceType(){
+        val isMerchant = _itemInCashierList.value?.all {
+            it.usedSubPrice.getSubPrice().isMerchant
+        } ?: false
+        val isConsumer = _itemInCashierList.value?.all {
+            !it.usedSubPrice.getSubPrice().isMerchant
+        } ?: false
+        if (isMerchant){
+            _priceType.value = Merchant
+        }else if (isConsumer){
+            _priceType.value = Consumer
+        } else {
+            _priceType.value = None
+        }
     }
 
 }

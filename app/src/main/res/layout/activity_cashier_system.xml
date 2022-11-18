@@ -188,7 +188,7 @@
                         android:src="@drawable/ic_question_mark_circle"
                         />
 
-                    <RadioGroup
+                    <LinearLayout
                         android:id="@+id/radio_group_cashier_system_set_items"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
                             android:buttonTint="@color/primary_100"
                             android:text="@string/consumer_price" />
 
-                    </RadioGroup>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_cashier_system_list_item"

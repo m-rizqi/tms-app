@@ -1,5 +1,6 @@
 package com.rizqi.tms.ui.cashiersystem
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -60,7 +61,9 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
             }
 
             val possibleSubPrice = mutableListOf<SubPriceWithSpecialPrice>()
-            itemInCashier.itemWithPrices.prices.forEach { priceAndSubPrice ->
+            itemInCashier.itemWithPrices.prices.filter { priceAndSubPrice ->
+                priceAndSubPrice.price.barcode == itemInCashier.barcode
+            }.forEach { priceAndSubPrice ->
                 possibleSubPrice.add(priceAndSubPrice.merchantSubPrice)
                 possibleSubPrice.add(priceAndSubPrice.consumerSubPrice)
             }
@@ -68,27 +71,28 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                 context, R.layout.item_auto_complete, R.id.tv_item_auto_complete,
                 possibleSubPrice.map { subPriceWithSpecialPrice ->
                     val subPrice = subPriceWithSpecialPrice.getSubPrice()
-                    "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(subPrice.price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == subPrice.priceId }?.price?.unitName} (${
-                        when(subPrice){
-                            is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
-                            is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
-                        }
-                    })"
+                    generatePriceHint(context, subPrice, itemInCashier)
                 }
             )
 
             binding.actvItemCashierPrice.apply {
                 setAdapter(priceArrayAdapter)
-                hint = "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(itemInCashier.usedSubPrice.getSubPrice().price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == itemInCashier.usedSubPrice.getSubPrice().priceId }?.price?.unitName} (${
-                    when(itemInCashier.usedSubPrice.getSubPrice()){
-                        is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
-                        is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
-                    }
-                })"
+                hint = generatePriceHint(context, itemInCashier.usedSubPrice.getSubPrice(), itemInCashier)
+//                hint = "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(itemInCashier.usedSubPrice.getSubPrice().price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == itemInCashier.usedSubPrice.getSubPrice().priceId }?.price?.unitName} (${
+//                    when(itemInCashier.usedSubPrice.getSubPrice()){
+//                        is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
+//                        is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
+//                    }
+//                })"
                 setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                 setOnItemClickListener { _, _, i, _ ->
                     val changedSubPrice = possibleSubPrice[i]
                     onSubPriceChangedListener?.invoke(itemInCashier, changedSubPrice, position)?.let { updatedItemCashier ->
+                        binding.actvItemCashierPrice.apply {
+                            setText("")
+                            hint = generatePriceHint(context, updatedItemCashier.usedSubPrice.getSubPrice(), updatedItemCashier)
+                            setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
+                        }
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
                     }
 
@@ -113,6 +117,15 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
             valueString = valueString.substring(0, dotIndex)
         }
         return valueString
+    }
+
+    private fun generatePriceHint(context: Context, subPrice : SubPrice, itemInCashier: ItemInCashier): String {
+        return "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(subPrice.price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == subPrice.priceId }?.price?.unitName} (${
+            when(subPrice){
+                is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
+                is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
+            }
+        })"
     }
 
 }

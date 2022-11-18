@@ -112,8 +112,8 @@ class CreatePriceViewModel : ViewModel(){
     )
 
     fun getPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice.MerchantSpecialPrice>, consumerSpecialPriceList: List<SpecialPrice.ConsumerSpecialPrice>): PriceAndSubPrice {
-        val merchantSubPrice = SubPrice.MerchantSubPrice(_merchantPrice.value!!, _isMerchantEnabled.value!!, null, null)
-        val consumerSubPrice = SubPrice.ConsumerSubPrice(_consumerPrice.value!!, _isConsumerEnabled.value!!, null, null)
+        val merchantSubPrice = SubPrice.MerchantSubPrice(_merchantPrice.value!!, _isMerchantEnabled.value!!, true, null, null)
+        val consumerSubPrice = SubPrice.ConsumerSubPrice(_consumerPrice.value!!, _isConsumerEnabled.value!!, false, null, null)
         val merchantSubPriceWithSpecialPrice = SubPriceWithSpecialPrice.MerchantSubPriceWithSpecialPrice(merchantSubPrice, merchantSpecialPriceList)
         val consumerSubPriceWithSpecialPrice = SubPriceWithSpecialPrice.ConsumerSubPriceWithSpecialPrice(consumerSubPrice, consumerSpecialPriceList)
         val price = Price(

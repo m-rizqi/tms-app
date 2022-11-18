@@ -202,6 +202,8 @@
     <string name="set_items_to_price_description">Klik harga pedagang agar semua barang dalam perhitungan menggunakan harga pedagang. Klik harga konsumenr agar semua barang dalam perhintungan menggunakan harga konsumern. Kamu tetap bisa menggunakan kedua jenis harga tersebut bersamaan dengan cara mengubahnya pada barang yang diinginkan.</string>
     <string name="consumer">Konsumen</string>
     <string name="merchant">Pedagang</string>
+    <string name="item_removed_from_cashier">%1$s telah dihapus dari kasir</string>
+    <string name="undo">Undo</string>
 
     <string-array name="months">
         <item>Januari</item>
