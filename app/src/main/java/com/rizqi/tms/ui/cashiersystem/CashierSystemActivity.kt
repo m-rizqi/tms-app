@@ -1,17 +1,18 @@
 package com.rizqi.tms.ui.cashiersystem
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -21,7 +22,9 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityCashierSystemBinding
 import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceType
+import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.dialog.info.InfoDialog
+import com.rizqi.tms.ui.dialog.itemnotfound.ItemNotFoundDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.utility.ThousandFormatter
 import com.rizqi.tms.utility.hideKeyboard
@@ -43,6 +46,7 @@ class CashierSystemActivity : AppCompatActivity() {
     private var scanTime = 0L
     private val TAG = this::class.java.name
     private val itemInCashierAdapter = ItemInCashierAdapter()
+    private val searchItemAdapter = SearchItemAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +79,9 @@ class CashierSystemActivity : AppCompatActivity() {
         viewModel.total.observe(this){
             binding.total = ThousandFormatter.format(it)
         }
+        viewModel.searchItemList.observe(this){
+            searchItemAdapter.submitList(it)
+        }
 
         itemInCashierAdapter.onSubPriceChangedListener = {itemInCashier, changedSubPrice, position ->
             viewModel.updateItemInCashier(itemInCashier, changedSubPrice, position)
@@ -85,9 +92,28 @@ class CashierSystemActivity : AppCompatActivity() {
         itemInCashierAdapter.onIncrementQuantityListener = {itemInCashier, position ->
             viewModel.incrementQuantityItemInCashier(itemInCashier, position)
         }
+        itemInCashierAdapter.onQuantityChangedListener = {itemInCashier, requestQuantity, position ->
+            viewModel.onQuantityChanged(itemInCashier, requestQuantity, position)
+        }
+        searchItemAdapter.onClickListener = {itemWithPrices ->
+            viewModel.addItemFromSearch(itemWithPrices,
+                onDuplicateItemListener = {itemInCashierAdapter.notifyItemChanged(it)},
+                onItemNotFoundListener = {barcode ->
+                    showItemNotFoundDialog(barcode)
+                }
+            )
+        }
 
         binding.apply {
             rvCashierSystemItems.adapter = itemInCashierAdapter
+            rvCashierSystemSearchItems.adapter = searchItemAdapter
+            tieCashierSystemSearch.doAfterTextChanged {
+                viewModel.searchItem(it.toString())
+            }
+            tieCashierSystemSearch.setOnEditorActionListener { _, _, _ ->
+                hideKeyboard(binding.tieCashierSystemSearch)
+                true
+            }
             radioCashierSystemSetToMerchant.setOnClickListener {
                 viewModel.setPriceType(PriceType.Merchant){
                     itemInCashierAdapter.notifyDataSetChanged()
@@ -215,10 +241,14 @@ class CashierSystemActivity : AppCompatActivity() {
                 if (barcodes.size() == 1) {
                     val currentValue = barcodes.valueAt(0).rawValue
                     if ((scanTime == 0L || viewModel.scannedValue.value != currentValue) && currentValue !=  "0"){
+                        playScannerSound()
                         runOnUiThread {
-                            viewModel.setScannedValue(currentValue){
-                                itemInCashierAdapter.notifyItemChanged(it)
-                            }
+                            viewModel.setScannedValue(currentValue,
+                                onDuplicateItemListener = {itemInCashierAdapter.notifyItemChanged(it)},
+                                onItemNotFoundListener = {barcode ->
+                                    showItemNotFoundDialog(barcode)
+                                }
+                            )
                         }
                         scanTime = System.currentTimeMillis()
                     } else if (viewModel.scannedValue.value == currentValue && scanTime > (System.currentTimeMillis() - PAUSE_SCAN_TIME)){
@@ -235,13 +265,29 @@ class CashierSystemActivity : AppCompatActivity() {
     private fun showDeletedItemSnackBar(itemName : String, barcode : String){
        Snackbar.make(binding.root, getString(R.string.item_removed_from_cashier, itemName), Toast.LENGTH_SHORT)
             .setAction(getString(R.string.undo)){
-                viewModel.setScannedValue(barcode){
-                    itemInCashierAdapter.notifyItemChanged(it)
-                }
+                viewModel.setScannedValue(barcode,
+                    onDuplicateItemListener = {itemInCashierAdapter.notifyItemChanged(it)},
+                    onItemNotFoundListener = {barcode ->
+                        showItemNotFoundDialog(barcode)
+                    }
+                )
             }
            .also {
                it.show()
            }
+    }
+
+    private fun showItemNotFoundDialog(barcode: String){
+        ItemNotFoundDialog(barcode){
+            Intent(this, CreateItemActivity::class.java).also { itn ->
+                startActivity(itn)
+            }
+        }.show(supportFragmentManager, null)
+    }
+
+    private fun playScannerSound(){
+        val mp = MediaPlayer.create(this, R.raw.scanner_sound)
+        mp.start()
     }
 
 }

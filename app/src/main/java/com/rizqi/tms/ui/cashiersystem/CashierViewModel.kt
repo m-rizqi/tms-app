@@ -22,6 +22,10 @@ class CashierViewModel : ViewModel() {
 
     private val _allItems = MutableLiveData<List<ItemWithPrices>>()
 
+    private val _searchItemList = MutableLiveData<MutableList<ItemWithPrices>>()
+    val searchItemList : LiveData<MutableList<ItemWithPrices>>
+        get() = _searchItemList
+
     private val _priceType = MutableLiveData<PriceType>(Merchant)
     val priceType : LiveData<PriceType>
         get() = _priceType
@@ -30,7 +34,7 @@ class CashierViewModel : ViewModel() {
     val itemInCashierList : LiveData<MutableList<ItemInCashier>>
         get() = _itemInCashierList
 
-    fun setScannedValue(value : String, onDuplicateItemListener : (Int) -> kotlin.Unit){
+    fun setScannedValue(value : String, onDuplicateItemListener : (Int) -> kotlin.Unit, onItemNotFoundListener : (String) -> kotlin.Unit){
         _scannedValue.value = value
 
         val duplicateItem = _itemInCashierList.value?.withIndex()?.find { it.value.barcode == value }
@@ -59,8 +63,10 @@ class CashierViewModel : ViewModel() {
             )
             _itemInCashierList.value?.add(itemInCashier)
             _itemInCashierList.notifyObserver()
+            calculateTotal()
+        }else{
+            onItemNotFoundListener(value)
         }
-        calculateTotal()
     }
 
     fun setAllItems(value : List<ItemWithPrices>){
@@ -152,6 +158,34 @@ class CashierViewModel : ViewModel() {
             _priceType.value = Consumer
         } else {
             _priceType.value = None
+        }
+    }
+
+    fun onQuantityChanged(itemInCashier: ItemInCashier, requestQuantity: Double, position: Int): ItemInCashier? {
+        val itemCashier = _itemInCashierList.value?.get(position)
+        itemCashier?.quantity = requestQuantity
+        itemCashier?.total = ceil(requestQuantity * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: itemInCashier.usedSubPrice.getSubPrice().price)).toLong()
+        _itemInCashierList.notifyObserver()
+        calculateTotal()
+        return itemCashier
+    }
+
+    fun addItemFromSearch(itemWithPrices: ItemWithPrices, onDuplicateItemListener : (Int) -> kotlin.Unit, onItemNotFoundListener : (String) -> kotlin.Unit){
+        val mainPrice = itemWithPrices.prices.firstOrNull {
+            it.price.isMainPrice
+        } ?: itemWithPrices.prices.first()
+        setScannedValue(mainPrice.price.barcode, onDuplicateItemListener, onItemNotFoundListener)
+        _searchItemList.value?.clear()
+        _searchItemList.notifyObserver()
+    }
+
+    fun searchItem(query: String) {
+        if (query.isBlank()){
+            _searchItemList.value = mutableListOf()
+        }else{
+            _searchItemList.value = _allItems.value?.filter {
+                it.item.name.trim().lowercase().contains(query.trim().lowercase())
+            }?.toMutableList()
         }
     }
 

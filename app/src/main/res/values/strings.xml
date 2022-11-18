@@ -199,11 +199,13 @@
     <string name="cancel_this_transaction">Batalkan Transaksi Ini ?</string>
     <string name="are_you_sure_cancel_this_transaction">Apakah kamu yakin ingin membatalkan transaksi ini ?</string>
     <string name="set_items_to_price_title">Atur Semua Barang Jadi Harga . . .</string>
-    <string name="set_items_to_price_description">Klik harga pedagang agar semua barang dalam perhitungan menggunakan harga pedagang. Klik harga konsumenr agar semua barang dalam perhintungan menggunakan harga konsumern. Kamu tetap bisa menggunakan kedua jenis harga tersebut bersamaan dengan cara mengubahnya pada barang yang diinginkan.</string>
+    <string name="set_items_to_price_description">Klik harga pedagang agar semua barang dalam perhitungan menggunakan harga pedagang. Klik harga konsumen agar semua barang dalam perhitungan menggunakan harga konsumen. Kamu tetap bisa menggunakan kedua jenis harga tersebut bersamaan dengan cara mengubahnya pada barang yang diinginkan.</string>
     <string name="consumer">Konsumen</string>
     <string name="merchant">Pedagang</string>
     <string name="item_removed_from_cashier">%1$s telah dihapus dari kasir</string>
     <string name="undo">Undo</string>
+    <string name="item_with_barcode_not_found"><![CDATA[Barang dengan barcode <font color=#4641A7>%1$s</font> tidak ditemukan! <font color=#4641A7>Buat barang ini sekarang ?</font>]]></string>
+    <string name="no">Tidak</string>
 
     <string-array name="months">
         <item>Januari</item>

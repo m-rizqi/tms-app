@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ import kotlin.math.ceil
 class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.ItemInCashierViewHolder>(DiffCallback){
 
     var onSubPriceChangedListener : ((ItemInCashier, SubPriceWithSpecialPrice, Int) -> ItemInCashier?)? = null
+    var onQuantityChangedListener : ((ItemInCashier, Double, Int) -> ItemInCashier?)? = null
     var onIncrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
     var onDecrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
 
@@ -58,6 +60,14 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
                     }
                 }
+                lItemCashierQuantity.tieAmount.doAfterTextChanged {
+                    try {
+                        val requestQuantity = it.toString().toDouble()
+                        onQuantityChangedListener?.invoke(itemInCashier, requestQuantity, position)?.let {updatedItemCashier ->
+                            binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                        }
+                    }catch (_:Exception){}
+                }
             }
 
             val possibleSubPrice = mutableListOf<SubPriceWithSpecialPrice>()
@@ -78,12 +88,6 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
             binding.actvItemCashierPrice.apply {
                 setAdapter(priceArrayAdapter)
                 hint = generatePriceHint(context, itemInCashier.usedSubPrice.getSubPrice(), itemInCashier)
-//                hint = "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(itemInCashier.usedSubPrice.getSubPrice().price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == itemInCashier.usedSubPrice.getSubPrice().priceId }?.price?.unitName} (${
-//                    when(itemInCashier.usedSubPrice.getSubPrice()){
-//                        is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
-//                        is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
-//                    }
-//                })"
                 setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                 setOnItemClickListener { _, _, i, _ ->
                     val changedSubPrice = possibleSubPrice[i]
@@ -113,7 +117,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
     private fun formatQuantity(value : Double): String {
         var valueString = value.toString()
         val dotIndex = valueString.indexOf('.')
-        if (dotIndex >= 0 && dotIndex <= valueString.lastIndex && valueString.substring(dotIndex).split("").all { it == "0" }){
+        if (dotIndex >= 0 && dotIndex < valueString.lastIndex && valueString.substring(dotIndex+1).all { it == '0' }){
             valueString = valueString.substring(0, dotIndex)
         }
         return valueString

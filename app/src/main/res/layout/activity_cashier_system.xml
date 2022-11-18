@@ -80,6 +80,7 @@
                         android:drawableStart="@drawable/ic_search"
                         android:drawablePadding="8dp"
                         android:hint="@string/type_the_item_name_you_search"
+                        android:imeOptions="actionSearch"
                         android:inputType="text" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -251,6 +252,7 @@
             app:layout_constraintTop_toBottomOf="@id/mcv_cashier_system_app_bar">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cashier_system_search_items"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
