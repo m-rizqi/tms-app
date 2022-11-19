@@ -25,6 +25,7 @@ import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceType
 import com.rizqi.tms.ui.createitem.CreateItemActivity
 import com.rizqi.tms.ui.dialog.adjusttotalprice.AdjustTotalPriceDialog
+import com.rizqi.tms.ui.dialog.finishconfirmation.FinishConfirmationDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.itemnotfound.ItemNotFoundDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
@@ -143,6 +144,11 @@ class CashierSystemActivity : AppCompatActivity() {
                 cameraSource.release()
                 setupControls()
                 cameraSource.start(binding.svCashierSystemScanner.holder)
+            }
+            tvCashierSystemFinish.setOnClickListener {
+                FinishConfirmationDialog{
+
+                }.show(supportFragmentManager, null)
             }
         }
 
