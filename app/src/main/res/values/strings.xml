@@ -206,6 +206,10 @@
     <string name="undo">Undo</string>
     <string name="item_with_barcode_not_found"><![CDATA[Barang dengan barcode <font color=#4641A7>%1$s</font> tidak ditemukan! <font color=#4641A7>Buat barang ini sekarang ?</font>]]></string>
     <string name="no">Tidak</string>
+    <string name="adjust_total_price_item">Penyesuaian Total %1$s</string>
+    <string name="total_price">Total Harga</string>
+    <string name="input_format_must_number">Format masukkan harus berupa angka</string>
+    <string name="adjusted">Disesuaikan</string>
 
     <string-array name="months">
         <item>Januari</item>

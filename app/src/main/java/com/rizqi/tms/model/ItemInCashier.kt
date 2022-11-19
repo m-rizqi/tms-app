@@ -9,6 +9,7 @@ data class ItemInCashier(
     var priceId : Long? = null,
     val barcode : String? = null,
     var subPriceId : Long? = null,
+    var totalAdjusted : Boolean = false,
     val id : Long? = null
 ){
     override fun equals(other: Any?): Boolean {

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
@@ -23,6 +24,7 @@ import com.rizqi.tms.databinding.ActivityCashierSystemBinding
 import com.rizqi.tms.model.Info
 import com.rizqi.tms.model.PriceType
 import com.rizqi.tms.ui.createitem.CreateItemActivity
+import com.rizqi.tms.ui.dialog.adjusttotalprice.AdjustTotalPriceDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.itemnotfound.ItemNotFoundDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
@@ -94,6 +96,12 @@ class CashierSystemActivity : AppCompatActivity() {
         }
         itemInCashierAdapter.onQuantityChangedListener = {itemInCashier, requestQuantity, position ->
             viewModel.onQuantityChanged(itemInCashier, requestQuantity, position)
+        }
+        itemInCashierAdapter.onRequestTotalAdjustmentListener = {itemInCashier, position ->
+            AdjustTotalPriceDialog(itemInCashier.itemWithPrices.item.name, itemInCashier.total){requestTotal ->
+                viewModel.adjustTotalPriceItemInCashier(itemInCashier, position, requestTotal)
+                itemInCashierAdapter.notifyItemChanged(position)
+            }.show(supportFragmentManager, null)
         }
         searchItemAdapter.onClickListener = {itemWithPrices ->
             viewModel.addItemFromSearch(itemWithPrices,

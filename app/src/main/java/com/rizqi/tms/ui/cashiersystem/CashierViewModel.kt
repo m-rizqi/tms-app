@@ -61,8 +61,10 @@ class CashierViewModel : ViewModel() {
             val itemInCashier = ItemInCashier(1.0, ceil(1.0 * selectedSubPrice.getSubPrice().price).toLong(), selectedItemWithPrices, selectedSubPrice,
                 selectedItemWithPrices.item.id, selectedPriceAndSubPrice.price.id, value, selectedSubPrice.getSubPrice().id
             )
-            _itemInCashierList.value?.add(itemInCashier)
-            _itemInCashierList.notifyObserver()
+            _itemInCashierList.value = mutableListOf(itemInCashier).apply {
+                _itemInCashierList.value?.let { addAll(it) }
+            }
+//            _itemInCashierList.notifyObserver()
             calculateTotal()
         }else{
             onItemNotFoundListener(value)
@@ -82,6 +84,7 @@ class CashierViewModel : ViewModel() {
                     it.usedSubPrice = priceAndSubPrice?.merchantSubPrice ?: it.usedSubPrice
                     it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
                     it.subPriceId = priceAndSubPrice?.merchantSubPrice?.subPrice?.id ?: it.subPriceId
+                    it.totalAdjusted = false
                 }
             }
             Consumer -> {
@@ -90,6 +93,7 @@ class CashierViewModel : ViewModel() {
                     it.usedSubPrice = priceAndSubPrice?.consumerSubPrice ?: it.usedSubPrice
                     it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
                     it.subPriceId = priceAndSubPrice?.consumerSubPrice?.subPrice?.id ?: it.subPriceId
+                    it.totalAdjusted = false
                 }
             }
             None -> {}
@@ -105,6 +109,8 @@ class CashierViewModel : ViewModel() {
         itemCashier?.subPriceId = changedSubPrice.getSubPrice().id
         itemCashier?.priceId = changedSubPrice.getSubPrice().priceId
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * changedSubPrice.getSubPrice().price).toLong()
+        itemCashier?.totalAdjusted = false
+        itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
         calculatePriceType()
@@ -114,16 +120,18 @@ class CashierViewModel : ViewModel() {
     fun incrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int): ItemInCashier? {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) + 1.0
-        _itemInCashierList.notifyObserver()
+        itemCashier?.totalAdjusted = false
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
+        itemCashier?.let { _itemInCashierList.value?.set(position, it) }
+        _itemInCashierList.notifyObserver()
         calculateTotal()
-        calculatePriceType()
         return itemCashier
     }
 
     fun decrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int, showSnackBar: (String, String) -> kotlin.Unit): ItemInCashier? {
         var itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) - 1.0
+        itemCashier?.totalAdjusted = false
         if ((itemCashier?.quantity ?: 1.0) <= 0.0){
             showSnackBar(itemCashier?.itemWithPrices?.item?.name ?: "", itemCashier?.barcode ?: "")
             _itemInCashierList.value?.removeAt(position)
@@ -131,15 +139,27 @@ class CashierViewModel : ViewModel() {
         }else{
             itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
         }
+        itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
         return itemCashier
     }
 
+    fun adjustTotalPriceItemInCashier(itemInCashier: ItemInCashier, position: Int, requestTotal : Long) {
+        val itemCashier = _itemInCashierList.value?.get(position)
+        itemCashier?.total = requestTotal
+        itemCashier?.totalAdjusted = true
+        itemCashier?.let { _itemInCashierList.value?.set(position, it) }
+        _itemInCashierList.notifyObserver()
+        calculateTotal()
+    }
+
     private fun calculateTotal(){
         var tempTotal = 0L
         _itemInCashierList.value?.forEach { itemInCashier ->
-            itemInCashier.total = ceil(itemInCashier.quantity * itemInCashier.usedSubPrice.getSubPrice().price).toLong()
+//            if (!itemInCashier.totalAdjusted){
+//                itemInCashier.total = ceil(itemInCashier.quantity * itemInCashier.usedSubPrice.getSubPrice().price).toLong()
+//            }
             tempTotal += itemInCashier.total
         }
         _total.value = tempTotal
@@ -164,6 +184,7 @@ class CashierViewModel : ViewModel() {
     fun onQuantityChanged(itemInCashier: ItemInCashier, requestQuantity: Double, position: Int): ItemInCashier? {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = requestQuantity
+        itemCashier?.totalAdjusted = true
         itemCashier?.total = ceil(requestQuantity * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: itemInCashier.usedSubPrice.getSubPrice().price)).toLong()
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -175,7 +196,7 @@ class CashierViewModel : ViewModel() {
             it.price.isMainPrice
         } ?: itemWithPrices.prices.first()
         setScannedValue(mainPrice.price.barcode, onDuplicateItemListener, onItemNotFoundListener)
-        _searchItemList.value?.clear()
+        _searchItemList.value = mutableListOf()
         _searchItemList.notifyObserver()
     }
 

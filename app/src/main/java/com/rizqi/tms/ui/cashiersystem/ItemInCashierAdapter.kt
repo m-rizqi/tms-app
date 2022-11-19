@@ -1,8 +1,10 @@
 package com.rizqi.tms.ui.cashiersystem
 
+import android.content.ClipData.Item
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.res.ResourcesCompat
@@ -25,6 +27,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
     var onQuantityChangedListener : ((ItemInCashier, Double, Int) -> ItemInCashier?)? = null
     var onIncrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
     var onDecrementQuantityListener : ((ItemInCashier, Int) -> ItemInCashier?)? = null
+    var onRequestTotalAdjustmentListener : ((ItemInCashier, Int) -> Unit)? = null
 
     companion object DiffCallback : DiffUtil.ItemCallback<ItemInCashier>(){
         override fun areItemsTheSame(oldItem: ItemInCashier, newItem: ItemInCashier): Boolean {
@@ -52,21 +55,29 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                     onDecrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
                     }
                 }
+                mcvItemCashierAdjusted.visibility = if (itemInCashier.totalAdjusted) View.VISIBLE else View.GONE
                 lItemCashierQuantity.btnPlus.setOnClickListener {
                     onIncrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
                     }
                 }
                 lItemCashierQuantity.tieAmount.doAfterTextChanged {
                     try {
                         val requestQuantity = it.toString().toDouble()
+                        if (requestQuantity == itemInCashier.quantity) return@doAfterTextChanged
                         onQuantityChangedListener?.invoke(itemInCashier, requestQuantity, position)?.let {updatedItemCashier ->
                             binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
                         }
                     }catch (_:Exception){}
+                }
+                btnItemCashierEditTotal.setOnClickListener {
+                    onRequestTotalAdjustmentListener?.invoke(itemInCashier, position)
                 }
             }
 
@@ -98,6 +109,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                             setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                         }
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
                     }
 
                 }
