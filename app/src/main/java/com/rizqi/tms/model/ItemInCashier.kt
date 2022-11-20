@@ -1,16 +1,50 @@
 package com.rizqi.tms.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+
+@Entity(
+    foreignKeys = [ForeignKey(
+        entity = Transaction::class,
+        parentColumns = ["id"],
+        childColumns = ["transaction_id"],
+        onDelete = ForeignKey.CASCADE,
+        onUpdate = ForeignKey.CASCADE
+    )]
+)
 data class ItemInCashier(
-    var quantity : Double,
-    var total : Long,
-    val itemWithPrices: ItemWithPrices,
-    var usedSubPrice: SubPriceWithSpecialPrice,
-    val itemId : Long? = null,
+    var quantity : Double = 0.0,
+    var total : Long = 0,
+    @ColumnInfo(name = "total_adjusted")
+    var barcode : String? = null,
+    @ColumnInfo(name = "is_total_adjusted")
+    var isTotalAdjusted : Boolean = false,
+    @ColumnInfo(name = "price_type")
+    var priceType: PriceType = PriceType.Merchant,
+    @ColumnInfo(name = "price_per_item")
+    var pricePerItem : Double = 0.0,
+    @ColumnInfo(name = "unit_name")
+    var unitName : String = "",
+    @ColumnInfo(name = "image_path")
+    var imagePath : String? = null,
+    @ColumnInfo(name = "item_id")
+    var itemId : Long? = null,
+    @ColumnInfo(name = "price_id")
     var priceId : Long? = null,
-    val barcode : String? = null,
+    @ColumnInfo(name = "sub_price_id")
     var subPriceId : Long? = null,
-    var totalAdjusted : Boolean = false,
-    val id : Long? = null
+    @ColumnInfo(name = "transaction_id")
+    var transactionId : Long? = null,
+    @PrimaryKey(autoGenerate = true)
+    var id : Long? = null,
+    @Ignore
+    var itemWithPrices: ItemWithPrices? = null,
+    @Ignore
+    var usedSubPrice: SubPriceWithSpecialPrice? = null,
 ){
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -20,14 +54,17 @@ data class ItemInCashier(
 
         if (quantity != other.quantity) return false
         if (total != other.total) return false
-        if (itemWithPrices != other.itemWithPrices) return false
-        if (usedSubPrice != other.usedSubPrice) return false
-        if (usedSubPrice.getSubPrice().price != other.usedSubPrice.getSubPrice().price) return false
+        if (barcode != other.barcode) return false
+        if (isTotalAdjusted != other.isTotalAdjusted) return false
+        if (priceType != other.priceType) return false
+        if (pricePerItem != other.pricePerItem) return false
+        if (unitName != other.unitName) return false
         if (itemId != other.itemId) return false
         if (priceId != other.priceId) return false
-        if (barcode != other.barcode) return false
         if (subPriceId != other.subPriceId) return false
         if (id != other.id) return false
+        if (itemWithPrices != other.itemWithPrices) return false
+        if (usedSubPrice != other.usedSubPrice) return false
 
         return true
     }
@@ -35,13 +72,17 @@ data class ItemInCashier(
     override fun hashCode(): Int {
         var result = quantity.hashCode()
         result = 31 * result + total.hashCode()
-        result = 31 * result + itemWithPrices.hashCode()
-        result = 31 * result + usedSubPrice.hashCode()
+        result = 31 * result + (barcode?.hashCode() ?: 0)
+        result = 31 * result + isTotalAdjusted.hashCode()
+        result = 31 * result + priceType.hashCode()
+        result = 31 * result + pricePerItem.hashCode()
+        result = 31 * result + unitName.hashCode()
         result = 31 * result + (itemId?.hashCode() ?: 0)
         result = 31 * result + (priceId?.hashCode() ?: 0)
-        result = 31 * result + (barcode?.hashCode() ?: 0)
         result = 31 * result + (subPriceId?.hashCode() ?: 0)
         result = 31 * result + (id?.hashCode() ?: 0)
+        result = 31 * result + (itemWithPrices?.hashCode() ?: 0)
+        result = 31 * result + (usedSubPrice?.hashCode() ?: 0)
         return result
     }
 }

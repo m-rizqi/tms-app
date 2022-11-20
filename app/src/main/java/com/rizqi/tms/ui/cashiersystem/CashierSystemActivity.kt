@@ -29,10 +29,14 @@ import com.rizqi.tms.ui.dialog.finishconfirmation.FinishConfirmationDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.itemnotfound.ItemNotFoundDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
+import com.rizqi.tms.ui.transactiondetail.TransactionDetailActivity
+import com.rizqi.tms.utility.TRANSACTION_ID
 import com.rizqi.tms.utility.ThousandFormatter
 import com.rizqi.tms.utility.hideKeyboard
 import com.rizqi.tms.viewmodel.ItemViewModel
+import com.rizqi.tms.viewmodel.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 @AndroidEntryPoint
@@ -40,6 +44,7 @@ class CashierSystemActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCashierSystemBinding
     private val viewModel : CashierViewModel by viewModels()
     private val itemViewModel : ItemViewModel by viewModels()
+    private val transactionViewModel : TransactionViewModel by viewModels()
     private var cameraFacing = CameraSource.CAMERA_FACING_FRONT
     private var cameraCallback : SurfaceHolder.Callback? = null
     private lateinit var cameraSource: CameraSource
@@ -99,7 +104,7 @@ class CashierSystemActivity : AppCompatActivity() {
             viewModel.onQuantityChanged(itemInCashier, requestQuantity, position)
         }
         itemInCashierAdapter.onRequestTotalAdjustmentListener = {itemInCashier, position ->
-            AdjustTotalPriceDialog(itemInCashier.itemWithPrices.item.name, itemInCashier.total){requestTotal ->
+            AdjustTotalPriceDialog(itemInCashier.itemWithPrices?.item?.name ?: "", itemInCashier.total){requestTotal ->
                 viewModel.adjustTotalPriceItemInCashier(itemInCashier, position, requestTotal)
                 itemInCashierAdapter.notifyItemChanged(position)
             }.show(supportFragmentManager, null)
@@ -147,7 +152,14 @@ class CashierSystemActivity : AppCompatActivity() {
             }
             tvCashierSystemFinish.setOnClickListener {
                 FinishConfirmationDialog{
-
+                    transactionViewModel.viewModelScope.launch {
+                        val transactionId = transactionViewModel.insetTransactionWithItemInCashier(viewModel.getResultTransaction())
+                        Intent(this@CashierSystemActivity, TransactionDetailActivity::class.java).apply {
+                            putExtra(TRANSACTION_ID, transactionId)
+                        }.also { itn ->
+                            startActivity(itn)
+                        }
+                    }
                 }.show(supportFragmentManager, null)
             }
         }

@@ -1,8 +1,6 @@
 package com.rizqi.tms.ui.cashiersystem
 
-import android.content.ClipData.Item
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +42,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
         fun bind(itemInCashier: ItemInCashier, position: Int){
             val context = binding.root.context
             binding.apply {
-                itemName = itemInCashier.itemWithPrices.item.name
+                itemName = itemInCashier.itemWithPrices?.item?.name
                 quantity = formatQuantity(itemInCashier.quantity)
                 total = ThousandFormatter.format(itemInCashier.total)
                 lItemCashierQuantity.tieAmount.setOnEditorActionListener { _, _, _ ->
@@ -55,15 +53,15 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                     onDecrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
                     }
                 }
-                mcvItemCashierAdjusted.visibility = if (itemInCashier.totalAdjusted) View.VISIBLE else View.GONE
+                mcvItemCashierAdjusted.visibility = if (itemInCashier.isTotalAdjusted) View.VISIBLE else View.GONE
                 lItemCashierQuantity.btnPlus.setOnClickListener {
                     onIncrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
                     }
                 }
                 lItemCashierQuantity.tieAmount.doAfterTextChanged {
@@ -72,7 +70,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                         if (requestQuantity == itemInCashier.quantity) return@doAfterTextChanged
                         onQuantityChangedListener?.invoke(itemInCashier, requestQuantity, position)?.let {updatedItemCashier ->
                             binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
+                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
                         }
                     }catch (_:Exception){}
                 }
@@ -82,9 +80,9 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
             }
 
             val possibleSubPrice = mutableListOf<SubPriceWithSpecialPrice>()
-            itemInCashier.itemWithPrices.prices.filter { priceAndSubPrice ->
+            itemInCashier.itemWithPrices?.prices?.filter { priceAndSubPrice ->
                 priceAndSubPrice.price.barcode == itemInCashier.barcode
-            }.forEach { priceAndSubPrice ->
+            }?.forEach { priceAndSubPrice ->
                 possibleSubPrice.add(priceAndSubPrice.merchantSubPrice)
                 possibleSubPrice.add(priceAndSubPrice.consumerSubPrice)
             }
@@ -98,18 +96,18 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
 
             binding.actvItemCashierPrice.apply {
                 setAdapter(priceArrayAdapter)
-                hint = generatePriceHint(context, itemInCashier.usedSubPrice.getSubPrice(), itemInCashier)
+                hint = generatePriceHint(context, itemInCashier.usedSubPrice?.getSubPrice(), itemInCashier)
                 setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                 setOnItemClickListener { _, _, i, _ ->
                     val changedSubPrice = possibleSubPrice[i]
                     onSubPriceChangedListener?.invoke(itemInCashier, changedSubPrice, position)?.let { updatedItemCashier ->
                         binding.actvItemCashierPrice.apply {
                             setText("")
-                            hint = generatePriceHint(context, updatedItemCashier.usedSubPrice.getSubPrice(), updatedItemCashier)
+                            hint = generatePriceHint(context, updatedItemCashier.usedSubPrice?.getSubPrice(), updatedItemCashier)
                             setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                         }
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
                     }
 
                 }
@@ -135,11 +133,12 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
         return valueString
     }
 
-    private fun generatePriceHint(context: Context, subPrice : SubPrice, itemInCashier: ItemInCashier): String {
-        return "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(subPrice.price).toLong()))}/${itemInCashier.itemWithPrices.prices.find { priceAndSubPrice -> priceAndSubPrice.price.id == subPrice.priceId }?.price?.unitName} (${
+    private fun generatePriceHint(context: Context, subPrice : SubPrice?, itemInCashier: ItemInCashier): String {
+        return "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(subPrice?.price ?: 0.0).toLong()))}/${itemInCashier.itemWithPrices?.prices?.find { priceAndSubPrice -> priceAndSubPrice.price.id == subPrice?.priceId }?.price?.unitName} (${
             when(subPrice){
                 is SubPrice.ConsumerSubPrice -> context.getString(R.string.consumer)
                 is SubPrice.MerchantSubPrice -> context.getString(R.string.merchant)
+                null -> ""
             }
         })"
     }

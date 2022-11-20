@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.rizqi.tms.model.*
 import com.rizqi.tms.model.Unit
 import com.rizqi.tms.utility.TMS_DATABASE
@@ -17,16 +18,20 @@ import com.rizqi.tms.utility.TMS_DATABASE
         SubPrice.ConsumerSubPrice::class,
         Price::class,
         Item::class,
-        SearchHistory::class
-               ],
+        SearchHistory::class,
+        ItemInCashier::class,
+        Transaction::class
+        ],
     version = 1,
     exportSchema = false
 )
+@TypeConverters(Converters::class)
 abstract class TMSDatabase : RoomDatabase(){
     abstract fun userDao() : UserDao
     abstract fun unitDao() : UnitDao
     abstract fun itemDao() : ItemDao
     abstract fun searchHistoryDao() : SearchHistoryDao
+    abstract fun transactionDao() : TransactionDao
 
     companion object {
         @Volatile
