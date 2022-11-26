@@ -8,7 +8,7 @@
     <item
         android:id="@+id/im_cashier"
         android:icon="@drawable/ic_cashier"
-        android:title="@string/cashier"
+        android:title="@string/transaction"
         />
 <!--    <item-->
 <!--        android:id="@+id/im_finance"-->

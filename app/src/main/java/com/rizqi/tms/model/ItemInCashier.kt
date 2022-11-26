@@ -31,6 +31,8 @@ data class ItemInCashier(
     var unitName : String = "",
     @ColumnInfo(name = "image_path")
     var imagePath : String? = null,
+    @ColumnInfo(name = "item_name")
+    var itemName : String = "",
     @ColumnInfo(name = "item_id")
     var itemId : Long? = null,
     @ColumnInfo(name = "price_id")

@@ -11,4 +11,12 @@ data class Transaction(
     var thumbnails : List<String?> = listOf(),
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null
-)
+){
+    fun getThumbnailsAt(index : Int): String? {
+        return try {
+            thumbnails[index]
+        }catch (e : Exception){
+            null
+        }
+    }
+}

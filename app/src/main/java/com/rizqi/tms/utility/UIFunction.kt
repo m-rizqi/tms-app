@@ -1,6 +1,7 @@
 package com.rizqi.tms.utility
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
@@ -27,6 +28,8 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.nio.channels.FileChannel
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 
 private fun disableScreen(appCompatActivity: AppCompatActivity){
@@ -313,4 +316,12 @@ fun hideKeyboard(view: View?){
         manager?.hideSoftInputFromWindow(view.windowToken, 0)
         view.clearFocus()
     }
+}
+
+@SuppressLint("SimpleDateFormat")
+fun getFormattedDateString(timeInMillis : Long, format : String = EEE_DD_MMM_YYYY): String? {
+    val cal = Calendar.getInstance()
+    cal.timeInMillis = timeInMillis
+    val formatter = SimpleDateFormat(format)
+    return formatter.format(cal)
 }

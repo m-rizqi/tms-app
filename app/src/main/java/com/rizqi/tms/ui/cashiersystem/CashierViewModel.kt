@@ -224,6 +224,7 @@ class CashierViewModel : ViewModel() {
                     priceAndSubPrice.price.id == itemInCashier.usedSubPrice?.getSubPrice()?.priceId
                 }?.price?.unitName ?: ""
             itemInCashier.imagePath = itemInCashier.itemWithPrices?.item?.imagePath
+            itemInCashier.itemName = itemInCashier.itemWithPrices?.item?.name ?: ""
             itemInCashier.priceId = itemInCashier.usedSubPrice?.getSubPrice()?.priceId
             itemInCashier.subPriceId = itemInCashier.usedSubPrice?.getSubPrice()?.id
             itemInCashier

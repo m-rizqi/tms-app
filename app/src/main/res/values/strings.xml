@@ -212,6 +212,7 @@
     <string name="adjusted">Disesuaikan</string>
     <string name="are_you_sure_done">Yakin Sudah Selesai ?</string>
     <string name="finish_confirmation_description"><![CDATA[<font color=#4641A7>Transaksi tidak bisa diubah</font> kembali setelah selesai. Apakah Kamu yakin semua barang dan harga sudah dicek ?</font>]]></string>
+    <string name="transaction">Transaksi</string>
 
     <string-array name="months">
         <item>Januari</item>

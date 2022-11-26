@@ -2,6 +2,22 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="date"
+            type="String" />
+        <variable
+            name="id"
+            type="Long" />
+        <variable
+            name="total"
+            type="String" />
+        <variable
+            name="itemNames"
+            type="String" />
+    </data>
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +57,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/iv_transaction_history_image_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -63,6 +80,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/iv_transaction_history_image_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -85,6 +103,7 @@
                     >
 
                     <ImageView
+                        android:id="@+id/iv_transaction_history_image_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
@@ -113,6 +132,7 @@
                     style="@style/TextAppearance.Subtitle2"
                     tool:text="Senin, 24 Juni 2022 13:00"
                     android:textColor="@color/black_100"
+                    android:text="@{date}"
                     />
 
                 <TextView
@@ -124,6 +144,7 @@
                     tool:text="123456789"
                     android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/ic_id"
+                    android:text="@{Long.toString(id)}"
                     />
 
                 <TextView
@@ -135,6 +156,7 @@
                     tool:text="Rp. 12.000,-"
                     android:drawablePadding="8dp"
                     app:drawableStartCompat="@drawable/ic_sum"
+                    android:text="@{@string/rp_(total)}"
                     />
 
                 <TextView
@@ -145,6 +167,7 @@
                     android:layout_marginTop="12dp"
                     android:maxLines="1"
                     android:ellipsize="end"
+                    android:text="@{itemNames}"
                     tool:text="Nama barang 1, Nama barang 2, Nama barang 3"
                     />
 

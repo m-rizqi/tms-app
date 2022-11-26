@@ -1,22 +1,17 @@
 package com.rizqi.tms.ui.dashboard
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.rizqi.tms.R
-import com.rizqi.tms.TMSPreferences.Companion.getBackupSchedule
-import com.rizqi.tms.TMSPreferences.Companion.getNextBackupDate
 import com.rizqi.tms.databinding.ActivityDashboardBinding
-import com.rizqi.tms.model.BackupSchedule
 import com.rizqi.tms.ui.dashboard.DashboardActivity.DashboardState.*
-import com.rizqi.tms.ui.dashboard.cashier.CashierFragment
+import com.rizqi.tms.ui.dashboard.transaction.TransactionFragment
 import com.rizqi.tms.ui.dashboard.finance.FinanceFragment
 import com.rizqi.tms.ui.dashboard.home.HomeFragment
 import com.rizqi.tms.ui.dashboard.profile.ProfileFragment
@@ -24,17 +19,16 @@ import com.rizqi.tms.utility.DASHBOARD_STATE
 import com.rizqi.tms.utility.MENU_INDEX
 import dagger.hilt.android.AndroidEntryPoint
 import nl.joery.animatedbottombar.AnimatedBottomBar
-import kotlin.system.exitProcess
 
 @AndroidEntryPoint
 class DashboardActivity : AppCompatActivity() {
     private lateinit var binding : ActivityDashboardBinding
     private val homeFragment = HomeFragment()
-    private val cashierFragment = CashierFragment()
+    private val transactionFragment = TransactionFragment()
     private val financeFragment = FinanceFragment()
     private val profileFragment = ProfileFragment()
     private val dashboardFragmentList = mutableListOf(
-        homeFragment, cashierFragment, profileFragment
+        homeFragment, transactionFragment, profileFragment
     )
     private var menuIndex = 0
     private var dashboardState = HOME
@@ -78,7 +72,7 @@ class DashboardActivity : AppCompatActivity() {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fcv_dashboard, homeFragment)
-            .add(R.id.fcv_dashboard, cashierFragment)
+            .add(R.id.fcv_dashboard, transactionFragment)
 //            .add(R.id.fcv_dashboard, financeFragment)
             .add(R.id.fcv_dashboard, profileFragment)
             .commit()

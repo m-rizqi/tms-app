@@ -3,11 +3,13 @@ package com.rizqi.tms.viewmodel
 import androidx.lifecycle.*
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.Transaction
+import com.rizqi.tms.model.TransactionHistoryViewType
 import com.rizqi.tms.model.TransactionWithItemInCashier
 import com.rizqi.tms.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,6 +58,23 @@ class TransactionViewModel @Inject constructor(
             insertItemInCashier(itemInCashier)
         }
         return transactionId
+    }
+
+    fun groupToTransactionHistoryViewType(list: List<TransactionWithItemInCashier>): List<TransactionHistoryViewType> {
+        val result = mutableListOf<TransactionHistoryViewType>()
+        list.groupBy {
+            val cal = Calendar.getInstance()
+            cal.timeInMillis = it.transaction.time
+            cal.set(Calendar.HOUR, 0)
+            cal.set(Calendar.MINUTE, 0)
+            cal.get(Calendar.DATE)
+        }.forEach {
+            result.add(TransactionHistoryViewType.Date(it.value.first().transaction.time))
+            it.value.forEach { transaction ->
+                result.add(TransactionHistoryViewType.TransactionItem(transaction))
+            }
+        }
+        return result
     }
 
 }
