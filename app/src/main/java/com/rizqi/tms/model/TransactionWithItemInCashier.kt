@@ -12,4 +12,8 @@ data class TransactionWithItemInCashier(
         entity = ItemInCashier::class
     )
     val itemInCashiers : List<ItemInCashier> = listOf()
-)
+) : Comparable<TransactionWithItemInCashier> {
+    override fun compareTo(other: TransactionWithItemInCashier): Int {
+        return compareValuesBy(this, other, {it.transaction.hashCode()}, {it.itemInCashiers.hashCode()})
+    }
+}

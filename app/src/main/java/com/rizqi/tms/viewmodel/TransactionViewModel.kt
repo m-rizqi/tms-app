@@ -1,5 +1,6 @@
 package com.rizqi.tms.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.Transaction
@@ -60,8 +61,8 @@ class TransactionViewModel @Inject constructor(
         return transactionId
     }
 
-    fun groupToTransactionHistoryViewType(list: List<TransactionWithItemInCashier>): List<TransactionHistoryViewType> {
-        val result = mutableListOf<TransactionHistoryViewType>()
+    fun groupToTransactionHistoryViewType(list: List<TransactionWithItemInCashier>): List<Comparable<*>> {
+        val result = mutableListOf<Comparable<*>>()
         list.groupBy {
             val cal = Calendar.getInstance()
             cal.timeInMillis = it.transaction.time
@@ -69,9 +70,9 @@ class TransactionViewModel @Inject constructor(
             cal.set(Calendar.MINUTE, 0)
             cal.get(Calendar.DATE)
         }.forEach {
-            result.add(TransactionHistoryViewType.Date(it.value.first().transaction.time))
+            result.add(it.value.first().transaction.time)
             it.value.forEach { transaction ->
-                result.add(TransactionHistoryViewType.TransactionItem(transaction))
+                result.add(transaction)
             }
         }
         return result

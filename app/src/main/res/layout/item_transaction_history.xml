@@ -26,6 +26,9 @@
         app:cardBackgroundColor="@color/white"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="12dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:rippleColor="@color/black_10"
         >
         
         <androidx.constraintlayout.widget.ConstraintLayout

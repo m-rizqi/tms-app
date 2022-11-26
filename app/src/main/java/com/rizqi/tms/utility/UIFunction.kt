@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -322,6 +323,10 @@ fun hideKeyboard(view: View?){
 fun getFormattedDateString(timeInMillis : Long, format : String = EEE_DD_MMM_YYYY): String? {
     val cal = Calendar.getInstance()
     cal.timeInMillis = timeInMillis
-    val formatter = SimpleDateFormat(format)
-    return formatter.format(cal)
+    val formatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        SimpleDateFormat(format)
+    } else {
+        SimpleDateFormat()
+    }
+    return formatter.format(cal.time)
 }
