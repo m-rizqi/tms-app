@@ -1,6 +1,7 @@
 package com.rizqi.tms.ui.dashboard.transaction
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,8 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemDateTransactionBinding
 import com.rizqi.tms.databinding.ItemTransactionHistoryBinding
 import com.rizqi.tms.model.TransactionWithItemInCashier
-import com.rizqi.tms.utility.EEE_DD_MMM_YYYY_HH_MM
-import com.rizqi.tms.utility.ThousandFormatter
-import com.rizqi.tms.utility.getBitmapFromPath
-import com.rizqi.tms.utility.getFormattedDateString
+import com.rizqi.tms.ui.transactiondetail.TransactionDetailActivity
+import com.rizqi.tms.utility.*
 
 class TransactionAdapter : ListAdapter<Comparable<*>, TransactionAdapter.BaseTransactionViewHolder<*>>(diffCallback){
 
@@ -66,15 +65,22 @@ class TransactionAdapter : ListAdapter<Comparable<*>, TransactionAdapter.BaseTra
                 id = data.transaction.id
                 total = ThousandFormatter.format(data.transaction.total)
                 itemNames = data.itemInCashiers.joinToString { it.itemName }
+                root.setOnClickListener {
+                    Intent(context.applicationContext, TransactionDetailActivity::class.java).apply {
+                        putExtra(TRANSACTION_ID, data.transaction.id)
+                    }.also { itn ->
+                        context.startActivity(itn)
+                    }
+                }
             }
-            data.transaction.getThumbnailsAt(0)?.let {
-                Glide.with(context).load(context.getBitmapFromPath(it)).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage1)
+            data.transaction.getThumbnailsAt(0).also {
+                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage1)
             }
-            data.transaction.getThumbnailsAt(1)?.let {
-                Glide.with(context).load(context.getBitmapFromPath(it)).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage2)
+            data.transaction.getThumbnailsAt(1).also {
+                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage2)
             }
-            data.transaction.getThumbnailsAt(2)?.let {
-                Glide.with(context).load(context.getBitmapFromPath(it)).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage3)
+            data.transaction.getThumbnailsAt(2).also {
+                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage3)
             }
         }
     }

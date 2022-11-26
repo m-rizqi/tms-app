@@ -1,10 +1,8 @@
 package com.rizqi.tms.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.Transaction
-import com.rizqi.tms.model.TransactionHistoryViewType
 import com.rizqi.tms.model.TransactionWithItemInCashier
 import com.rizqi.tms.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
