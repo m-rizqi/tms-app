@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <import type="android.text.InputType"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/l_transaction_filter_root"
+        android:background="@drawable/round_corner_shape"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            >
+
+            <include
+                android:id="@+id/l_transaction_filter_home_indicator"
+                layout="@layout/home_indicator"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_transaction_filter_title"
+                style="@style/TextAppearance.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/l_transaction_filter_home_indicator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp"
+                android:text="@string/transaction_filter"
+                android:textColor="@color/black_100" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_above="@id/btn_transaction_filter_apply"
+                android:layout_below="@id/tv_transaction_filter_title"
+                android:layout_marginVertical="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_all"
+                        layout="@layout/layout_range_date"
+                        app:rangeName="@{@string/all}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_today"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/today}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_yesterday"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/yesterday}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_this_week"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/this_week}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_last_week"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/last_week}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_this_month"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/this_month}"
+                        />
+
+                    <include
+                        android:id="@+id/l_transaction_filter_date_range_last_month"
+                        layout="@layout/layout_range_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        app:rangeName="@{@string/last_month}"
+                        />
+
+                    <TextView
+                        style="@style/TextAppearance.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/date_range"
+                        android:textColor="@color/black_100" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextAppearance.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/from"
+                                android:textColor="@color/black_80" />
+
+                            <include
+                                android:id="@+id/til_transaction_filter_date_from"
+                                layout="@layout/layout_input_layout_no_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                app:inputType="@{InputType.TYPE_NULL}"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="8dp">
+
+                            <TextView
+                                style="@style/TextAppearance.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/to"
+                                android:textColor="@color/black_80" />
+
+                            <include
+                                android:id="@+id/til_transaction_filter_date_to"
+                                layout="@layout/layout_input_layout_no_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                app:inputType="@{InputType.TYPE_NULL}"
+                                />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/TextAppearance.Subtitle2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/by_price_range"
+                        android:textColor="@color/black_100" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/TextAppearance.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/from"
+                                android:textColor="@color/black_80" />
+
+                            <include
+                                android:id="@+id/til_transaction_filter_price_from"
+                                layout="@layout/layout_input_layout_no_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                                app:prefixText="@{@string/rp_hint}" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_marginStart="8dp">
+
+                            <TextView
+                                style="@style/TextAppearance.Body1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/to"
+                                android:textColor="@color/black_80" />
+
+                            <include
+                                android:id="@+id/til_transaction_filter_price_to"
+                                layout="@layout/layout_input_layout_no_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                                app:prefixText="@{@string/rp_hint}" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_transaction_filter_apply"
+                style="@style/MaterialButton.Default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/apply" />
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -153,7 +153,7 @@ class CashierSystemActivity : AppCompatActivity() {
             tvCashierSystemFinish.setOnClickListener {
                 FinishConfirmationDialog{
                     transactionViewModel.viewModelScope.launch {
-                        val transactionId = transactionViewModel.insetTransactionWithItemInCashier(viewModel.getResultTransaction())
+                        val transactionId = transactionViewModel.insertTransactionWithItemInCashier(viewModel.getResultTransaction())
                         Intent(this@CashierSystemActivity, TransactionDetailActivity::class.java).apply {
                             putExtra(TRANSACTION_ID, transactionId)
                             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -8,11 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import com.rizqi.tms.databinding.FragmentTransactionBinding
 import com.rizqi.tms.ui.cashiersystem.CashierSystemActivity
+import com.rizqi.tms.ui.dialog.transactionfilter.TransactionFilterBottomSheet
 import com.rizqi.tms.viewmodel.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class TransactionFragment : Fragment() {
@@ -35,6 +39,9 @@ class TransactionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         transactionViewModel.getListTransaction().observe(viewLifecycleOwner){
+            transactionViewModel.filterTransaction(it)
+        }
+        transactionViewModel.filteredTransaction.observe(viewLifecycleOwner){
             transactionAdapter.submitList(transactionViewModel.groupToTransactionHistoryViewType(it))
         }
 
@@ -44,6 +51,11 @@ class TransactionFragment : Fragment() {
                 Intent(context, CashierSystemActivity::class.java).also {itn ->
                     startActivity(itn)
                 }
+            }
+            btnTransactionFilter.setOnClickListener {
+                TransactionFilterBottomSheet(
+                    transactionViewModel.transactionFilter.value
+                ).show(parentFragmentManager, null)
             }
         }
     }

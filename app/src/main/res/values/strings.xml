@@ -218,6 +218,15 @@
     <string name="time">Waktu</string>
     <string name="see_bill">Lihat Nota</string>
     <string name="price_adjusted">Harga disesuaikan</string>
+    <string name="transaction_filter">Filter Transaksi</string>
+    <string name="all">Semua</string>
+    <string name="today">Hari Ini</string>
+    <string name="yesterday">Kemarin</string>
+    <string name="this_week">Minggu Ini</string>
+    <string name="last_week">Minggu Kemarin</string>
+    <string name="this_month">Bulan Ini</string>
+    <string name="last_month">Bulan Kemarin</string>
+    <string name="date_range">Rentang Waktu</string>
 
     <string-array name="months">
         <item>Januari</item>

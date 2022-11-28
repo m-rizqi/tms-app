@@ -3,10 +3,12 @@ package com.rizqi.tms.viewmodel
 import androidx.lifecycle.*
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.Transaction
+import com.rizqi.tms.model.TransactionFilter
 import com.rizqi.tms.model.TransactionWithItemInCashier
 import com.rizqi.tms.repository.TransactionRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -15,6 +17,14 @@ import javax.inject.Inject
 class TransactionViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository
 ) : ViewModel(){
+
+    private val _filteredTransaction = MutableLiveData<List<TransactionWithItemInCashier>>()
+    val filteredTransaction : LiveData<List<TransactionWithItemInCashier>>
+        get() = _filteredTransaction
+
+    private val _transactionFilter = MutableLiveData<TransactionFilter>()
+    val transactionFilter : LiveData<TransactionFilter>
+        get() = _transactionFilter
 
     fun getTransactionById(id : Long): LiveData<TransactionWithItemInCashier> {
         return transactionRepository.getById(id).asLiveData()
@@ -29,7 +39,7 @@ class TransactionViewModel @Inject constructor(
     }
 
     fun getListTransaction(): LiveData<List<TransactionWithItemInCashier>> {
-        return transactionRepository.getAll().asLiveData()
+        return transactionRepository.getAll().flowOn(Dispatchers.IO).asLiveData()
     }
 
     fun deleteTransaction(transaction: Transaction){
@@ -50,7 +60,7 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-    suspend fun insetTransactionWithItemInCashier(transactionWithItemInCashier: TransactionWithItemInCashier): Long {
+    suspend fun insertTransactionWithItemInCashier(transactionWithItemInCashier: TransactionWithItemInCashier): Long {
         val transactionId = insertTransaction(transactionWithItemInCashier.transaction)
         transactionWithItemInCashier.itemInCashiers.forEach { itemInCashier ->
             itemInCashier.transactionId = transactionId
@@ -74,6 +84,10 @@ class TransactionViewModel @Inject constructor(
             }
         }
         return result
+    }
+
+    fun filterTransaction(list: List<TransactionWithItemInCashier>? = null, transactionFilter: TransactionFilter? = null){
+
     }
 
 }
