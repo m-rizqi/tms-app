@@ -78,6 +78,7 @@
                     style="@style/TextAppearance.Button"
                     android:textColor="@color/primary_100"
                     android:text="@string/edit_profile"
+                    android:visibility="gone"
                     />
 
                 <TextView

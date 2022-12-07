@@ -1,11 +1,13 @@
 package com.rizqi.tms.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.rizqi.tms.model.ItemInCashier
-import com.rizqi.tms.model.Transaction
-import com.rizqi.tms.model.TransactionFilter
-import com.rizqi.tms.model.TransactionWithItemInCashier
+import com.rizqi.tms.model.*
 import com.rizqi.tms.repository.TransactionRepository
+import com.rizqi.tms.utility.DD_MMM_YYYY
+import com.rizqi.tms.utility.getFormattedDateString
+import com.rizqi.tms.utility.notifyObserver
+import com.rizqi.tms.utility.toCalendar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -22,9 +24,19 @@ class TransactionViewModel @Inject constructor(
     val filteredTransaction : LiveData<List<TransactionWithItemInCashier>>
         get() = _filteredTransaction
 
-    private val _transactionFilter = MutableLiveData<TransactionFilter>()
+    private val _transactionFilter = MutableLiveData(TransactionFilter(null, null, null, null, DateRange.All()))
     val transactionFilter : LiveData<TransactionFilter>
         get() = _transactionFilter
+
+    private val _allTransaction = MutableLiveData<List<TransactionWithItemInCashier>>(emptyList())
+    private val allTransaction : LiveData<List<TransactionWithItemInCashier>>
+        get() = _allTransaction
+
+    fun setAllTransaction(list: List<TransactionWithItemInCashier>){
+        _allTransaction.value = list
+        _allTransaction.notifyObserver()
+        filterTransaction()
+    }
 
     fun getTransactionById(id : Long): LiveData<TransactionWithItemInCashier> {
         return transactionRepository.getById(id).asLiveData()
@@ -86,7 +98,54 @@ class TransactionViewModel @Inject constructor(
         return result
     }
 
-    fun filterTransaction(list: List<TransactionWithItemInCashier>? = null, transactionFilter: TransactionFilter? = null){
+    fun filterTransaction(transactionFilter: TransactionFilter? = null){
+        if (transactionFilter != null){
+            this._transactionFilter.value = transactionFilter
+        }
+        var temp = allTransaction.value ?: emptyList()
+
+        this._transactionFilter.value?.let {
+
+            // Filter by date
+            val dateRange = it.dateRangeType
+            val dateFromCalendar = toCalendar(it.dateFrom ?: 0)
+            val dateToCalendar = toCalendar(it.dateTo ?: 0)
+            when(dateRange.ordinal){
+                DateRange.All().ordinal -> {}
+                DateRange.Today().ordinal, DateRange.Yesterday().ordinal -> {
+                    temp = temp.filter {trans ->
+                        toCalendar(trans.transaction.time).get(Calendar.DATE) == dateFromCalendar.get(Calendar.DATE)
+                    }
+                }
+                else -> {
+                    temp = temp.filter {trans ->
+                        val date = toCalendar(trans.transaction.time)
+                        dateFromCalendar.apply {
+                            set(Calendar.HOUR_OF_DAY, 0)
+                            set(Calendar.MINUTE, 0)
+                            set(Calendar.SECOND, 0)
+                        }
+                        dateToCalendar.apply {
+                            set(Calendar.HOUR_OF_DAY, 23)
+                            set(Calendar.MINUTE, 59)
+                            set(Calendar.SECOND, 59)
+                        }
+                        date.timeInMillis >= dateFromCalendar.timeInMillis && date.timeInMillis<= dateToCalendar.timeInMillis
+                    }
+                }
+            }
+
+            // Filter by price
+            if (it.priceFrom != null && it.priceTo != null){
+                temp = temp.filter { trans ->
+                    trans.transaction.total in it.priceFrom!!..it.priceTo!!
+                }
+            }
+
+        }
+
+        _filteredTransaction.value = temp
+        _filteredTransaction.notifyObserver()
 
     }
 

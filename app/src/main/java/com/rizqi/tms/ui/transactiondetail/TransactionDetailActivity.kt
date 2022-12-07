@@ -32,6 +32,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         transactionId = intent.getLongExtra(TRANSACTION_ID, 0)
         transactionViewModel.getTransactionById(transactionId).observe(this){transaction ->
             this.transaction = transaction
+            if (transaction == null) return@observe
             itemInCashierAdapter.submitList(transaction.itemInCashiers)
             binding.apply {
                 id = transaction.transaction.id

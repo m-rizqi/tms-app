@@ -19,4 +19,5 @@ const val BACKUP_NOTIFICATION_CHANNEL_NAME = "Backup"
 const val BACKUP_NOTIFICATION_ID = 4243
 const val TRANSACTION_ID = "transaction_id"
 const val EEE_DD_MMM_YYYY = "EEEE, dd MMMM yyyy"
+const val DD_MMM_YYYY = "dd MMMM yyyy"
 const val EEE_DD_MMM_YYYY_HH_MM = "EEEE, dd MMMM yyyy  HH:mm"

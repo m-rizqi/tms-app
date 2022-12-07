@@ -4,24 +4,25 @@ import com.rizqi.tms.utility.getFormattedDateString
 import java.util.*
 
 sealed class DateRange(
+    var ordinal : Int,
     var dateFrom : Long? = null,
-    var dateTo : Long? = null
+    var dateTo : Long? = null,
 ) {
-    class All() : DateRange()
-    class Today() : DateRange(){
+    class All() : DateRange(0)
+    class Today() : DateRange(1){
         init {
             val cal = Calendar.getInstance()
             dateFrom = cal.timeInMillis
         }
     }
-    class Yesterday() : DateRange(){
+    class Yesterday() : DateRange(2){
         init {
             val cal = Calendar.getInstance()
             cal.add(Calendar.DATE, -1)
             dateFrom = cal.timeInMillis
         }
     }
-    class ThisWeek() : DateRange(){
+    class ThisWeek() : DateRange(3){
         init {
             val cal = Calendar.getInstance()
             dateTo = cal.timeInMillis
@@ -29,7 +30,7 @@ sealed class DateRange(
             dateFrom = cal.timeInMillis
         }
     }
-    class LastWeek() : DateRange(){
+    class LastWeek() : DateRange(4){
         init {
             val cal = Calendar.getInstance()
             cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
@@ -39,7 +40,7 @@ sealed class DateRange(
             dateFrom = cal.timeInMillis
         }
     }
-    class ThisMonth() : DateRange(){
+    class ThisMonth() : DateRange(5){
         init {
             val cal = Calendar.getInstance()
             dateTo = cal.timeInMillis
@@ -47,7 +48,7 @@ sealed class DateRange(
             dateFrom = cal.timeInMillis
         }
     }
-    class LastMonth() : DateRange(){
+    class LastMonth() : DateRange(6){
         init {
             val cal = Calendar.getInstance()
             cal.add(Calendar.MONTH, -1)
@@ -57,7 +58,7 @@ sealed class DateRange(
             dateTo = cal.timeInMillis
         }
     }
-    class Custom() : DateRange()
+    class Custom() : DateRange(7)
 
     fun getDateRangeString() : String {
         return when(this){

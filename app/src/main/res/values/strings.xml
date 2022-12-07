@@ -227,6 +227,8 @@
     <string name="this_month">Bulan Ini</string>
     <string name="last_month">Bulan Kemarin</string>
     <string name="date_range">Rentang Waktu</string>
+    <string name="this_field">Bagian ini</string>
+    <string name="reset">Reset</string>
 
     <string-array name="months">
         <item>Januari</item>

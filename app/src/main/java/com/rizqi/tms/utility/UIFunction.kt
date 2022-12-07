@@ -2,6 +2,7 @@ package com.rizqi.tms.utility
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.*
@@ -21,6 +22,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.textfield.TextInputEditText
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ChipUnitBinding
 import com.rizqi.tms.databinding.LayoutLoadingBinding
@@ -329,4 +331,27 @@ fun getFormattedDateString(timeInMillis : Long, format : String = EEE_DD_MMM_YYY
         SimpleDateFormat()
     }
     return formatter.format(cal.time)
+}
+
+fun showDatePicker(context : Context, textInputEditText: TextInputEditText, cal : Calendar? = null, onDateSet : (Long) -> Unit){
+    val c = cal ?: Calendar.getInstance()
+    val year = c.get(Calendar.YEAR)
+    val month = c.get(Calendar.MONTH)
+    val day = c.get(Calendar.DAY_OF_MONTH)
+    val dpd = DatePickerDialog(context,
+        { _, yearOfDate, monthOfYear, dayOfMonth ->
+            c.set(Calendar.YEAR, yearOfDate)
+            c.set(Calendar.MONTH, monthOfYear)
+            c.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            textInputEditText.setText(getFormattedDateString(c.timeInMillis, DD_MMM_YYYY))
+            onDateSet(c.timeInMillis)
+        },
+        year, month, day)
+    dpd.show()
+}
+
+fun toCalendar(time: Long) : Calendar {
+    return Calendar.getInstance().apply {
+        timeInMillis = time
+    }
 }
