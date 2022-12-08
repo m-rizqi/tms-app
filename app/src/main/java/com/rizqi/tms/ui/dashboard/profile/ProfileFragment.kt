@@ -24,6 +24,7 @@ import com.rizqi.tms.ui.onboarding.OnBoardingActivity
 import com.rizqi.tms.utility.getInitialBitmap
 import com.rizqi.tms.utility.getInitialPlaceholder
 import com.rizqi.tms.viewmodel.ItemViewModel
+import com.rizqi.tms.viewmodel.TransactionViewModel
 import com.rizqi.tms.viewmodel.UnitViewModel
 import com.rizqi.tms.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,7 @@ class ProfileFragment : Fragment() {
     private val userViewModel : UserViewModel by viewModels()
     private val itemViewModel : ItemViewModel by viewModels()
     private val unitViewModel : UnitViewModel by viewModels()
+    private val transactionViewModel : TransactionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,6 +76,7 @@ class ProfileFragment : Fragment() {
             context?.setUserId(0)
             userViewModel.deleteAllUser()
             itemViewModel.deleteAllItem()
+            transactionViewModel.deleteAll()
             unitViewModel.deleteAll()
             val intent = Intent(context, OnBoardingActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK

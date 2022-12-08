@@ -1,7 +1,5 @@
 package com.rizqi.tms.ui.backup
 
-import android.app.ActivityManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -11,8 +9,8 @@ import com.rizqi.tms.TMSPreferences.Companion.isBackupWithImage
 import com.rizqi.tms.TMSPreferences.Companion.setBackupSchedule
 import com.rizqi.tms.TMSPreferences.Companion.setBackupWithImage
 import com.rizqi.tms.databinding.ActivityBackupBinding
-import com.rizqi.tms.model.BackupSchedule
 import com.rizqi.tms.model.BackupSchedule.*
+import com.rizqi.tms.service.BackupService
 import com.rizqi.tms.utility.checkServiceRunning
 import com.rizqi.tms.utility.getDateString
 import com.rizqi.tms.utility.setSwitchTheme

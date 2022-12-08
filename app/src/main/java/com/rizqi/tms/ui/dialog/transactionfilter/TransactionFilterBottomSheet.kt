@@ -140,6 +140,10 @@ class TransactionFilterBottomSheet(
             tvTransactionFilterReset.setOnClickListener {
                 tempTransactionFilter = TransactionFilter()
                 toggleDateRangeType(tempTransactionFilter?.dateRangeType ?: DateRange.All())
+                binding.tilTransactionFilterDateFrom.editText.setText("")
+                binding.tilTransactionFilterDateTo.editText.setText("")
+                binding.tilTransactionFilterPriceFrom.editText.setText("")
+                binding.tilTransactionFilterPriceTo.editText.setText("")
             }
         }
 

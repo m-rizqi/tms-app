@@ -16,6 +16,10 @@ import com.rizqi.tms.databinding.ItemTransactionHistoryBinding
 import com.rizqi.tms.model.TransactionWithItemInCashier
 import com.rizqi.tms.ui.transactiondetail.TransactionDetailActivity
 import com.rizqi.tms.utility.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TransactionAdapter : ListAdapter<Comparable<*>, TransactionAdapter.BaseTransactionViewHolder<*>>(diffCallback){
 
@@ -73,14 +77,25 @@ class TransactionAdapter : ListAdapter<Comparable<*>, TransactionAdapter.BaseTra
                     }
                 }
             }
-            data.transaction.getThumbnailsAt(0).also {
-                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage1)
-            }
-            data.transaction.getThumbnailsAt(1).also {
-                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage2)
-            }
-            data.transaction.getThumbnailsAt(2).also {
-                Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage3)
+            CoroutineScope(Dispatchers.IO).launch {
+                data.transaction.getThumbnailsAt(0).also {
+                    val bmp = context.getBitmapFromPath(it ?: "")
+                    withContext(Dispatchers.Main){
+                        Glide.with(context).load(bmp).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage1)
+                    }
+                }
+                data.transaction.getThumbnailsAt(1).also {
+                    val bmp = context.getBitmapFromPath(it ?: "")
+                    withContext(Dispatchers.Main){
+                        Glide.with(context).load(bmp).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage2)
+                    }
+                }
+                data.transaction.getThumbnailsAt(2).also {
+                    val bmp = context.getBitmapFromPath(it ?: "")
+                    withContext(Dispatchers.Main){
+                        Glide.with(context).load(bmp).placeholder(context.getDrawable(R.drawable.image_placeholder)).into(binding.ivTransactionHistoryImage3)
+                    }
+                }
             }
         }
     }

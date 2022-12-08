@@ -41,18 +41,18 @@ import com.rizqi.tms.model.Item
 import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.model.User
 import com.rizqi.tms.network.model._Item
+import com.rizqi.tms.network.model._Transaction
 import com.rizqi.tms.room.TMSDatabase
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.register.RegisterActivity
 import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.ItemViewModel
+import com.rizqi.tms.viewmodel.TransactionViewModel
 import com.rizqi.tms.viewmodel.UnitViewModel
 import com.rizqi.tms.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 import java.io.*
 import javax.inject.Inject
@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity(){
     private val viewModel : LoginViewModel by viewModels()
     private val userViewModel : UserViewModel by viewModels()
     private val itemViewModel : ItemViewModel by viewModels()
+    private val transactionViewModel : TransactionViewModel by viewModels()
     private val unitViewModel : UnitViewModel by viewModels()
     private lateinit var oneTapClient: SignInClient
     private lateinit var signInRequest: BeginSignInRequest
@@ -262,122 +263,59 @@ class LoginActivity : AppCompatActivity(){
         Toast.makeText(this, getString(R.string.restoring_database), Toast.LENGTH_SHORT).show()
         showLoading(binding.lLoginLoading)
         val database = Firebase.database
-        val backupRef = database.getReference("backup/${firebaseUserId}")
-        backupRef.child("items").get()
-            .addOnCompleteListener {task ->
-                if (!task.isSuccessful){
-                    Toast.makeText(this, getString(R.string.failed_get_items), Toast.LENGTH_SHORT).show()
-                }else{
-                    task.result.children.forEach { itemSnapshot ->
-                        itemSnapshot.getValue(_Item::class.java)?.let { item ->
-                            itemViewModel.insertItemWithPrices(item.toLocalItemWithPrices())
-                            item.imagePath?.let { path ->
-                                val storage = Firebase.storage
-                                val storageRef = storage.reference.child("backup/${firebaseUserId}/${path}")
-                                val imageFile = File.createTempFile("image", null)
-                                runBlocking {
-                                    val imageTask = storageRef.getFile(imageFile).await()
-                                    if (imageTask.task.isSuccessful){
-                                        val bitmap = BitmapFactory.decodeFile(imageFile.path)
-                                        val fileName = saveBitmapToFolder(bitmap, path)
-                                    }
-                                }
+        val backupRef = database.getReference("${BACKUP_REFERENCE}/${firebaseUserId}")
+        CoroutineScope(Dispatchers.IO).launch {
+            val itemTask = backupRef.child(ITEMS_REFERENCE).get().await()
+            val transactionTask = backupRef.child(TRANSACTIONS_REFERENCE).get().await()
+            val unitTask = backupRef.child(UNITS_REFERENCE).get().await()
+            itemTask.children.forEach { itemSnapshot ->
+                itemSnapshot.getValue(_Item::class.java)?.let { item ->
+                    withContext(Dispatchers.Main){
+                        itemViewModel.insertItemWithPrices(item.toLocalItemWithPrices())
+                    }
+                    item.imagePath?.let { path ->
+                        val storage = Firebase.storage
+                        val storageRef = storage.reference.child("${BACKUP_REFERENCE}/${firebaseUserId}/${ITEMS_REFERENCE}/${path}")
+                        val imageFile = File.createTempFile("image", null)
+                        runBlocking {
+                            val imageTask = storageRef.getFile(imageFile).await()
+                            if (imageTask.task.isSuccessful){
+                                val bitmap = BitmapFactory.decodeFile(imageFile.path)
+                                val fileName = saveBitmapToFolder(bitmap, path)
                             }
                         }
                     }
                 }
-                backupRef.child("units").get()
-                    .addOnCompleteListener {unitTask ->
-                        if (!unitTask.isSuccessful){
-                            Toast.makeText(this, getString(R.string.failed_get_units), Toast.LENGTH_SHORT).show()
-                        }else{
-                            unitTask.result.children.forEach { unitSnapshot ->
-                                unitSnapshot.getValue(com.rizqi.tms.model.Unit::class.java)?.let { unit ->
-                                    unitViewModel.insertUnit(unit)
-                                }
+            }
+            transactionTask.children.forEach { transactionSnapshot ->
+                transactionSnapshot.getValue(_Transaction::class.java)?.let { transaction ->
+                    withContext(Dispatchers.Main){
+                        transactionViewModel.insertTransactionWithItemInCashier(transaction.toLocalTransactionWithItemInCashier())
+                    }
+                    transaction.itemInCashiers.mapNotNull { it.imagePath }.forEach { path ->
+                        val storage = Firebase.storage
+                        val storageRef = storage.reference.child("${BACKUP_REFERENCE}/${firebaseUserId}/${TRANSACTIONS_REFERENCE}/${path}")
+                        val imageFile = File.createTempFile("image", null)
+                        runBlocking {
+                            val imageTask = storageRef.getFile(imageFile).await()
+                            if (imageTask.task.isSuccessful){
+                                val bitmap = BitmapFactory.decodeFile(imageFile.path)
+                                val fileName = saveBitmapToFolder(bitmap, path)
                             }
                         }
-                        hideLoading(binding.lLoginLoading)
-                        onCompleteListener()
                     }
+                }
             }
+            unitTask.children.forEach { unitSnapshot ->
+                unitSnapshot.getValue(com.rizqi.tms.model.Unit::class.java)?.let { unit ->
+                    withContext(Dispatchers.Main){
+                        unitViewModel.insertUnit(unit)
+                    }
+                }
+            }
+            hideLoading(binding.lLoginLoading)
+            onCompleteListener()
+        }
     }
-
-//    private fun restoreDatabase(firebaseUserId : String, onCompleteListener : () -> Unit){
-//        TMSDatabase.getDatabase(this)
-//        viewModel.viewModelScope.launch(Dispatchers.IO){
-//            try {
-//                val storageRef = Firebase.storage.reference.child("backup/${firebaseUserId}")
-//                val restoreDBFile = File.createTempFile("restore", null)
-//                storageRef.getFile(restoreDBFile)
-//                    .addOnSuccessListener {
-//                        try {
-//                            val inputStream: InputStream? = contentResolver.openInputStream(restoreDBFile.toUri())
-//                            val oldDB = getDatabasePath(TMS_DATABASE)
-//                            copyFile(inputStream as FileInputStream, FileOutputStream(oldDB))
-//                            notificationManager.notify(
-//                                BACKUP_NOTIFICATION_ID,
-//                                backupNotificationBuilder
-//                                    .setContentTitle(getString(R.string.restore_success))
-//                                    .clearActions()
-//                                    .setContentText("")
-//                                    .setProgress(0,0, false)
-//                                    .build()
-//                            )
-//                            Toast.makeText(
-//                                this@LoginActivity, getString(R.string.restore_success),
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }catch (e : Exception){
-//                            notificationManager.notify(
-//                                BACKUP_NOTIFICATION_ID,
-//                                backupNotificationBuilder
-//                                    .setContentTitle(getString(R.string.restore_failed))
-//                                    .clearActions()
-//                                    .setContentText("")
-//                                    .setProgress(0,0, false)
-//                                    .build()
-//                            )
-//                            Toast.makeText(
-//                                this@LoginActivity, getString(R.string.restore_failed),
-//                                Toast.LENGTH_SHORT
-//                            ).show()
-//                        }
-//                        onCompleteListener()
-//                    }.addOnFailureListener {exception ->
-//                        notificationManager.notify(
-//                            BACKUP_NOTIFICATION_ID,
-//                            backupNotificationBuilder
-//                                .setContentTitle(getString(R.string.restore_failed))
-//                                .clearActions()
-//                                .setContentText("")
-//                                .setProgress(0,0, false)
-//                                .build()
-//                        )
-//                        val errorCode = (exception as StorageException).errorCode
-//                        Toast.makeText(
-//                            this@LoginActivity, if (errorCode == ERROR_OBJECT_NOT_FOUND) getString(R.string.restore_file_not_found) else getString(R.string.restore_failed),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                        onCompleteListener()
-//                    }.addOnProgressListener { snapshot ->
-//                        val transferred = snapshot.bytesTransferred
-//                        val total = snapshot.totalByteCount
-//                        val progress = (100 * transferred/total).toInt()
-//                        notificationManager.notify(
-//                            BACKUP_NOTIFICATION_ID,
-//                            backupNotificationBuilder
-//                                .setContentTitle(getString(R.string.downloading))
-//                                .setContentText("${progress}/100")
-//                                .setProgress(100, progress, true)
-//                                .build()
-//                        )
-//                    }
-//            }catch (e : Exception){
-//                Toast.makeText(this@LoginActivity, getString(R.string.restore_file_not_found), Toast.LENGTH_SHORT).show()
-//                onCompleteListener()
-//            }
-//        }
-//    }
 
 }

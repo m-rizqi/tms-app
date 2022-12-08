@@ -229,6 +229,13 @@
     <string name="date_range">Rentang Waktu</string>
     <string name="this_field">Bagian ini</string>
     <string name="reset">Reset</string>
+    <string name="uploading_transaction">Uploading Transaction</string>
+    <string name="backup_items_failed">Backup Items Failed</string>
+    <string name="backup_transactions_failed">Backup Transaction Failed</string>
+    <string name="backup_units_failed">Backup Units Failed</string>
+    <string name="backup_item_success">Backup Items Success</string>
+    <string name="backup_transactions_success">Backup Transaction Failed</string>
+    <string name="backup_units_success">Backup Units Failed</string>
 
     <string-array name="months">
         <item>Januari</item>

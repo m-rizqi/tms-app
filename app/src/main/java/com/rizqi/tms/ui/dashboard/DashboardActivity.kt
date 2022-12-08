@@ -1,6 +1,8 @@
 package com.rizqi.tms.ui.dashboard
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -9,7 +11,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.rizqi.tms.R
+import com.rizqi.tms.TMSPreferences.Companion.getBackupSchedule
+import com.rizqi.tms.TMSPreferences.Companion.getLastBackupDate
+import com.rizqi.tms.TMSPreferences.Companion.getNextBackupDate
 import com.rizqi.tms.databinding.ActivityDashboardBinding
+import com.rizqi.tms.service.BackupService
 import com.rizqi.tms.ui.dashboard.DashboardActivity.DashboardState.*
 import com.rizqi.tms.ui.dashboard.transaction.TransactionFragment
 import com.rizqi.tms.ui.dashboard.finance.FinanceFragment
@@ -17,6 +23,7 @@ import com.rizqi.tms.ui.dashboard.home.HomeFragment
 import com.rizqi.tms.ui.dashboard.profile.ProfileFragment
 import com.rizqi.tms.utility.DASHBOARD_STATE
 import com.rizqi.tms.utility.MENU_INDEX
+import com.rizqi.tms.utility.checkServiceRunning
 import dagger.hilt.android.AndroidEntryPoint
 import nl.joery.animatedbottombar.AnimatedBottomBar
 
@@ -81,6 +88,13 @@ class DashboardActivity : AppCompatActivity() {
         setDashboardStateFragment(dashboardState).commit()
         setupNavigation()
 
+//        Backup
+        val nextBackup = Calendar.getInstance().apply { timeInMillis = getNextBackupDate() }
+        val curCalendar = Calendar.getInstance()
+        if (curCalendar.get(Calendar.DATE) == nextBackup.get(Calendar.DATE) && !checkServiceRunning(BackupService::class.java.name)){
+            val serviceIntent = Intent(this@DashboardActivity, BackupService::class.java)
+            startForegroundService(serviceIntent)
+        }
     }
 
     private fun setDashboardStateFragment(state: DashboardState) : FragmentTransaction {

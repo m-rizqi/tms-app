@@ -9,8 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.rizqi.tms.R
 import com.rizqi.tms.model.SpecialPrice
-import com.rizqi.tms.ui.backup.BackupService
-import java.text.SimpleDateFormat
 import java.util.*
 
 private fun getDp(context: Context): Float {

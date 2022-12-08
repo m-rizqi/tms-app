@@ -85,7 +85,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".ui.backup.BackupService" />
+        <service android:name=".service.BackupService" />
     </application>
 
 </manifest>

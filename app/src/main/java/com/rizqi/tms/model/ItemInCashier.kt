@@ -6,6 +6,7 @@ import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.rizqi.tms.network.model._ItemInCashier
 
 @Entity(
     foreignKeys = [ForeignKey(
@@ -86,5 +87,24 @@ data class ItemInCashier(
         result = 31 * result + (itemWithPrices?.hashCode() ?: 0)
         result = 31 * result + (usedSubPrice?.hashCode() ?: 0)
         return result
+    }
+
+    fun toNetworkItemInCashier() : _ItemInCashier {
+        return _ItemInCashier(
+            this.quantity,
+            this.total,
+            this.barcode,
+            this.isTotalAdjusted,
+            this.priceType,
+            this.pricePerItem,
+            this.unitName,
+            this.imagePath,
+            this.itemName,
+            this.itemId,
+            this.priceId,
+            this.subPriceId,
+            this.transactionId,
+            this.id,
+        )
     }
 }
