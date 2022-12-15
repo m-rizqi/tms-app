@@ -236,6 +236,14 @@
     <string name="backup_item_success">Backup Items Success</string>
     <string name="backup_transactions_success">Backup Transaction Failed</string>
     <string name="backup_units_success">Backup Units Failed</string>
+    <string name="printer_setting">Pengaturan Printer</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="connected_device">Perangkat Terhubung</string>
+    <string name="refresh">refresh</string>
+    <string name="available_device">Perangkat Tersedia</string>
+    <string name="bluetooth_not_supported">Bluetooth tidak didukung pada perangkat ini</string>
+    <string name="turn_on_bluetooth_first">Harap nyalakan bluetooth terlebih dahulu</string>
+    <string name="turn_on_gps_to_search_device">Harap nyalakan GPS agar pencarian device maksimal</string>
 
     <string-array name="months">
         <item>Januari</item>

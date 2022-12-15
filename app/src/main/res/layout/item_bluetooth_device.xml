@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="name"
+            type="String" />
+        <variable
+            name="macAddress"
+            type="String" />
+        <variable
+            name="isPaired"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_bluetooth_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_printer"
+            app:tint="@{isPaired ? @color/primary_100 : @color/black_40, default=@color/primary_100}"
+            />
+
+        <TextView
+            android:id="@+id/tv_bluetooth_device_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_bluetooth_device"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="12dp"
+            android:text="@{name}"
+            tools:text="Bluetooth Printer"
+            style="@style/TextAppearance.Subtitle1"
+            android:textColor="@color/black_100"
+            />
+
+        <TextView
+            android:id="@+id/tv_bluetooth_device_mac_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_bluetooth_device_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_bluetooth_device_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_bluetooth_device_name"
+            android:text="@{macAddress}"
+            tools:text="1234:12810:2444"
+            style="@style/TextAppearance.Body1"
+            android:textColor="@{isPaired ? @color/black_70 : @color/black_40, default=@color/black_70}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

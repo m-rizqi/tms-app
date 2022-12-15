@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.rizqi.tms.R
 import com.rizqi.tms.TMSPreferences.Companion.isAnonymous
 import com.rizqi.tms.ui.backup.BackupActivity
+import com.rizqi.tms.ui.printer.PrinterActivity
 import com.rizqi.tms.ui.unit.UnitListActivity
 
 data class Setting(
@@ -34,11 +35,12 @@ data class Setting(
                     resources.getDrawable(R.drawable.ic_backup, null),
                     BackupActivity::class.java
                 ),
-//            Setting(
-//                resources.getString(R.string.printer),
-//                resources.getString(R.string.printer_setting_description),
-//                resources.getDrawable(R.drawable.ic_printer, null)
-//            ),
+            Setting(
+                resources.getString(R.string.printer),
+                resources.getString(R.string.printer_setting_description),
+                resources.getDrawable(R.drawable.ic_printer, null),
+                PrinterActivity::class.java
+            ),
 //            Setting(
 //                resources.getString(R.string.bill),
 //                resources.getString(R.string.bill_setting_description),

@@ -20,7 +20,8 @@ import com.rizqi.tms.utility.TMS_DATABASE
         Item::class,
         SearchHistory::class,
         ItemInCashier::class,
-        Transaction::class
+        Transaction::class,
+        AppBluetoothDevice::class
         ],
     version = 1,
     exportSchema = false

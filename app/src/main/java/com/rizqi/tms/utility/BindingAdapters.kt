@@ -9,7 +9,9 @@ import android.util.Log
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorRes
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -98,4 +100,11 @@ fun setSwitchTheme(
         switchCompat.thumbTintList = ColorStateList.valueOf(resources.getColor(R.color.white))
         switchCompat.trackTintList = ColorStateList.valueOf(resources.getColor(R.color.black_20))
     }
+}
+
+@BindingAdapter(
+    "tint"
+)
+fun setImageViewTint(imageView: ImageView, color : Int){
+    imageView.imageTintList = ColorStateList.valueOf(color)
 }
