@@ -1,24 +1,27 @@
 package com.rizqi.tms.model
 
 import android.bluetooth.BluetoothDevice
+import android.os.Parcelable
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class AppBluetoothDevice(
     @Ignore
     var bluetoothDevice: BluetoothDevice? = null,
-    var width : Float = 48f,
+    var width : Float = 0f,
     @ColumnInfo(name = "blank_line")
-    var blankLine : Int = 2,
+    var blankLine : Int = 0,
     @ColumnInfo(name = "char_per_line")
-    var charPerLine : Int = 32,
+    var charPerLine : Int = 0,
     @Ignore
     var isPaired : Boolean = false
-) {
+) : Parcelable {
     @PrimaryKey
     var id : String = ""
     override fun equals(other: Any?): Boolean {

@@ -15,6 +15,7 @@ import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.login.LoginActivity
 import com.rizqi.tms.ui.onboarding.OnBoardingActivity
 import com.rizqi.tms.ui.printer.PrinterActivity
+import com.rizqi.tms.ui.printer.PrinterProfileActivity
 import com.rizqi.tms.ui.register.RegisterActivity
 import com.rizqi.tms.ui.search.SearchActivity
 

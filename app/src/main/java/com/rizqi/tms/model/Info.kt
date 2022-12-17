@@ -12,4 +12,7 @@ sealed class Info(
     class MerchantPrice : Info(R.string.what_is_merchant_price, R.string.merchant_price_description)
     class ConsumerPrice : Info(R.string.what_is_consumer_price, R.string.consumer_price_description)
     class SetItemToPrice : Info(R.string.set_items_to_price_title, R.string.set_items_to_price_description)
+    class PrinterWidth : Info(R.string.what_is_printer_width, R.string.printer_width_description)
+    class PrinterCharPerLine : Info(R.string.what_is_char_per_line, R.string.char_per_line_description)
+    class PrinterBlankLine : Info(R.string.what_is_blank_line, R.string.blank_line_description)
 }

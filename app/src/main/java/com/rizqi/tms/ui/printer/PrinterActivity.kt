@@ -1,11 +1,13 @@
 package com.rizqi.tms.ui.printer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityPrinterBinding
 import com.rizqi.tms.model.AppBluetoothDevice
+import com.rizqi.tms.utility.APP_BLUETOOTH_DEVICE
 import com.rizqi.tms.utility.BluetoothBehavior
 import com.rizqi.tms.utility.BluetoothBehaviorImpl
 
@@ -44,7 +46,7 @@ class PrinterActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBehav
         subscribeDiscoveredDevices(this, Observer {result ->
             discoveredDevices = result.map {
                 BluetoothItemViewType.BluetoothItem(AppBluetoothDevice(it)).apply {
-                    onItemClickListener = { appBluetoothDevice-> appBluetoothDevice.bluetoothDevice?.let { it1 -> pairDevice(it1) } }
+                    onItemClickListener = { appBluetoothDevice-> appBluetoothDevice.bluetoothDevice?.let { it1 -> it1.createBond() } }
                 }
             }
             updateBluetoothDeviceRecyclerview()
@@ -53,7 +55,15 @@ class PrinterActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBehav
             pairedDevices = result.map {
                 BluetoothItemViewType.BluetoothItem(
                     AppBluetoothDevice(it, isPaired = true)
-                )
+                ).apply {
+                    onItemClickListener = {appBluetoothDevice ->
+                        Intent(this@PrinterActivity, PrinterProfileActivity::class.java).apply {
+                            putExtra(APP_BLUETOOTH_DEVICE, appBluetoothDevice)
+                        }.also { itn ->
+                            startActivity(itn)
+                        }
+                    }
+                }
             }
             updateBluetoothDeviceRecyclerview()
         })

@@ -244,6 +244,24 @@
     <string name="bluetooth_not_supported">Bluetooth tidak didukung pada perangkat ini</string>
     <string name="turn_on_bluetooth_first">Harap nyalakan bluetooth terlebih dahulu</string>
     <string name="turn_on_gps_to_search_device">Harap nyalakan GPS agar pencarian device maksimal</string>
+    <string name="printer_profile">Profil Printer</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="paper_width">Lebar Kertas</string>
+    <string name="paper_width_hint">Lebar kertas printer(milimeter), ex: 48</string>
+    <string name="mm">mm</string>
+    <string name="max_char_per_line">Jumlah Maksimal Karakter per Baris</string>
+    <string name="max_char_per_line_hint">ex: 32</string>
+    <string name="blank_line_at_the_end">Jumlah Baris Kosong di Akhir Nota</string>
+    <string name="blank_line_at_the_end_hint">ex: 3</string>
+    <string name="print_test">Test Print</string>
+    <string name="what_is_printer_width">Apa Itu Lebar Kertas Printer ?</string>
+    <string name="printer_width_description">Informasi mengenai lebar kertas yang digunakan pada printer. Informasi ini biasanya tersedia pada printer atau kertas.</string>
+    <string name="what_is_char_per_line">Apa Itu Karakter Per Baris ?</string>
+    <string name="char_per_line_description">Jumlah maksimal karakter atau huruf yang dapat di cetak dalam satu baris oleh printer. Informasi ini biasanya tersedia pada printer.</string>
+    <string name="what_is_blank_line">Apa Itu Baris Kosong ?</string>
+    <string name="blank_line_description">Jumlah baris kosong di akhir cetakan nota. Tujuannya agar informasi mengenai nota tidak terpotong dan tetap utuh.</string>
+    <string name="are_you_sure_disconnect_this_device">Apakah Kamu Yakin Ingin Putuskan Koneksi Device Ini ?</string>
+    <string name="all_device_information_will_be_deleted">Semua informasi mengenai device ini akan dihapus. Lanjut putuskan koneksi ?</string>
 
     <string-array name="months">
         <item>Januari</item>
