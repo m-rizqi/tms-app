@@ -262,6 +262,7 @@
     <string name="blank_line_description">Jumlah baris kosong di akhir cetakan nota. Tujuannya agar informasi mengenai nota tidak terpotong dan tetap utuh.</string>
     <string name="are_you_sure_disconnect_this_device">Apakah Kamu Yakin Ingin Putuskan Koneksi Device Ini ?</string>
     <string name="all_device_information_will_be_deleted">Semua informasi mengenai device ini akan dihapus. Lanjut putuskan koneksi ?</string>
+    <string name="empty_field_will_be_default">Data printer yang kosong akan diisi dengan nilai default</string>
 
     <string-array name="months">
         <item>Januari</item>

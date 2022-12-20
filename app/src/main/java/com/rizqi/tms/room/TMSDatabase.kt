@@ -33,6 +33,7 @@ abstract class TMSDatabase : RoomDatabase(){
     abstract fun itemDao() : ItemDao
     abstract fun searchHistoryDao() : SearchHistoryDao
     abstract fun transactionDao() : TransactionDao
+    abstract fun appBluetoothDeviceDao() : AppBluetoothDeviceDao
 
     companion object {
         @Volatile
