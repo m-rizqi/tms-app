@@ -313,7 +313,9 @@ class LoginActivity : AppCompatActivity(){
                     }
                 }
             }
-            hideLoading(binding.lLoginLoading)
+            withContext(Dispatchers.Main){
+                hideLoading(binding.lLoginLoading)
+            }
             onCompleteListener()
         }
     }

@@ -263,6 +263,14 @@
     <string name="are_you_sure_disconnect_this_device">Apakah Kamu Yakin Ingin Putuskan Koneksi Device Ini ?</string>
     <string name="all_device_information_will_be_deleted">Semua informasi mengenai device ini akan dihapus. Lanjut putuskan koneksi ?</string>
     <string name="empty_field_will_be_default">Data printer yang kosong akan diisi dengan nilai default</string>
+    <string name="bill_setting">Pengaturan Nota</string>
+    <string name="photo_profile">Foto Profil</string>
+    <string name="merchant_name">Nama Merchant</string>
+    <string name="merchant_address">Alamat Toko</string>
+    <string name="merchant_chasier_name">Nama Kasir</string>
+    <string name="merchant_chasier_date">Tanggal Transaksi</string>
+    <string name="merchant_chasier_id">Id Transaksi</string>
+    <string name="save_success">Berhasil menyimpan</string>
 
     <string-array name="months">
         <item>Januari</item>

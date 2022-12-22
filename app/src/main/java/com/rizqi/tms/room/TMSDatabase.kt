@@ -21,7 +21,8 @@ import com.rizqi.tms.utility.TMS_DATABASE
         SearchHistory::class,
         ItemInCashier::class,
         Transaction::class,
-        AppBluetoothDevice::class
+        AppBluetoothDevice::class,
+        BillItem::class
         ],
     version = 1,
     exportSchema = false
@@ -34,6 +35,7 @@ abstract class TMSDatabase : RoomDatabase(){
     abstract fun searchHistoryDao() : SearchHistoryDao
     abstract fun transactionDao() : TransactionDao
     abstract fun appBluetoothDeviceDao() : AppBluetoothDeviceDao
+    abstract fun billItemDao() : BillItemDao
 
     companion object {
         @Volatile
