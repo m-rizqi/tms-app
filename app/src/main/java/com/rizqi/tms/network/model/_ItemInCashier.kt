@@ -2,12 +2,13 @@ package com.rizqi.tms.network.model
 
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.PriceType
+import com.rizqi.tms.model.TotalPriceType
 
 data class _ItemInCashier (
         var quantity : Double = 0.0,
         var total : Long = 0,
         var barcode : String? = null,
-        var isTotalAdjusted : Boolean = false,
+        var totalPriceType: TotalPriceType = TotalPriceType.ORIGINAL,
         var priceType: PriceType = PriceType.Merchant,
         var pricePerItem : Double = 0.0,
         var unitName : String = "",
@@ -24,7 +25,7 @@ data class _ItemInCashier (
                         this.quantity,
                         this.total,
                         this.barcode,
-                        this.isTotalAdjusted,
+                        this.totalPriceType,
                         this.priceType,
                         this.pricePerItem,
                         this.unitName,

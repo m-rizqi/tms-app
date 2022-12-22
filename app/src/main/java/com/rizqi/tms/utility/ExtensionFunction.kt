@@ -77,3 +77,12 @@ fun Context.checkServiceRunning(serviceName : String): Boolean {
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
+
+fun formatQuantity(value : Double): String {
+    var valueString = value.toString()
+    val dotIndex = valueString.indexOf('.')
+    if (dotIndex >= 0 && dotIndex < valueString.lastIndex && valueString.substring(dotIndex+1).all { it == '0' }){
+        valueString = valueString.substring(0, dotIndex)
+    }
+    return valueString
+}

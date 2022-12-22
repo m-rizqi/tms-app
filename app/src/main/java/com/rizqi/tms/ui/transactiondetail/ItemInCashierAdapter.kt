@@ -12,6 +12,7 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ItemItemInCashierBinding
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.PriceType
+import com.rizqi.tms.model.TotalPriceType
 import com.rizqi.tms.utility.ThousandFormatter
 import com.rizqi.tms.utility.getBitmapFromPath
 import kotlin.math.ceil
@@ -26,7 +27,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                 price = "${context.getString(R.string.rp_, ThousandFormatter.format(ceil(itemInCashier.pricePerItem).toLong()))}/${itemInCashier.unitName}"
                 quantity = "${formatQuantity(itemInCashier.quantity)} ${itemInCashier.unitName}"
                 total = context.getString(R.string.rp_, ThousandFormatter.format(itemInCashier.total))
-                mcvTransactionDetailPriceAdjusted.visibility = if (itemInCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                mcvTransactionDetailPriceAdjusted.visibility = if (itemInCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
             }
             itemInCashier.imagePath.also {
                 Glide.with(context).load(context.getBitmapFromPath(it ?: "")).placeholder(R.drawable.image_placeholder).into(binding.ivTransactioinDetail)

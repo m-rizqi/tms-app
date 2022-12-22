@@ -271,6 +271,11 @@
     <string name="merchant_chasier_date">Tanggal Transaksi</string>
     <string name="merchant_chasier_id">Id Transaksi</string>
     <string name="save_success">Berhasil menyimpan</string>
+    <string name="print_bill">Print Nota</string>
+    <string name="print">Print</string>
+    <string name="download">Download</string>
+    <string name="cashier_name">Kasir : %1$s</string>
+    <string name="date_bill">Tanggal  : %1$s</string>
 
     <string-array name="months">
         <item>Januari</item>

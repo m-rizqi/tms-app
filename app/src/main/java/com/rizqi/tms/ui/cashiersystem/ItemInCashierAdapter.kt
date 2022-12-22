@@ -15,6 +15,7 @@ import com.rizqi.tms.databinding.ItemCashierBinding
 import com.rizqi.tms.model.ItemInCashier
 import com.rizqi.tms.model.SubPrice
 import com.rizqi.tms.model.SubPriceWithSpecialPrice
+import com.rizqi.tms.model.TotalPriceType
 import com.rizqi.tms.utility.ThousandFormatter
 import com.rizqi.tms.utility.hideKeyboard
 import kotlin.math.ceil
@@ -53,15 +54,15 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                     onDecrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
                     }
                 }
-                mcvItemCashierAdjusted.visibility = if (itemInCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                mcvItemCashierAdjusted.visibility = if (itemInCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
                 lItemCashierQuantity.btnPlus.setOnClickListener {
                     onIncrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
                     }
                 }
                 lItemCashierQuantity.tieAmount.doAfterTextChanged {
@@ -70,7 +71,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                         if (requestQuantity == itemInCashier.quantity) return@doAfterTextChanged
                         onQuantityChangedListener?.invoke(itemInCashier, requestQuantity, position)?.let {updatedItemCashier ->
                             binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
                         }
                     }catch (_:Exception){}
                 }
@@ -107,7 +108,7 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                             setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                         }
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.isTotalAdjusted) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
                     }
 
                 }

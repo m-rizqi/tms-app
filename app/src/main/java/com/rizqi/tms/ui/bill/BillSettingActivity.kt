@@ -1,5 +1,6 @@
 package com.rizqi.tms.ui.bill
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,8 +16,10 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
 import com.rizqi.tms.R
+import com.rizqi.tms.databinding.ActivityBillPrintBinding
 import com.rizqi.tms.databinding.ActivityBillSettingBinding
 import com.rizqi.tms.model.BillItem
+import com.rizqi.tms.model.TransactionWithItemInCashier
 import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.BillItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -143,6 +146,13 @@ class BillSettingActivity : AppCompatActivity() {
                 billItemViewModel.insert(merchantTransactionIdItem)
 
                 Toast.makeText(this@BillSettingActivity, R.string.save_success, Toast.LENGTH_SHORT).show()
+            }
+            btnBillSettingTestPrint.setOnClickListener {
+                Intent(this@BillSettingActivity, BillPrintActivity::class.java).apply {
+                    putExtra(TRANSACTION_WITH_ITEM_IN_CASHIER, TransactionWithItemInCashier.getMockedTransactionWithItemInCashier())
+                }.also { itn ->
+                    startActivity(itn)
+                }
             }
 
         }

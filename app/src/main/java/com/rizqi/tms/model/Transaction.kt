@@ -11,7 +11,7 @@ data class Transaction(
     var thumbnails : List<String?> = listOf(),
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null
-){
+) : java.io.Serializable{
     fun getThumbnailsAt(index : Int): String? {
         return try {
             thumbnails[index]

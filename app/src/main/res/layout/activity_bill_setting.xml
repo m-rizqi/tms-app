@@ -449,6 +449,7 @@
             >
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bill_setting_test_print"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/MaterialButton.Default"

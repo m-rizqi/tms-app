@@ -20,6 +20,18 @@ class Converters {
         }
     }
     @TypeConverter
+    fun fromTotalPriceType(totalPriceType: TotalPriceType): Int {
+        return totalPriceType.ordinal
+    }
+    @TypeConverter
+    fun toTotalPriceType(ordinal : Int): TotalPriceType {
+        return when(ordinal){
+            0 -> TotalPriceType.ADJUSTED
+            1 -> TotalPriceType.ORIGINAL
+            else -> TotalPriceType.ORIGINAL
+        }
+    }
+    @TypeConverter
     fun fromListOfString(list: List<String?>) : String {
         return list.filterNotNull().joinToString(",")
     }

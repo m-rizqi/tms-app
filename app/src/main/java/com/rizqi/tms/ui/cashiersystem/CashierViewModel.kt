@@ -84,7 +84,7 @@ class CashierViewModel : ViewModel() {
                     it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
                     it.subPriceId = priceAndSubPrice?.merchantSubPrice?.subPrice?.id ?: it.subPriceId
                     it.total = ceil(it.quantity * (it.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
-                    it.isTotalAdjusted = false
+                    it.totalPriceType = TotalPriceType.ORIGINAL
                 }
             }
             Consumer -> {
@@ -94,7 +94,7 @@ class CashierViewModel : ViewModel() {
                     it.priceId = priceAndSubPrice?.price?.id ?: it.priceId
                     it.subPriceId = priceAndSubPrice?.consumerSubPrice?.subPrice?.id ?: it.subPriceId
                     it.total = ceil(it.quantity * (it.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
-                    it.isTotalAdjusted = false
+                    it.totalPriceType = TotalPriceType.ORIGINAL
                 }
             }
             None -> {}
@@ -110,7 +110,7 @@ class CashierViewModel : ViewModel() {
         itemCashier?.subPriceId = changedSubPrice.getSubPrice().id
         itemCashier?.priceId = changedSubPrice.getSubPrice().priceId
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * changedSubPrice.getSubPrice().price).toLong()
-        itemCashier?.isTotalAdjusted = false
+        itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -121,7 +121,7 @@ class CashierViewModel : ViewModel() {
     fun incrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int): ItemInCashier? {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) + 1.0
-        itemCashier?.isTotalAdjusted = false
+        itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
@@ -132,7 +132,7 @@ class CashierViewModel : ViewModel() {
     fun decrementQuantityItemInCashier(itemInCashier: ItemInCashier, position: Int, showSnackBar: (String, String) -> kotlin.Unit): ItemInCashier? {
         var itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) - 1.0
-        itemCashier?.isTotalAdjusted = false
+        itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
         if ((itemCashier?.quantity ?: 1.0) <= 0.0){
             showSnackBar(itemCashier?.itemWithPrices?.item?.name ?: "", itemCashier?.barcode ?: "")
             _itemInCashierList.value?.removeAt(position)
@@ -149,7 +149,7 @@ class CashierViewModel : ViewModel() {
     fun adjustTotalPriceItemInCashier(itemInCashier: ItemInCashier, position: Int, requestTotal : Long) {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.total = requestTotal
-        itemCashier?.isTotalAdjusted = true
+        itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -185,7 +185,7 @@ class CashierViewModel : ViewModel() {
     fun onQuantityChanged(itemInCashier: ItemInCashier, requestQuantity: Double, position: Int): ItemInCashier? {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.quantity = requestQuantity
-        itemCashier?.isTotalAdjusted = true
+        itemCashier?.totalPriceType = TotalPriceType.ADJUSTED
         itemCashier?.total = ceil(requestQuantity * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: itemInCashier.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
         _itemInCashierList.notifyObserver()
         calculateTotal()

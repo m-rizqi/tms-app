@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="itemName"
+            type="String" />
+        <variable
+            name="pricePerItem"
+            type="String" />
+        <variable
+            name="quantity"
+            type="String" />
+        <variable
+            name="total"
+            type="String" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Item Name"
+                android:text="@{itemName}"
+                style="@style/TextAppearance.Body2"
+                android:textColor="@color/black_100"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Rp. 4.000/Bungkus"
+                android:text="@{pricePerItem}"
+                style="@style/TextAppearance.Overline"
+                android:textColor="@color/black_100"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="2 Bungkus"
+            android:text="@{quantity}"
+            style="@style/TextAppearance.Body2"
+            android:textColor="@color/black_100"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            tools:text="Rp. 12.4000,-"
+            android:text="@{total}"
+            android:textAlignment="textEnd"
+            style="@style/TextAppearance.Body2"
+            android:textColor="@color/black_100"
+            />
+
+    </LinearLayout>
+</layout>

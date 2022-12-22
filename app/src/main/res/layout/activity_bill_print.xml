@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="selectedPrinterName"
+            type="String" />
+        <variable
+            name="merchantName"
+            type="String" />
+        <variable
+            name="merchantAddress"
+            type="String" />
+        <variable
+            name="merchantcashier"
+            type="String" />
+        <variable
+            name="date"
+            type="String" />
+        <variable
+            name="id"
+            type="String" />
+        <variable
+            name="total"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".ui.bill.BillPrintActivity">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_bill_print_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_bill_print_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_left" />
+
+                <TextView
+                    style="@style/TextAppearance.RubikMedium14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/print_bill"
+                    android:textColor="@color/black_100"
+                    />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/mcv_bill_print_app_bar"
+            app:layout_constraintBottom_toTopOf="@id/l_bill_print_print"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="24dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_bill_print_image"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    android:background="@color/black_20"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bill_print_merchant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    tools:text="Nama Toko"
+                    android:text="@{merchantName}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bill_print_merchant_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="Alamat Toko"
+                    android:text="@{merchantAddress}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_20"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bill_print_merchant_cashier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:text="Nama Kasir"
+                    android:text="@{merchantcashier}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bill_print_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:text="Tanggal"
+                    android:text="@{date}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_bill_print_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:text="Id"
+                    android:text="@{id}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_20"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="5"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/item_name"
+                        style="@style/TextAppearance.Body2"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/quantity"
+                        style="@style/TextAppearance.Body2"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="@string/total"
+                        android:textAlignment="textEnd"
+                        style="@style/TextAppearance.Body2"
+                        android:textColor="@color/black_100"
+                        />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_bill_print_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_bill_print"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_20"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/total"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textAlignment="textEnd"
+                        android:text="@{total}"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toTopOf="@id/l_bill_print_print"
+            android:background="@drawable/shadow_round_corner"
+            android:layout_marginBottom="-16dp"
+            android:layout_marginStart="-8dp"
+            android:layout_marginEnd="-8dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/l_bill_print_print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/round_corner_shape"
+            >
+
+            <LinearLayout
+                android:id="@+id/l_bill_print_selected_printer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp"
+                android:paddingVertical="4dp"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Nama Printer"
+                    android:text="@{selectedPrinterName}"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/black_100"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_top"
+                    android:rotation="90"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="1dp"
+                    />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bill_print_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Default"
+                android:text="@string/print"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bill_print_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                style="@style/MaterialButton.Outlined.Positive"
+                android:text="@string/download"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

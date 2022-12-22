@@ -1,5 +1,6 @@
 package com.rizqi.tms.model
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
@@ -7,6 +8,8 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.rizqi.tms.network.model._ItemInCashier
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 
 @Entity(
     foreignKeys = [ForeignKey(
@@ -17,13 +20,14 @@ import com.rizqi.tms.network.model._ItemInCashier
         onUpdate = ForeignKey.CASCADE
     )]
 )
+@Parcelize
 data class ItemInCashier(
     var quantity : Double = 0.0,
     var total : Long = 0,
     @ColumnInfo(name = "total_adjusted")
     var barcode : String? = null,
-    @ColumnInfo(name = "is_total_adjusted")
-    var isTotalAdjusted : Boolean = false,
+    @ColumnInfo(name = "total_price_type")
+    var totalPriceType : TotalPriceType = TotalPriceType.ORIGINAL,
     @ColumnInfo(name = "price_type")
     var priceType: PriceType = PriceType.Merchant,
     @ColumnInfo(name = "price_per_item")
@@ -45,10 +49,12 @@ data class ItemInCashier(
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null,
     @Ignore
+    @IgnoredOnParcel
     var itemWithPrices: ItemWithPrices? = null,
     @Ignore
+    @IgnoredOnParcel
     var usedSubPrice: SubPriceWithSpecialPrice? = null,
-){
+) : Parcelable{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -58,7 +64,7 @@ data class ItemInCashier(
         if (quantity != other.quantity) return false
         if (total != other.total) return false
         if (barcode != other.barcode) return false
-        if (isTotalAdjusted != other.isTotalAdjusted) return false
+        if (totalPriceType != other.totalPriceType) return false
         if (priceType != other.priceType) return false
         if (pricePerItem != other.pricePerItem) return false
         if (unitName != other.unitName) return false
@@ -76,7 +82,7 @@ data class ItemInCashier(
         var result = quantity.hashCode()
         result = 31 * result + total.hashCode()
         result = 31 * result + (barcode?.hashCode() ?: 0)
-        result = 31 * result + isTotalAdjusted.hashCode()
+        result = 31 * result + totalPriceType.hashCode()
         result = 31 * result + priceType.hashCode()
         result = 31 * result + pricePerItem.hashCode()
         result = 31 * result + unitName.hashCode()
@@ -94,7 +100,7 @@ data class ItemInCashier(
             this.quantity,
             this.total,
             this.barcode,
-            this.isTotalAdjusted,
+            this.totalPriceType,
             this.priceType,
             this.pricePerItem,
             this.unitName,
