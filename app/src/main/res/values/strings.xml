@@ -281,6 +281,10 @@
     <string name="failed_to_save_bill">Gagal mendownload nota</string>
     <string name="success_save_bill">Berhasil menyimpan nota ke penyimpanan external</string>
     <string name="select">Pilih</string>
+    <string name="send_email">Kirim Email</string>
+    <string name="problem_and_need_help">Terkendala Sesuatu dan Butuh Bantuan ?</string>
+    <string name="company_email">mrizqi070502@gmail.com</string>
+    <string name="help_email_subject">Toko Management System - Bantuan</string>
 
     <string-array name="months">
         <item>Januari</item>

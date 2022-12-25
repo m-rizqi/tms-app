@@ -36,6 +36,13 @@
         android:theme="@style/Theme.TokoManagementSystem.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.help.HelpActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.bill.BillPrintActivity"
             android:exported="false">
             <meta-data
@@ -110,6 +117,7 @@
             android:theme="@style/Theme.TokoManagementSystem.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
