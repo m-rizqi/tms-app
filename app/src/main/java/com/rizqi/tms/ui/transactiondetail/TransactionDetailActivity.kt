@@ -1,5 +1,6 @@
 package com.rizqi.tms.ui.transactiondetail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,10 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityTransactionDetailBinding
 import com.rizqi.tms.model.TransactionWithItemInCashier
-import com.rizqi.tms.utility.EEE_DD_MMM_YYYY_HH_MM
-import com.rizqi.tms.utility.TRANSACTION_ID
-import com.rizqi.tms.utility.ThousandFormatter
-import com.rizqi.tms.utility.getFormattedDateString
+import com.rizqi.tms.ui.bill.BillPrintActivity
+import com.rizqi.tms.utility.*
 import com.rizqi.tms.viewmodel.TransactionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -48,6 +47,13 @@ class TransactionDetailActivity : AppCompatActivity() {
                 transaction?.let {tr ->
                     transactionViewModel.deleteTransaction(tr.transaction)
                     finish()
+                }
+            }
+            tvTransactionDetailViewBill.setOnClickListener {
+                Intent(this@TransactionDetailActivity, BillPrintActivity::class.java).apply {
+                    putExtra(TRANSACTION_WITH_ITEM_IN_CASHIER, transaction)
+                }.also { itn ->
+                    startActivity(itn)
                 }
             }
         }

@@ -123,6 +123,11 @@ class CashierViewModel : ViewModel() {
         itemCashier?.quantity = (itemCashier?.quantity ?: 1.0) + 1.0
         itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
         itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
+        val specialPrice = itemCashier?.usedSubPrice?.getSpecialPrice()?.find { it.quantity == itemCashier.quantity }
+        if (specialPrice != null){
+            itemCashier.totalPriceType = TotalPriceType.SPECIAL
+            itemCashier.total = ceil(specialPrice.price).toLong()
+        }
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -140,6 +145,11 @@ class CashierViewModel : ViewModel() {
         }else{
             itemCashier?.total = ceil((itemCashier?.quantity ?: 1.0) * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
         }
+        val specialPrice = itemCashier?.usedSubPrice?.getSpecialPrice()?.find { it.quantity == itemCashier.quantity }
+        if (specialPrice != null){
+            itemCashier?.totalPriceType = TotalPriceType.SPECIAL
+            itemCashier?.total = ceil(specialPrice.price).toLong()
+        }
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -149,7 +159,7 @@ class CashierViewModel : ViewModel() {
     fun adjustTotalPriceItemInCashier(itemInCashier: ItemInCashier, position: Int, requestTotal : Long) {
         val itemCashier = _itemInCashierList.value?.get(position)
         itemCashier?.total = requestTotal
-        itemCashier?.totalPriceType = TotalPriceType.ORIGINAL
+        itemCashier?.totalPriceType = TotalPriceType.ADJUSTED
         itemCashier?.let { _itemInCashierList.value?.set(position, it) }
         _itemInCashierList.notifyObserver()
         calculateTotal()
@@ -187,6 +197,11 @@ class CashierViewModel : ViewModel() {
         itemCashier?.quantity = requestQuantity
         itemCashier?.totalPriceType = TotalPriceType.ADJUSTED
         itemCashier?.total = ceil(requestQuantity * (itemCashier?.usedSubPrice?.getSubPrice()?.price ?: itemInCashier.usedSubPrice?.getSubPrice()?.price ?: 0.0)).toLong()
+        val specialPrice = itemCashier?.usedSubPrice?.getSpecialPrice()?.find { it.quantity == itemCashier.quantity }
+        if (specialPrice != null){
+            itemCashier.totalPriceType = TotalPriceType.SPECIAL
+            itemCashier.total = ceil(specialPrice.price).toLong()
+        }
         _itemInCashierList.notifyObserver()
         calculateTotal()
         return itemCashier

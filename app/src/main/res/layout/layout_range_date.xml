@@ -51,6 +51,5 @@
             android:buttonTint="@color/primary_100"
             />
 
-
     </RelativeLayout>
 </layout>

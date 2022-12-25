@@ -167,6 +167,7 @@
     <string name="edit_unit">Ubah Satuan</string>
     <string name="last_backup">Backup Terakhir</string>
     <string name="date_">Tanggal : %1$s</string>
+    <string name="date">Tanggal :</string>
     <string name="size_">Ukuran : %1$s</string>
     <string name="backup_schedule">Jadwal Backup</string>
     <string name="every_day">Tiap Hari</string>
@@ -279,6 +280,7 @@
     <string name="select_printer">Pilih Printer</string>
     <string name="failed_to_save_bill">Gagal mendownload nota</string>
     <string name="success_save_bill">Berhasil menyimpan nota ke penyimpanan external</string>
+    <string name="select">Pilih</string>
 
     <string-array name="months">
         <item>Januari</item>

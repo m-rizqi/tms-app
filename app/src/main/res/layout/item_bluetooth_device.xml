@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/iv_bluetooth_device"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/radio_bluetooth_device"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="12dp"
             android:text="@{name}"
@@ -56,6 +56,20 @@
             tools:text="1234:12810:2444"
             style="@style/TextAppearance.Body1"
             android:textColor="@{isPaired ? @color/black_70 : @color/black_40, default=@color/black_70}"
+            />
+
+        <RadioButton
+            android:id="@+id/radio_bluetooth_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:clickable="false"
+            android:buttonTint="@color/primary_100"
+            android:visibility="gone"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

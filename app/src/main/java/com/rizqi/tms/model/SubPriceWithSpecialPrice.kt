@@ -7,6 +7,7 @@ import com.rizqi.tms.network.model._SubPrice
 sealed interface SubPriceWithSpecialPrice{
     fun toNetworkSubPrice() : _SubPrice
     fun getSubPrice() : SubPrice
+    fun getSpecialPrice() : List<SpecialPrice>
 
     data class MerchantSubPriceWithSpecialPrice(
         @Embedded
@@ -28,6 +29,11 @@ sealed interface SubPriceWithSpecialPrice{
         override fun getSubPrice(): SubPrice {
             return subPrice
         }
+
+        override fun getSpecialPrice(): List<SpecialPrice> {
+            return specialPrices
+        }
+
     }
 
     data class ConsumerSubPriceWithSpecialPrice(
@@ -49,6 +55,10 @@ sealed interface SubPriceWithSpecialPrice{
 
         override fun getSubPrice(): SubPrice {
             return subPrice
+        }
+
+        override fun getSpecialPrice(): List<SpecialPrice> {
+            return specialPrices
         }
     }
 }

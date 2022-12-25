@@ -54,15 +54,30 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                     onDecrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED || updatedItemCashier.totalPriceType == TotalPriceType.SPECIAL) View.VISIBLE else View.GONE
+                        binding.totalPriceType = when(updatedItemCashier.totalPriceType){
+                            TotalPriceType.ADJUSTED -> context.getString(R.string.adjusted)
+                            TotalPriceType.SPECIAL -> context.getString(R.string.special_price)
+                            TotalPriceType.ORIGINAL -> context.getString(R.string.adjusted)
+                        }
                     }
                 }
-                mcvItemCashierAdjusted.visibility = if (itemInCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
+                mcvItemCashierAdjusted.visibility = if (itemInCashier.totalPriceType == TotalPriceType.ADJUSTED || itemInCashier.totalPriceType == TotalPriceType.SPECIAL) View.VISIBLE else View.GONE
+                totalPriceType = when(itemInCashier.totalPriceType){
+                    TotalPriceType.ADJUSTED -> context.getString(R.string.adjusted)
+                    TotalPriceType.SPECIAL -> context.getString(R.string.special_price)
+                    TotalPriceType.ORIGINAL -> context.getString(R.string.adjusted)
+                }
                 lItemCashierQuantity.btnPlus.setOnClickListener {
                     onIncrementQuantityListener?.invoke(itemInCashier, position)?.let { updatedItemCashier ->
                         binding.quantity = formatQuantity(updatedItemCashier.quantity)
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED || updatedItemCashier.totalPriceType == TotalPriceType.SPECIAL) View.VISIBLE else View.GONE
+                        binding.totalPriceType = when(updatedItemCashier.totalPriceType){
+                            TotalPriceType.ADJUSTED -> context.getString(R.string.adjusted)
+                            TotalPriceType.SPECIAL -> context.getString(R.string.special_price)
+                            TotalPriceType.ORIGINAL -> context.getString(R.string.adjusted)
+                        }
                     }
                 }
                 lItemCashierQuantity.tieAmount.doAfterTextChanged {
@@ -71,7 +86,12 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                         if (requestQuantity == itemInCashier.quantity) return@doAfterTextChanged
                         onQuantityChangedListener?.invoke(itemInCashier, requestQuantity, position)?.let {updatedItemCashier ->
                             binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
+                            binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED || updatedItemCashier.totalPriceType == TotalPriceType.SPECIAL) View.VISIBLE else View.GONE
+                            binding.totalPriceType = when(updatedItemCashier.totalPriceType){
+                                TotalPriceType.ADJUSTED -> context.getString(R.string.adjusted)
+                                TotalPriceType.SPECIAL -> context.getString(R.string.special_price)
+                                TotalPriceType.ORIGINAL -> context.getString(R.string.adjusted)
+                            }
                         }
                     }catch (_:Exception){}
                 }
@@ -108,7 +128,12 @@ class ItemInCashierAdapter : ListAdapter<ItemInCashier, ItemInCashierAdapter.Ite
                             setHintTextColor(ResourcesCompat.getColor(context.resources, R.color.black_100, null))
                         }
                         binding.total = ThousandFormatter.format(updatedItemCashier.total)
-                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED) View.VISIBLE else View.GONE
+                        binding.mcvItemCashierAdjusted.visibility = if (updatedItemCashier.totalPriceType == TotalPriceType.ADJUSTED || updatedItemCashier.totalPriceType == TotalPriceType.SPECIAL) View.VISIBLE else View.GONE
+                        binding.totalPriceType = when(updatedItemCashier.totalPriceType){
+                            TotalPriceType.ADJUSTED -> context.getString(R.string.adjusted)
+                            TotalPriceType.SPECIAL -> context.getString(R.string.special_price)
+                            TotalPriceType.ORIGINAL -> context.getString(R.string.adjusted)
+                        }
                     }
 
                 }

@@ -1,6 +1,7 @@
 package com.rizqi.tms.ui.printer
 
 import android.bluetooth.BluetoothDevice
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,9 +11,12 @@ import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityPrinterProfileBinding
 import com.rizqi.tms.model.AppBluetoothDevice
 import com.rizqi.tms.model.Info
+import com.rizqi.tms.model.TransactionWithItemInCashier
+import com.rizqi.tms.ui.bill.BillPrintActivity
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.utility.APP_BLUETOOTH_DEVICE
+import com.rizqi.tms.utility.TRANSACTION_WITH_ITEM_IN_CASHIER
 import com.rizqi.tms.utility.hideKeyboard
 import com.rizqi.tms.viewmodel.AppBluetoothDeviceViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +90,14 @@ class PrinterProfileActivity : AppCompatActivity() {
                 appBluetoothDeviceViewModel.insert(
                     savedDbDevice!!
                 )
+            }
+            btnPrinterProfileTestPrint.setOnClickListener {
+                Intent(this@PrinterProfileActivity, BillPrintActivity::class.java).apply {
+                    putExtra(APP_BLUETOOTH_DEVICE, appBluetoothDevice)
+                    putExtra(TRANSACTION_WITH_ITEM_IN_CASHIER, TransactionWithItemInCashier.getMockedTransactionWithItemInCashier())
+                }.also { itn ->
+                    startActivity(itn)
+                }
             }
         }
     }

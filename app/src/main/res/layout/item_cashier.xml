@@ -13,6 +13,9 @@
         <variable
             name="total"
             type="String" />
+        <variable
+            name="totalPriceType"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -124,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="2dp"
                     android:layout_marginHorizontal="8dp"
-                    android:text="@string/adjusted"
+                    android:text="@{totalPriceType}"
                     style="@style/TextAppearance.Overline"
                     android:textColor="@color/black_100"
                     />
