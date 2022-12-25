@@ -11,6 +11,7 @@ import com.rizqi.tms.ui.backup.BackupActivity
 import com.rizqi.tms.ui.bill.BillSettingActivity
 import com.rizqi.tms.ui.help.HelpActivity
 import com.rizqi.tms.ui.printer.PrinterActivity
+import com.rizqi.tms.ui.privacypolicy.PrivacyPolicyActivity
 import com.rizqi.tms.ui.unit.UnitListActivity
 
 data class Setting(
@@ -49,11 +50,12 @@ data class Setting(
                 resources.getDrawable(R.drawable.ic_bill, null),
                 BillSettingActivity::class.java
             ),
-//            Setting(
-//                resources.getString(R.string.privacy_policy),
-//                resources.getString(R.string.privacy_policy_setting_description),
-//                resources.getDrawable(R.drawable.ic_privacy_policy, null)
-//            ),
+            Setting(
+                resources.getString(R.string.privacy_policy),
+                resources.getString(R.string.privacy_policy_setting_description),
+                resources.getDrawable(R.drawable.ic_privacy_policy, null),
+                PrivacyPolicyActivity::class.java
+            ),
             Setting(
                 resources.getString(R.string.help),
                 resources.getString(R.string.help_setting_description),
