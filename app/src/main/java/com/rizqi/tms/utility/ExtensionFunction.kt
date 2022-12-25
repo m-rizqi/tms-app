@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
@@ -85,4 +86,10 @@ fun formatQuantity(value : Double): String {
         valueString = valueString.substring(0, dotIndex)
     }
     return valueString
+}
+
+inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
+        onSdk29()
+    }else null
 }

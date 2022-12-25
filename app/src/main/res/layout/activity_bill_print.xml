@@ -81,11 +81,13 @@
             >
 
             <LinearLayout
+                android:id="@+id/l_bill_print_bill_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="24dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/white">
 
                 <ImageView
                     android:id="@+id/iv_bill_print_image"

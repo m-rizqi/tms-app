@@ -276,6 +276,9 @@
     <string name="download">Download</string>
     <string name="cashier_name">Kasir : %1$s</string>
     <string name="date_bill">Tanggal  : %1$s</string>
+    <string name="select_printer">Pilih Printer</string>
+    <string name="failed_to_save_bill">Gagal mendownload nota</string>
+    <string name="success_save_bill">Berhasil menyimpan nota ke penyimpanan external</string>
 
     <string-array name="months">
         <item>Januari</item>

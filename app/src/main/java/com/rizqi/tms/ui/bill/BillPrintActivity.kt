@@ -3,6 +3,7 @@ package com.rizqi.tms.ui.bill
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.rizqi.tms.R
@@ -15,7 +16,7 @@ import com.rizqi.tms.viewmodel.BillItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BillPrintActivity : AppCompatActivity() {
+class BillPrintActivity : AppCompatActivity(){
     private lateinit var binding : ActivityBillPrintBinding
     private var transaction : TransactionWithItemInCashier? = null
     private var appBluetoothDevice : AppBluetoothDevice? = null
@@ -27,6 +28,7 @@ class BillPrintActivity : AppCompatActivity() {
     private var merchantDateItem : BillItem = BillItem(id = MERCHANT_DATE_ID)
     private var merchantTransactionIdItem : BillItem = BillItem(id = MERCHANT_TRANSACTION_ID_ID)
     private val billPrintItemAdapter = BillPrintItemAdapter()
+    private val externalStorageUtility : ExternalStorageUtility = ExternalStorageUtilityImpl()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class BillPrintActivity : AppCompatActivity() {
 
         transaction = intent.getParcelableExtra(TRANSACTION_WITH_ITEM_IN_CASHIER)
         appBluetoothDevice = intent.getParcelableExtra(APP_BLUETOOTH_DEVICE)
+        externalStorageUtility.setup(this)
 
         billItemViewModel.getById(MERCHANT_IMAGE_ID).observe(this) {
             if (it == null) return@observe
@@ -86,8 +89,15 @@ class BillPrintActivity : AppCompatActivity() {
         }
 
         binding.apply {
+            selectedPrinterName = if (appBluetoothDevice == null) getString(R.string.select_printer) else appBluetoothDevice!!.bluetoothDevice?.name
             rvBillPrintItems.adapter = billPrintItemAdapter
             btnBillPrintBack.setOnClickListener { onBackPressed() }
+            btnBillPrintDownload.setOnClickListener {
+                val bitmap = convertViewToBitmap(binding.lBillPrintBillLayout)
+                val isSuccess = externalStorageUtility.save("TMS_Transaction_${transaction?.transaction?.id}", bitmap)
+                val message = if (isSuccess) getString(R.string.success_save_bill) else getString(R.string.failed_to_save_bill)
+                Toast.makeText(this@BillPrintActivity, message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
