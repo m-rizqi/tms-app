@@ -3,7 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.rizqi.tms">
 
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.camera.front" />
+
     <application
+        android:name=".TMSApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,14 +36,100 @@
         android:theme="@style/Theme.TokoManagementSystem.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.privacypolicy.PrivacyPolicyActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.help.HelpActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.bill.BillPrintActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.bill.BillSettingActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.printer.PrinterProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".ui.printer.PrinterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.transactiondetail.TransactionDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.cashiersystem.CashierSystemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.backup.BackupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.unit.UnitListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.barcodesearch.BarcodeSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.updateitem.UpdateItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.itemdetail.ItemDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.takeimage.TakeImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.scan.ScanBarcodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.createitem.CreateItemActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.dashboard.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.onboarding.OnBoardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.TokoManagementSystem.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".service.BackupService" />
     </application>
 
 </manifest>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <variable
+            name="id"
+            type="Long" />
+        <variable
+            name="time"
+            type="String" />
+        <variable
+            name="total"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.transactiondetail.TransactionDetailActivity"
+        android:background="#0D0A0A0A"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_transaction_detail_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_transaction_detail_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_left" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    style="@style/TextAppearance.RubikMedium14"
+                    android:textColor="@color/black_100"
+                    android:text="@string/transaction_detail"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_transaction_detail_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+                    style="@style/TextAppearance.Body2"
+                    android:textColor="@color/danger_main"
+                    android:text="@string/delete"
+                    />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/mcv_transaction_detail_app_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="16dp"
+                    android:paddingVertical="12dp"
+                    android:paddingHorizontal="16dp"
+                    android:background="@color/white"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        >
+
+                        <TextView
+                            style="@style/TextAppearance.Subtitle1"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:text="@string/transaction_id"
+                            android:textColor="@color/black_100" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textAlignment="textEnd"
+                            style="@style/TextAppearance.Body1"
+                            android:textColor="@color/black_80"
+                            android:text="@{Long.toString(id)}"
+                            tools:text="1234"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_marginTop="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/TextAppearance.Subtitle1"
+                            android:textColor="@color/black_100"
+                            android:text="@string/time"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textAlignment="textEnd"
+                            style="@style/TextAppearance.Body1"
+                            android:textColor="@color/black_80"
+                            android:text="@{time}"
+                            tools:text="Rabu, 12 Agustus 2022 14:30"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_marginTop="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/TextAppearance.Subtitle1"
+                            android:textColor="@color/black_100"
+                            android:text="@string/total"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textAlignment="textEnd"
+                            style="@style/TextAppearance.Body1"
+                            android:textColor="@color/black_80"
+                            android:text="@{total}"
+                            tools:text="Rp. 24.500,-"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_transaction_detail_view_bill"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_gravity="end"
+                        style="@style/TextAppearance.Button"
+                        android:textColor="@color/primary_100"
+                        android:text="@string/see_bill"
+                        />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_transaction_detail_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_item_in_cashier"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <import type="android.text.InputType"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/l_select_printer_root"
+        android:background="@drawable/round_corner_shape"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="24dp"
+            >
+
+            <include
+                android:id="@+id/l_select_printer_home_indicator"
+                layout="@layout/home_indicator"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="100dp"
+                android:layout_height="4dp"
+                />
+
+            <TextView
+                android:id="@+id/tv_select_printer_title"
+                style="@style/TextAppearance.Subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/l_select_printer_home_indicator"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="24dp"
+                android:text="@string/select_printer"
+                android:textColor="@color/black_100" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_above="@id/btn_select_printer_select"
+                android:layout_below="@id/tv_select_printer_title"
+                android:layout_marginVertical="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_select_printer_devices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_bluetooth_device"
+                    />
+
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_select_printer_select"
+                style="@style/MaterialButton.Default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/select" />
+
+        </RelativeLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

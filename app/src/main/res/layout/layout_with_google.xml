@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="buttonText"
+            type="String" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:strokeColor="@color/black_40"
+        app:strokeWidth="1dp"
+        app:rippleColor="@color/black_10"
+        android:clickable="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_google"
+                android:layout_margin="12dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/black_40"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                style="@style/TextAppearance.Body2"
+                android:textColor="@color/black_80"
+                android:text="@{buttonText}"
+                android:gravity="center"
+                />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

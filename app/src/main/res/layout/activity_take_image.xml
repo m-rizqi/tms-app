@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.takeimage.TakeImageActivity">
+        
+        <com.otaliastudios.cameraview.CameraView
+            android:id="@+id/camera_view_take_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cameraAudio="off"
+            app:cameraMode="picture"
+            app:cameraPictureSizeAspectRatio="16:9"
+            app:cameraPictureFormat="jpeg"
+            app:cameraGesturePinch="zoom"
+            app:cameraGestureTap="autoFocus"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2"
+            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/black_40"
+                android:layout_marginBottom="200dp"
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/black_40"
+                android:layout_marginTop="200dp"
+                />
+
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_take_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="32dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="64dp"
+            app:strokeColor="@color/primary_100"
+            app:strokeWidth="4dp"
+            />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_take_image_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="18dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="100dp"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_left"
+                android:layout_gravity="center"
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

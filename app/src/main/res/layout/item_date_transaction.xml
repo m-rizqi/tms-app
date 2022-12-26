@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="date"
+            type="String" />
+    </data>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.RubikMedium14"
+        android:textColor="@color/black_100"
+        tools:text="Senin, 1 Januari 2022"
+        android:text="@{date}"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="16dp"
+        />
+
+</layout>

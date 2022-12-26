@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <data>
+        <import type="android.text.InputType"/>
+        <import type="android.view.inputmethod.EditorInfo"/>
+        <variable
+            name="deviceName"
+            type="String" />
+        <variable
+            name="deviceAddress"
+            type="String" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.printer.PrinterProfileActivity"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_printer_profile_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_printer_profile_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_left" />
+
+                <TextView
+                    style="@style/TextAppearance.RubikMedium14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/printer_profile"
+                    android:textColor="@color/black_100" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/mcv_printer_profile_app_bar"
+            app:layout_constraintBottom_toTopOf="@id/l_printer_profile_print"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="24dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    tools:text="Desktop Hasdasd"
+                    android:text="@{deviceName}"
+                    style="@style/TextAppearance.Headline6"
+                    android:textColor="@color/black_100"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    tools:text="H2:346:Has:23"
+                    android:text="@{deviceAddress}"
+                    style="@style/TextAppearance.Subtitle1"
+                    android:textColor="@color/black_70"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_printer_profile_disconnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    style="@style/MaterialButton.TextButton.Negative"
+                    android:text="@string/disconnect"
+                    android:minHeight="0dp"
+                    android:paddingVertical="4dp"
+                    android:layout_marginTop="8dp"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/printer_setting"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_printer_profile_save"
+                        style="@style/MaterialButton.TextButton.Positive"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:minHeight="0dp"
+                        android:paddingVertical="4dp"
+                        android:text="@string/save" />
+
+                </RelativeLayout>
+
+                <include
+                    android:id="@+id/tv_printer_profile_width"
+                    layout="@layout/layout_title_with_help"
+                    app:title="@{@string/paper_width}"
+                    android:layout_marginTop="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <include
+                    android:id="@+id/l_printer_profile_width"
+                    layout="@layout/layout_input_layout_no_title"
+                    app:hint="@{@string/paper_width_hint}"
+                    app:suffixText="@{@string/mm}"
+                    app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                    app:imeOption="@{EditorInfo.IME_ACTION_NEXT}"
+                    />
+
+                <include
+                    android:id="@+id/tv_printer_profile_char_per_line"
+                    layout="@layout/layout_title_with_help"
+                    app:title="@{@string/max_char_per_line}"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <include
+                    android:id="@+id/l_printer_profile_char_per_line"
+                    layout="@layout/layout_input_layout_no_title"
+                    app:hint="@{@string/max_char_per_line_hint}"
+                    app:inputType="@{InputType.TYPE_CLASS_NUMBER}"
+                    app:imeOption="@{EditorInfo.IME_ACTION_NEXT}"
+                    />
+
+                <include
+                    android:id="@+id/tv_printer_profile_blank_line"
+                    layout="@layout/layout_title_with_help"
+                    app:title="@{@string/blank_line_at_the_end}"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+                <include
+                    android:id="@+id/l_printer_profile_blank_line"
+                    layout="@layout/layout_input_layout_no_title"
+                    app:hint="@{@string/blank_line_at_the_end_hint}"
+                    app:inputType="@{InputType.TYPE_CLASS_NUMBER}"
+                    app:imeOption="@{EditorInfo.IME_ACTION_DONE}"
+                    />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toTopOf="@id/l_printer_profile_print"
+            android:background="@drawable/shadow_round_corner"
+            android:layout_marginBottom="-16dp"
+            android:layout_marginStart="-8dp"
+            android:layout_marginEnd="-8dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/l_printer_profile_print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/round_corner_shape"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_printer_profile_test_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Default"
+                android:text="@string/print_test"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
