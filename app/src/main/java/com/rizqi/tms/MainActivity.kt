@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, DashboardActivity::class.java))
             return
         }
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, OnBoardingActivity::class.java))
 
     }
 }

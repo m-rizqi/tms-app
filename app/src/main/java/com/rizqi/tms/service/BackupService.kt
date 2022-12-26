@@ -182,7 +182,7 @@ class BackupService : Service() {
         )
         setNextBackupDate(calendar.timeInMillis)
         setLastBackupDate()
-        stopForeground(false)
+        stopForeground(true)
         stopSelf()
     }
 

@@ -188,7 +188,9 @@ class BluetoothBehaviorImpl() : BluetoothBehavior {
 
     override fun onLifecycleStateDestroy() {
         bluetoothAdapter?.cancelDiscovery()
-        activity.unregisterReceiver(discoverReceiver)
+        try {
+            activity.unregisterReceiver(discoverReceiver)
+        }catch (_ : Exception){}
     }
 
     override fun subscribeBluetoothStatus(
