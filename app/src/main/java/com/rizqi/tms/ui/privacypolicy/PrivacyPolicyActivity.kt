@@ -14,6 +14,7 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         binding.apply {
             btnPrivacyPolicyBack.setOnClickListener { onBackPressed() }
             webviewPrivacyPolicy.loadUrl("https://www.freeprivacypolicy.com/live/d8e72927-f2a2-4198-959e-cfc62b5129dd")
+            webviewPrivacyPolicy.settings.javaScriptEnabled = true
         }
     }
 
