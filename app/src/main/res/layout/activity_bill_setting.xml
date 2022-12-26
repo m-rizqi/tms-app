@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+        <import type="android.text.InputType"/>
+        <import type="android.view.inputmethod.EditorInfo"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.bill.BillSettingActivity"
+        android:background="@color/white"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_bill_setting_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/white"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="16dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btn_bill_setting_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_arrow_left" />
+
+                <TextView
+                    style="@style/TextAppearance.RubikMedium14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/bill_setting"
+                    android:textColor="@color/black_100" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_bill_setting_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentEnd="true"
+                    style="@style/MaterialButton.TextButton.Positive"
+                    android:minHeight="0dp"
+                    android:paddingVertical="0dp"
+                    android:text="@string/save"
+                    />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/mcv_bill_setting_app_bar"
+            app:layout_constraintBottom_toTopOf="@id/l_bill_setting_test_print"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="24dp"
+                android:paddingHorizontal="16dp"
+                android:orientation="vertical"
+                >
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/photo_profile"
+                            style="@style/TextAppearance.Overline"
+                            android:textColor="@color/black_60"
+                            />
+
+                        <ImageView
+                            android:id="@+id/iv_bill_setting_image"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:src="@color/black_20"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:scaleType="centerCrop"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_image_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="@id/iv_bill_setting_image"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_image_upload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_backup"
+                            app:layout_constraintEnd_toStartOf="@id/btn_bill_setting_image_visibility"
+                            app:layout_constraintTop_toTopOf="@id/btn_bill_setting_image_visibility"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_bill_setting_image_visibility"
+                            app:tint="@color/black_40"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_bill_setting_image_reset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/btn_bill_setting_image_visibility"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_bill_setting_image_visibility"
+                            app:layout_constraintEnd_toStartOf="@id/btn_bill_setting_image_upload"
+                            android:text="@string/reset"
+                            style="@style/TextAppearance.Button"
+                            android:layout_marginEnd="12dp"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_bill_settting_merchant_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/merchant_name"
+                            style="@style/TextAppearance.Overline"
+                            android:textColor="@color/black_60"
+                            />
+
+                        <include
+                            android:id="@+id/il_bill_setting_merchant_name"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bill_settting_merchant_name"
+                            app:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                            app:imeOption="@{EditorInfo.IME_ACTION_NEXT}"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_name_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/il_bill_setting_merchant_name"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_bill_settting_merchant_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/merchant_address"
+                            style="@style/TextAppearance.Overline"
+                            android:textColor="@color/black_60"
+                            />
+
+                        <include
+                            android:id="@+id/il_bill_setting_merchant_address"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bill_settting_merchant_address"
+                            app:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                            app:imeOption="@{EditorInfo.IME_ACTION_NEXT}"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_address_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/il_bill_setting_merchant_address"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/black_40"
+                    />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_cashier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_bill_settting_merchant_cahsier"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/merchant_chasier_name"
+                            style="@style/TextAppearance.Overline"
+                            android:textColor="@color/black_60"
+                            />
+
+                        <include
+                            android:id="@+id/il_bill_setting_merchant_cashier"
+                            layout="@layout/layout_input_layout_no_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_bill_settting_merchant_cahsier"
+                            app:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                            app:imeOption="@{EditorInfo.IME_ACTION_DONE}"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_cashier_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/il_bill_setting_merchant_cashier"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_bill_settting_merchant_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/merchant_chasier_date"
+                            style="@style/TextAppearance.Body2"
+                            android:textColor="@color/black_100"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_date_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_bill_setting_merchant_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="4dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/black_40"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="10dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/tv_bill_settting_merchant_id"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="@string/merchant_chasier_id"
+                            style="@style/TextAppearance.Body2"
+                            android:textColor="@color/black_100"
+                            />
+
+                        <ImageButton
+                            android:id="@+id/btn_bill_setting_id_visibility"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_baseline_visibility_off_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toTopOf="@id/l_bill_setting_test_print"
+            android:background="@drawable/shadow_round_corner"
+            android:layout_marginBottom="-16dp"
+            android:layout_marginStart="-8dp"
+            android:layout_marginEnd="-8dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/l_bill_setting_test_print"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            android:paddingVertical="16dp"
+            android:paddingHorizontal="16dp"
+            android:background="@drawable/round_corner_shape"
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_bill_setting_test_print"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButton.Default"
+                android:text="@string/print_test"
+                />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.dashboard.DashboardActivity"
+        android:background="@color/white">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/bnv_dashboard"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:layout_constraintBottom_toTopOf="@id/bnv_dashboard"
+            android:background="@drawable/shadow"
+            />
+
+        <nl.joery.animatedbottombar.AnimatedBottomBar
+            android:id="@+id/bnv_dashboard"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:abb_selectedTabType="text"
+            app:abb_indicatorAppearance="round"
+            app:abb_indicatorMargin="16dp"
+            app:abb_indicatorHeight="4dp"
+            app:abb_tabs="@menu/tabs"
+            app:abb_selectedIndex="0"
+            app:abb_tabColor="@color/black_100"
+            app:abb_tabColorSelected="@color/primary_100"
+            app:abb_textAppearance="@style/TextAppearance.Body2"
+            app:abb_rippleEnabled="true"
+            app:abb_rippleColor="@color/primary_20"
+            app:abb_tabAnimation="slide"
+            app:abb_indicatorColor="@color/primary_100"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

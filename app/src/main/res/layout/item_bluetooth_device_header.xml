@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="headerTitle"
+            type="String" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="@{headerTitle}"
+            tools:text="Perangkat Terhubung"
+            style="@style/TextAppearance.KarlaMedium16"
+            android:textColor="@color/black_100"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_bluetooth_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            style="@style/MaterialButton.TextButton.Positive"
+            android:text="@string/refresh"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:padding="0dp"
+            android:letterSpacing="0.1"
+            />
+
+    </RelativeLayout>
+</layout>

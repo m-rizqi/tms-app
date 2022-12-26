@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.text.InputType"/>
+        <import type="android.view.inputmethod.EditorInfo"/>
+        <variable
+            name="itemName"
+            type="String" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="18dp"
+            >
+
+            <TextView
+                android:id="@+id/tv_adjust_total_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                style="@style/TextAppearance.RubikMedium14"
+                android:textColor="@color/black_100"
+                android:text="@{@string/adjust_total_price_item(itemName)}"
+                />
+
+            <include layout="@layout/layout_input_layout_no_title"
+                android:id="@+id/til_adjust_total_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_adjust_total_title"
+                android:layout_marginTop="24dp"
+                app:inputType="@{InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL}"
+                app:prefixText="@{@string/rp_hint}"
+                app:imeOption="@{EditorInfo.IME_ACTION_DONE}"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/til_adjust_total_price"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_adjust_total_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/MaterialButton.TextButton.Negative"
+                    android:text="@string/cancel"
+                    android:layout_marginEnd="8dp"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_adjust_total_save"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    style="@style/MaterialButton.Default"
+                    android:text="@string/apply"
+                    android:layout_marginStart="8dp"
+                    android:visibility="visible"
+                    />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

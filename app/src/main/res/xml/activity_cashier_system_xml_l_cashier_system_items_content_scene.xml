@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="307">
+       <KeyFrameSet>
+       </KeyFrameSet>
+        <OnClick />
+        <OnClick />
+        <OnClick motion:targetId="@+id/v_cashier_system_toogle_view" />
+        <OnClick motion:targetId="@+id/v_cashier_system_toogle_view" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/radio_group_cashier_system_set_items"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            motion:layout_constraintTop_toBottomOf="@id/l_cashier_system_set_items"
+            motion:layout_constraintBottom_toBottomOf="@id/l_cashier_system_set_items" />
+        <Constraint
+            android:id="@+id/iv_cashier_system_arrow_set_items"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:rotation="180" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+    </ConstraintSet>
+</MotionScene>
