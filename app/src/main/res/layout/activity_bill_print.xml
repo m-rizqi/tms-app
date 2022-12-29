@@ -180,7 +180,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="2"
-                        android:text="@string/item_name"
+                        android:text="@string/item"
                         style="@style/TextAppearance.Body2"
                         android:textColor="@color/black_100"
                         />
@@ -189,7 +189,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/quantity"
+                        android:text="@string/qty"
                         style="@style/TextAppearance.Body2"
                         android:textColor="@color/black_100"
                         />

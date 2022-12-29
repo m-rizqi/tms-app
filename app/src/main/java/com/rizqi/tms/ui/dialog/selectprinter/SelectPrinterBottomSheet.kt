@@ -11,8 +11,10 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rizqi.tms.databinding.BottomSheetSelectPrinterBinding
+import com.rizqi.tms.model.AppBluetoothDevice
 
 class SelectPrinterBottomSheet(
+    private val appBluetoothDevice: AppBluetoothDevice? = null,
     private val bluetoothDevices : List<BluetoothDevice>,
     private val onSelectListener : (BluetoothDevice?) -> Unit
 ) : BottomSheetDialogFragment(){
@@ -21,7 +23,7 @@ class SelectPrinterBottomSheet(
         get() = _binding!!
     private lateinit var dialog : BottomSheetDialog
     private val bluetoothDevicesAdapter = BluetoothDevicesAdapter()
-    private var selectedDevice : BluetoothDevice? = null
+    private var selectedDevice : BluetoothDevice? = appBluetoothDevice?.bluetoothDevice
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +58,10 @@ class SelectPrinterBottomSheet(
 
         binding.apply {
             rvSelectPrinterDevices.adapter = bluetoothDevicesAdapter
-            btnSelectPrinterSelect.setOnClickListener { onSelectListener(selectedDevice) }
+            btnSelectPrinterSelect.setOnClickListener {
+                onSelectListener(selectedDevice)
+                dismiss()
+            }
         }
 
     }

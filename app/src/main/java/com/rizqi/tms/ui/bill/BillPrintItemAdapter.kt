@@ -18,9 +18,9 @@ class BillPrintItemAdapter : ListAdapter<ItemInCashier, BillPrintItemAdapter.Bil
             val context = binding.root.context
             binding.apply {
                 itemName = itemInCashier.itemName
-                pricePerItem = "${context.getString(R.string.rp_, ThousandFormatter.format(itemInCashier.pricePerItem))}/${itemInCashier.unitName}"
+                pricePerItem = "${context.getString(R.string.rp_no_comma, ThousandFormatter.format(itemInCashier.pricePerItem))}/${itemInCashier.unitName}"
                 quantity = "${formatQuantity(itemInCashier.quantity)} ${itemInCashier.unitName}"
-                total = context.getString(R.string.rp_, ThousandFormatter.format(itemInCashier.total))
+                total = context.getString(R.string.rp_no_comma, ThousandFormatter.format(itemInCashier.total))
             }
         }
     }

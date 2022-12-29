@@ -20,10 +20,10 @@ data class AppBluetoothDevice(
     @ColumnInfo(name = "char_per_line")
     var charPerLine : Int = 0,
     @Ignore
-    var isPaired : Boolean = false
-) : Parcelable {
+    var isPaired : Boolean = false,
     @PrimaryKey
     var id : String = ""
+) : Parcelable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
@@ -92,4 +94,8 @@ inline fun <T> sdk29AndUp(onSdk29: () -> T): T? {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
         onSdk29()
     }else null
+}
+
+fun Bitmap.resize(width : Int, height : Int): Bitmap? {
+    return Bitmap.createScaledBitmap(this, width, height, false)
 }

@@ -27,19 +27,20 @@ data class BillStringBuilder(
     private val cashierSection = "[L]${context.getString(R.string.cashier)} : %s"
     private val dateSection = "[L]${context.getString(R.string.date)} %s"
     private val idSection = "[L]${context.getString(R.string.transaction_id)} : %s"
-    private val headerItemSection = "[L]${context.getString(R.string.item_name)}[C]${context.getString(R.string.quantity)}[R]${context.getString(R.string.total)}"
+    private val headerItemSection = "[L]${context.getString(R.string.item)}[C]${context.getString(R.string.qty)}[R]${context.getString(R.string.total)}"
     private val mainItemSection = "[L]%s[C]%s[R]%s"
     private val pricePerItemSection = "[L]%s"
-    private val totalSection = "[L]<font size='big'>${context.getString(R.string.total)}</font>[R]<font size='big'>%s</font>"
+    private val totalSection = "[L]${context.getString(R.string.total)}[C][R]%s"
 
     fun build(): String {
         val builder = StringBuilder()
-        if (merchantImageItem != null && merchantImageItem.isVisible){
+        if (merchantImageItem != null && merchantImageItem.isVisible && merchantImageItem.bitmapData != null){
             builder.append(String.format(
-                imageSection, PrinterTextParserImg.bitmapToHexadecimalString(escPosPrinter, merchantImageItem.bitmapData)
+                imageSection, PrinterTextParserImg.bitmapToHexadecimalString(escPosPrinter, merchantImageItem.bitmapData?.resize(merchantImageItem.bitmapData!!.width / 2, merchantImageItem.bitmapData!!.height / 2))
             ))
             builder.append("\n")
         }
+        builder.append("\n\n")
         if (merchantNameItem != null && merchantNameItem.isVisible){
             builder.append(String.format(
                 merchantNameSection, merchantNameItem.textData
@@ -82,19 +83,20 @@ data class BillStringBuilder(
         builder.append("\n")
         transactionWithItemInCashier.itemInCashiers.forEach {
             builder.append(String.format(
-                mainItemSection, it.itemName, "${it.quantity} ${it.unitName}", context.getString(R.string.rp_, ThousandFormatter.format(it.total))
+                mainItemSection, it.itemName, "${formatQuantity(it.quantity)} ${it.unitName}", context.getString(R.string.rp_no_comma, ThousandFormatter.format(it.total))
             ))
-            builder.append("\n")
-            builder.append(String.format(
-                pricePerItemSection, "${context.getString(R.string.rp_, ThousandFormatter.format(it.pricePerItem))}/${it.unitName}"
-            ))
+//            builder.append("\n")
+//            builder.append(String.format(
+//                pricePerItemSection, "${context.getString(R.string.rp_no_comma, ThousandFormatter.format(it.pricePerItem))}/${it.unitName}"
+//            ))
             builder.append("\n\n")
         }
         builder.append(
             "-".repeat(charPerLine)
         )
+        builder.append("\n")
         builder.append(String.format(
-            totalSection, context.getString(R.string.rp_, ThousandFormatter.format(transactionWithItemInCashier.transaction.total))
+            totalSection, context.getString(R.string.rp_no_comma, ThousandFormatter.format(transactionWithItemInCashier.transaction.total))
         ))
         builder.append(
             "\n".repeat(blankLine)

@@ -117,9 +117,18 @@ class BillPrintActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBeh
             pairedDevices = it
         }
 
+//        if (appBluetoothDevice != null){
+//            lifecycleScope.launch {
+//                appBluetoothDeviceViewModel.getById(appBluetoothDevice!!.id).collect {
+//                    appBluetoothDevice = it
+//                }
+//            }
+//        }
+
         transaction?.let {
             binding.date = getString(R.string.date_bill, getFormattedDateString(it.transaction.time, EEE_DD_MMM_YYYY_HH_MM))
             binding.id = "${getString(R.string.transaction_id)} : ${it.transaction.id}"
+            binding.total = getString(R.string.rp_no_comma, ThousandFormatter.format(it.transaction.total))
             billPrintItemAdapter.submitList(it.itemInCashiers)
         }
 
@@ -163,7 +172,7 @@ class BillPrintActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBeh
 
     private fun showSelectPrinterDialog(){
         refreshPairedDevices()
-        SelectPrinterBottomSheet(pairedDevices.toList()) {
+        SelectPrinterBottomSheet(appBluetoothDevice, pairedDevices.toList()) {
             if (it == null) return@SelectPrinterBottomSheet
             lifecycleScope.launch {
                 appBluetoothDeviceViewModel.getById(it.address).collect {dbDevice ->

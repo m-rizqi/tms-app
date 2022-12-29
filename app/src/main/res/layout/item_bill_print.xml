@@ -48,6 +48,7 @@
                 android:text="@{pricePerItem}"
                 style="@style/TextAppearance.Overline"
                 android:textColor="@color/black_100"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

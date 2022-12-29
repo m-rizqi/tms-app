@@ -75,7 +75,7 @@ class PrinterProfileActivity : AppCompatActivity() {
                 if (width.isBlank() || charPerLine.isBlank() || blankLine.isBlank()){
                     Toast.makeText(this@PrinterProfileActivity, getString(R.string.empty_field_will_be_default), Toast.LENGTH_SHORT).show()
                 }
-                if (savedDbDevice == null) savedDbDevice = AppBluetoothDevice()
+                if (savedDbDevice == null) savedDbDevice = AppBluetoothDevice(id = appBluetoothDevice?.bluetoothDevice?.address ?: "")
                 savedDbDevice?.apply {
                     this.width = try {
                         width.toFloat()
@@ -90,10 +90,13 @@ class PrinterProfileActivity : AppCompatActivity() {
                 appBluetoothDeviceViewModel.insert(
                     savedDbDevice!!
                 )
+                Toast.makeText(this@PrinterProfileActivity, getString(R.string.success_save_printer), Toast.LENGTH_SHORT).show()
             }
             btnPrinterProfileTestPrint.setOnClickListener {
                 Intent(this@PrinterProfileActivity, BillPrintActivity::class.java).apply {
-                    putExtra(APP_BLUETOOTH_DEVICE, appBluetoothDevice)
+                    putExtra(APP_BLUETOOTH_DEVICE, savedDbDevice.apply {
+                        this?.bluetoothDevice = appBluetoothDevice?.bluetoothDevice
+                    })
                     putExtra(TRANSACTION_WITH_ITEM_IN_CASHIER, TransactionWithItemInCashier.getMockedTransactionWithItemInCashier())
                 }.also { itn ->
                     startActivity(itn)

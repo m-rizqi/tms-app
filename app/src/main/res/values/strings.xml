@@ -68,6 +68,7 @@
     <string name="p">P</string>
     <string name="merchant_price">Harga Pedagang</string>
     <string name="rp_">Rp. %1$s,-</string>
+    <string name="rp_no_comma">Rp. %1$s</string>
     <string name="e">E</string>
     <string name="consumer_price">Harga Eceran</string>
     <string name="special_price">Harga Khusus</string>
@@ -285,6 +286,9 @@
     <string name="problem_and_need_help">Terkendala Sesuatu dan Butuh Bantuan ?</string>
     <string name="company_email">mrizqi070502@gmail.com</string>
     <string name="help_email_subject">Toko Management System - Bantuan</string>
+    <string name="qty">Qty</string>
+    <string name="item">Barang</string>
+    <string name="success_save_printer">Berhasil menyimpan data printer</string>
 
     <string-array name="months">
         <item>Januari</item>
