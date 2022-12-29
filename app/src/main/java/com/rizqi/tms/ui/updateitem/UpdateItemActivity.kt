@@ -71,7 +71,6 @@ class UpdateItemActivity : AppCompatActivity() {
 
                     CoroutineScope(Dispatchers.IO).launch{
                         val bitmap = it.item.imagePath?.let { it1 -> getBitmapFromPath(it1) }
-                        bitmap?.let { it1 -> viewModel.setImageBitmap(it1) }
                         withContext(Dispatchers.Main){
                             Glide.with(this@UpdateItemActivity).load(bitmap).into(binding.ivUpdateItemImage)
                             binding.ivUpdateItemImage.visibility = View.VISIBLE
@@ -142,8 +141,10 @@ class UpdateItemActivity : AppCompatActivity() {
                             SuccessDialog(
                                 description = getString(R.string.success_update_item, itemWithPrices?.item?.name)
                             , onDismissListener = {
-                                    previousImagePath?.let { path ->
-                                        deleteFile(this@UpdateItemActivity, path)
+                                    if (viewModel.imageBitmap.value != null){
+                                        previousImagePath?.let { path ->
+                                            deleteFile(this@UpdateItemActivity, path)
+                                        }
                                     }
                                     finish()
                                 }
