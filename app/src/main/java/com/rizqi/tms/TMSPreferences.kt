@@ -92,7 +92,7 @@ class TMSPreferences {
             else -> BackupSchedule.NEVER
         }
 
-        fun Context.getNextBackupDate() : Long = pref(this).getLong(NEXT_BACKUP_DATE, 0)
+        fun Context.getNextBackupDate() : Long = pref(this).getLong(NEXT_BACKUP_DATE, System.currentTimeMillis())
 
         fun Context.setNextBackupDate(value : Long) {
             val editor = pref(this).edit()

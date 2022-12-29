@@ -115,7 +115,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/textur_1"
-                                    android:scaleType="fitXY"
+                                    android:scaleType="centerCrop"
                                     />
 
                                 <TextView
@@ -169,7 +169,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:src="@drawable/textur_2"
-                                    android:scaleType="fitXY"
+                                    android:scaleType="centerCrop"
                                     />
 
                                 <TextView
@@ -221,7 +221,7 @@
                                 <ImageView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:scaleType="fitXY"
+                                    android:scaleType="centerCrop"
                                     android:src="@drawable/textur_3" />
 
                                 <TextView

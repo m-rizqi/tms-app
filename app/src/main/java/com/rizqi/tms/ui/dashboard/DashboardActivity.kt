@@ -91,7 +91,7 @@ class DashboardActivity : AppCompatActivity() {
 //        Backup
         val nextBackup = getNextBackupDate()
         val curCalendar = Calendar.getInstance().timeInMillis
-        if (curCalendar >= nextBackup && !checkServiceRunning(BackupService::class.java.name)){
+        if (curCalendar > nextBackup && !checkServiceRunning(BackupService::class.java.name)){
             val serviceIntent = Intent(this@DashboardActivity, BackupService::class.java)
             startForegroundService(serviceIntent)
         }

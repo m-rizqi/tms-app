@@ -2,7 +2,6 @@ package com.rizqi.tms.ui.login
 
 import android.content.Intent
 import android.content.IntentSender
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -11,11 +10,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.net.toUri
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
@@ -26,23 +23,17 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageException
-import com.google.firebase.storage.StorageException.ERROR_OBJECT_NOT_FOUND
 import com.google.firebase.storage.ktx.storage
 import com.rizqi.tms.R
-import com.rizqi.tms.TMSPreferences.Companion.getFirebaseUserId
 import com.rizqi.tms.TMSPreferences.Companion.setAnonymous
 import com.rizqi.tms.TMSPreferences.Companion.setFirebaseUserId
 import com.rizqi.tms.TMSPreferences.Companion.setLogin
 import com.rizqi.tms.TMSPreferences.Companion.setUserId
 import com.rizqi.tms.databinding.ActivityLoginBinding
 import com.rizqi.tms.di.NotificationModule
-import com.rizqi.tms.model.Item
-import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.model.User
 import com.rizqi.tms.network.model._Item
 import com.rizqi.tms.network.model._Transaction
-import com.rizqi.tms.room.TMSDatabase
 import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.register.RegisterActivity

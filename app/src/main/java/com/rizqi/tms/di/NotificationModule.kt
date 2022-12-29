@@ -39,7 +39,6 @@ object NotificationModule {
         val notificationBuilder = provideNotificationBuilder(context, BACKUP_NOTIFICATION_CHANNEL_ID)
             .setContentTitle(BACKUP_NOTIFICATION_CHANNEL_NAME)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setOngoing(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
         }

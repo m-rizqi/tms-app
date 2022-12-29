@@ -17,8 +17,6 @@ import com.rizqi.tms.databinding.FragmentStep1CreateItemBinding
 import com.rizqi.tms.ui.takeimage.TakeImageActivity
 import com.rizqi.tms.utility.Message
 import com.rizqi.tms.utility.getAndDecodeBitmap
-import com.rizqi.tms.utility.getBitmapFromPath
-import com.rizqi.tms.utility.saveBitmapToFolder
 
 class Step1CreateItemFragment : Fragment() {
     private var _binding : FragmentStep1CreateItemBinding? = null
