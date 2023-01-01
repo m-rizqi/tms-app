@@ -27,6 +27,12 @@
         <variable
             name="total"
             type="String" />
+        <variable
+            name="pay"
+            type="String" />
+        <variable
+            name="moneyChange"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -250,6 +256,74 @@
                         />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/pay"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textAlignment="textEnd"
+                        android:text="@{pay}"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="3"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/money_change"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textAlignment="textEnd"
+                        android:text="@{moneyChange}"
+                        style="@style/TextAppearance.Body1"
+                        android:textColor="@color/black_100"
+                        />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/thank_you_for_visiting"
+                    style="@style/TextAppearance.Body1"
+                    android:textColor="@color/black_100"
+                    />
 
             </LinearLayout>
 

@@ -289,6 +289,9 @@
     <string name="qty">Qty</string>
     <string name="item">Barang</string>
     <string name="success_save_printer">Berhasil menyimpan data printer</string>
+    <string name="pay">Bayar</string>
+    <string name="money_change">Kembalian</string>
+    <string name="thank_you_for_visiting">Terima Kasih Atas Kunjungan Anda</string>
 
     <string-array name="months">
         <item>Januari</item>
