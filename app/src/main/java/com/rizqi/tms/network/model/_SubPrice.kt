@@ -16,11 +16,11 @@ data class _SubPrice(
     fun toLocalSubPriceWithSpecialPrices(isMerchantPrice : Boolean) : SubPriceWithSpecialPrice {
         return if (isMerchantPrice){
             SubPriceWithSpecialPrice.MerchantSubPriceWithSpecialPrice(
-                SubPrice.MerchantSubPrice(price, isEnabled, isMerchant, priceId, id), specialPrices.map { it.toLocalSpecialPrice(true) as SpecialPrice.MerchantSpecialPrice }
+                SubPrice.MerchantSubPrice(price, isEnabled, isMerchant, priceId, id), specialPrices.map { it.toLocalSpecialPrice(true) as SpecialPrice.MerchantSpecialPrice.MerchantSpecialPrice }
             )
         }else{
             SubPriceWithSpecialPrice.ConsumerSubPriceWithSpecialPrice(
-                SubPrice.ConsumerSubPrice(price, isEnabled, isMerchant, priceId, id), specialPrices.map { it.toLocalSpecialPrice(false) as SpecialPrice.ConsumerSpecialPrice }
+                SubPrice.ConsumerSubPrice(price, isEnabled, isMerchant, priceId, id), specialPrices.map { it.toLocalSpecialPrice(false) as SpecialPrice.ConsumerSpecialPrice.ConsumerSpecialPrice }
             )
         }
     }

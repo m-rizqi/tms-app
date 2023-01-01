@@ -11,7 +11,7 @@ sealed interface SubPriceWithSpecialPrice{
 
     data class MerchantSubPriceWithSpecialPrice(
         @Embedded
-        val subPrice: SubPrice.MerchantSubPrice,
+        val subPrice: SubPrice.MerchantSubPrice.MerchantSubPrice,
         @Relation(
             parentColumn = "id",
             entityColumn = "sub_price_id"
@@ -38,7 +38,7 @@ sealed interface SubPriceWithSpecialPrice{
 
     data class ConsumerSubPriceWithSpecialPrice(
         @Embedded
-        val subPrice: SubPrice.ConsumerSubPrice,
+        val subPrice: SubPrice.ConsumerSubPrice.ConsumerSubPrice,
         @Relation(
             parentColumn = "id",
             entityColumn = "sub_price_id"

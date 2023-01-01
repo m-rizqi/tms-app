@@ -1,11 +1,8 @@
 package com.rizqi.tms.model
 
 import androidx.room.Embedded
-import androidx.room.Junction
 import androidx.room.Relation
 import com.rizqi.tms.network.model._Item
-import com.rizqi.tms.network.model._Price
-import com.rizqi.tms.network.model._SubPrice
 
 data class ItemWithPrices(
     @Embedded val item: Item,

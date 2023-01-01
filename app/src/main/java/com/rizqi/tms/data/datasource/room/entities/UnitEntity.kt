@@ -8,5 +8,4 @@ data class UnitEntity(
     var name : String = "",
     @PrimaryKey(autoGenerate = true)
     var id : Long? = null
-){
-}
+)

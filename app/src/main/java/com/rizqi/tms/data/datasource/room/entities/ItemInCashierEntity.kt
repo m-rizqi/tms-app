@@ -2,8 +2,6 @@ package com.rizqi.tms.data.datasource.room.entities
 
 import android.os.Parcelable
 import androidx.room.*
-import com.rizqi.tms.model.PriceType
-import com.rizqi.tms.model.TotalPriceType
 import kotlinx.parcelize.Parcelize
 
 @Entity(
@@ -22,9 +20,9 @@ data class ItemInCashierEntity(
     @ColumnInfo(name = "total_adjusted")
     var barcode : String? = null,
     @ColumnInfo(name = "total_price_type")
-    var totalPriceType : TotalPriceType = TotalPriceType.ORIGINAL,
+    var totalPriceType : EntityTotalPriceType = EntityTotalPriceType.ORIGINAL,
     @ColumnInfo(name = "price_type")
-    var priceType: PriceType = PriceType.Merchant,
+    var priceType: EntityPriceType = EntityPriceType.Merchant,
     @ColumnInfo(name = "price_per_item")
     var pricePerItem : Double = 0.0,
     @ColumnInfo(name = "unit_name")
