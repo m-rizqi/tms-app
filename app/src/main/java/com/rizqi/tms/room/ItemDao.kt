@@ -46,16 +46,16 @@ interface ItemDao {
     @Query("SELECT COUNT(*) FROM Item")
     fun getItemCount() : Flow<Long>
 
-    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) > 0")
+    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM PriceEntity WHERE PriceEntity.item_id = Item.id AND PriceEntity.barcode != $ITEM_NO_BARCODE) > 0")
     fun getBarcodeItemCount() : Flow<Long>
 
-    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) < 1")
+    @Query("SELECT COUNT(*) FROM Item WHERE (SELECT COUNT(*) FROM PriceEntity WHERE PriceEntity.item_id = Item.id AND PriceEntity.barcode != $ITEM_NO_BARCODE) < 1")
     fun getNonBarcodeItemCount() : Flow<Long>
 
     @Query("SELECT * FROM Item ORDER BY Item.click_count DESC LIMIT 6")
     fun getPopularItems() : Flow<List<ItemWithPrices>>
 
-    @Query("SELECT * FROM Item WHERE (SELECT COUNT(*) FROM Price WHERE Price.item_id = Item.id AND Price.barcode != $ITEM_NO_BARCODE) < 1 ORDER BY Item.click_count DESC LIMIT :limit")
+    @Query("SELECT * FROM Item WHERE (SELECT COUNT(*) FROM PriceEntity WHERE PriceEntity.item_id = Item.id AND PriceEntity.barcode != $ITEM_NO_BARCODE) < 1 ORDER BY Item.click_count DESC LIMIT :limit")
     fun getNonBarcodeItemsLimited(limit : Int) : Flow<List<ItemWithPrices>>
 
     @Query("SELECT * FROM Item WHERE Item.is_reminded = 1")
@@ -85,7 +85,7 @@ interface ItemDao {
     @Query("UPDATE Item SET click_count = click_count + 1 WHERE id = :itemId")
     suspend fun incrementClickCount(itemId : Long)
 
-    @Query("SELECT Item.id From Item, Price WHERE Price.barcode = :barcode AND Price.item_id = Item.id")
+    @Query("SELECT Item.id From Item, PriceEntity WHERE PriceEntity.barcode = :barcode AND PriceEntity.item_id = Item.id")
     suspend fun getItemIdByBarcode(barcode : String) : Long
 
     @Query("SELECT * FROM Item")

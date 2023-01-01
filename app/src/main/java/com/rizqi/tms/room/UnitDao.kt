@@ -9,10 +9,10 @@ interface UnitDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(unit: Unit) : Long
 
-    @Query("SELECT * FROM Unit")
+    @Query("SELECT * FROM UnitEntity")
     fun getAll() : Flow<List<Unit>>
 
-    @Query("SELECT * FROM Unit WHERE id=:id")
+    @Query("SELECT * FROM UnitEntity WHERE id=:id")
     fun getById(id : Long) : Flow<Unit>
 
     @Update
@@ -21,9 +21,9 @@ interface UnitDao {
     @Delete
     suspend fun delete(unit: Unit)
 
-    @Query("SELECT * FROM Unit LIMIT 1 OFFSET :pageIndex")
+    @Query("SELECT * FROM UnitEntity LIMIT 1 OFFSET :pageIndex")
     fun getWithPaginate(pageIndex : Long) : List<Unit>
 
-    @Query("DELETE FROM Unit")
+    @Query("DELETE FROM UnitEntity")
     suspend fun deleteAll()
 }

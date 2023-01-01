@@ -13,10 +13,10 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItemInCashier(itemInCashier: ItemInCashier) : Long
 
-    @Query("SELECT * FROM `Transaction`")
+    @Query("SELECT * FROM TransactionEntity")
     fun getAll() : Flow<List<TransactionWithItemInCashier>>
 
-    @Query("SELECT * FROM `Transaction` WHERE id=:id")
+    @Query("SELECT * FROM TransactionEntity WHERE id=:id")
     fun getById(id : Long) : Flow<TransactionWithItemInCashier>
 
     @Delete
@@ -25,6 +25,6 @@ interface TransactionDao {
     @Delete
     suspend fun deleteItemInCashier(itemInCashier: ItemInCashier)
 
-    @Query("DELETE FROM `Transaction`")
+    @Query("DELETE FROM TransactionEntity")
     suspend fun deleteAll()
 }

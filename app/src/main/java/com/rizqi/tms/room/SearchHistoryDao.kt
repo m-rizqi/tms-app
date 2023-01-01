@@ -11,10 +11,10 @@ interface SearchHistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(searchHistory: SearchHistory) : Long
 
-    @Query("SELECT * FROM SearchHistory")
+    @Query("SELECT * FROM SearchHistoryEntity")
     fun getAll() : Flow<List<SearchHistoryAndItem>>
 
-    @Query("SELECT * FROM SearchHistory ORDER BY last_search DESC LIMIT 1 OFFSET :pageIndex")
+    @Query("SELECT * FROM SearchHistoryEntity ORDER BY last_search DESC LIMIT 1 OFFSET :pageIndex")
     fun getWithPaginate(pageIndex : Long) : List<SearchHistoryAndItem>
 
     @Update
