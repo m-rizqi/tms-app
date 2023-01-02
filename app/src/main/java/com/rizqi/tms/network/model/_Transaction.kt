@@ -8,11 +8,13 @@ data class _Transaction (
     var total : Long = 0,
     var thumbnails : List<String?> = emptyList(),
     var itemInCashiers : List<_ItemInCashier> = emptyList(),
-    var id : Long? = null
+    var pay : Long = 0,
+    var changeMoney : Long = 0,
+    var id : Long? = null,
 ) {
     fun toLocalTransactionWithItemInCashier() : TransactionWithItemInCashier {
         return TransactionWithItemInCashier(
-            Transaction(this.time, this.total, this.thumbnails, this.id),
+            Transaction(this.time, this.total, this.thumbnails, this.pay, this.changeMoney, this.id),
             this.itemInCashiers.map { it.toLocalItemInCashier() }
         )
     }

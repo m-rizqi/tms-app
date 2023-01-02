@@ -3,6 +3,7 @@ package com.rizqi.tms.ui.bill
 import android.Manifest
 import android.bluetooth.BluetoothDevice
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,9 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityBillPrintBinding
 import com.rizqi.tms.model.AppBluetoothDevice
@@ -129,9 +133,19 @@ class BillPrintActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBeh
             binding.date = getString(R.string.date_bill, getFormattedDateString(it.transaction.time, EEE_DD_MMM_YYYY_HH_MM))
             binding.id = "${getString(R.string.transaction_id)} : ${it.transaction.id}"
             binding.total = getString(R.string.rp_no_comma, ThousandFormatter.format(it.transaction.total))
+            binding.pay = getString(R.string.rp_no_comma, ThousandFormatter.format(it.transaction.pay))
+            binding.moneyChange = getString(R.string.rp_no_comma, ThousandFormatter.format(it.transaction.changeMoney))
             billPrintItemAdapter.submitList(it.itemInCashiers)
         }
-
+        // Generate QR Code
+        try {
+            val mWriter = MultiFormatWriter()
+            val mMatrix = mWriter.encode(getString(R.string.app_playstore_url), BarcodeFormat.QR_CODE, 400, 400)
+            val mEncoder = BarcodeEncoder()
+            val mBitmap = mEncoder.createBitmap(mMatrix)
+            binding.ivBillPrintQrcode.setImageBitmap(mBitmap)
+        }catch (e : Exception){
+        }
         binding.apply {
             selectedPrinterName = if (appBluetoothDevice == null) getString(R.string.select_printer) else appBluetoothDevice!!.bluetoothDevice?.name
             rvBillPrintItems.adapter = billPrintItemAdapter
@@ -183,5 +197,18 @@ class BillPrintActivity : AppCompatActivity(), BluetoothBehavior by BluetoothBeh
                 }
             }
         }.show(supportFragmentManager, null)
+    }
+
+    private fun getViewWidth(view: View) : Int {
+        val layout = view
+        val vto = layout.viewTreeObserver
+        vto.addOnGlobalLayoutListener {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN){
+                layout.viewTreeObserver.removeGlobalOnLayoutListener {  }
+            }else {
+                layout.viewTreeObserver.removeOnGlobalLayoutListener {  }
+            }
+        }
+        return layout.measuredWidth
     }
 }

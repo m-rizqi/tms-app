@@ -28,6 +28,7 @@ import com.rizqi.tms.ui.dialog.adjusttotalprice.AdjustTotalPriceDialog
 import com.rizqi.tms.ui.dialog.finishconfirmation.FinishConfirmationDialog
 import com.rizqi.tms.ui.dialog.info.InfoDialog
 import com.rizqi.tms.ui.dialog.itemnotfound.ItemNotFoundDialog
+import com.rizqi.tms.ui.dialog.totalpaychangemoney.TotalPayChangeMoneyBottomSheet
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.transactiondetail.TransactionDetailActivity
 import com.rizqi.tms.utility.TRANSACTION_ID
@@ -152,16 +153,18 @@ class CashierSystemActivity : AppCompatActivity() {
             }
             tvCashierSystemFinish.setOnClickListener {
                 FinishConfirmationDialog{
-                    transactionViewModel.viewModelScope.launch {
-                        val transactionId = transactionViewModel.insertTransactionWithItemInCashier(viewModel.getResultTransaction())
-                        Intent(this@CashierSystemActivity, TransactionDetailActivity::class.java).apply {
-                            putExtra(TRANSACTION_ID, transactionId)
+                    viewModel.total.value?.let { it1 -> TotalPayChangeMoneyBottomSheet(it1){paid, moneyChange ->
+                        transactionViewModel.viewModelScope.launch {
+                            val transactionId = transactionViewModel.insertTransactionWithItemInCashier(viewModel.getResultTransaction(paid, moneyChange))
+                            Intent(this@CashierSystemActivity, TransactionDetailActivity::class.java).apply {
+                                putExtra(TRANSACTION_ID, transactionId)
 //                            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        }.also { itn ->
-                            startActivity(itn)
-                            finish()
+                            }.also { itn ->
+                                startActivity(itn)
+                                finish()
+                            }
                         }
-                    }
+                    }.show(supportFragmentManager, null) }
                 }.show(supportFragmentManager, null)
             }
         }

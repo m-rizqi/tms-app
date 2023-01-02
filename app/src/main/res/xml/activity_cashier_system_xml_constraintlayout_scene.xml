@@ -9,8 +9,8 @@
         motion:duration="307">
        <KeyFrameSet>
        </KeyFrameSet>
-        <OnClick />
         <OnSwipe motion:touchAnchorId="@+id/mcv_cashier_system_items" />
+        <OnClick motion:targetId="@+id/mcv_cashier_system_items" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">

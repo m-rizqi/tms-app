@@ -2,6 +2,7 @@ package com.rizqi.tms.utility
 
 import android.util.Log
 import java.util.*
+import kotlin.math.abs
 
 class ThousandFormatter {
     companion object {
@@ -19,7 +20,10 @@ class ThousandFormatter {
             return formatted
         }
         fun format(value : Double) = format(value.toLong())
-        fun format(value : Long) = format(value.toString())
+        fun format(value : Long): String {
+            val formatted = format(abs(value).toString())
+            return if (value < 0) "-${formatted}" else formatted
+        }
         private fun formatNoFloatingPoint(value : String) : String{
             val lst = StringTokenizer(value, ",")
             var str1 = value

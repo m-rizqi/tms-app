@@ -325,6 +325,34 @@
                     android:textColor="@color/black_100"
                     />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/printed_by"
+                    style="@style/TextAppearance.Body1"
+                    android:textColor="@color/black_100"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/app_name"
+                    style="@style/TextAppearance.Body1"
+                    android:textColor="@color/black_100"
+                    />
+                
+                <ImageView
+                    android:id="@+id/iv_bill_print_qrcode"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
+                    />
+
             </LinearLayout>
 
         </ScrollView>

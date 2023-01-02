@@ -15,6 +15,12 @@
         <variable
             name="total"
             type="String" />
+        <variable
+            name="pay"
+            type="String" />
+        <variable
+            name="moneyChange"
+            type="String" />
 
     </data>
 
@@ -180,6 +186,66 @@
                             style="@style/TextAppearance.Body1"
                             android:textColor="@color/black_80"
                             android:text="@{total}"
+                            tools:text="Rp. 24.500,-"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_marginTop="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/TextAppearance.Subtitle1"
+                            android:textColor="@color/black_100"
+                            android:text="@string/pay"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textAlignment="textEnd"
+                            style="@style/TextAppearance.Body1"
+                            android:textColor="@color/black_80"
+                            android:text="@{pay}"
+                            tools:text="Rp. 24.500,-"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:layout_marginTop="4dp"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            style="@style/TextAppearance.Subtitle1"
+                            android:textColor="@color/black_100"
+                            android:text="@string/money_change"
+                            />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:textAlignment="textEnd"
+                            style="@style/TextAppearance.Body1"
+                            android:textColor="@color/black_80"
+                            android:text="@{moneyChange}"
                             tools:text="Rp. 24.500,-"
                             />
 

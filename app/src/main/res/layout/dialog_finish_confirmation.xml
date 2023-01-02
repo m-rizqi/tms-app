@@ -48,6 +48,8 @@
                 app:htmlText="@{@string/finish_confirmation_description}"
                 />
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

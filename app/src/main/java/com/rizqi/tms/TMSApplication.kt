@@ -5,6 +5,9 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.rizqi.tms.utility.BACKUP_NOTIFICATION_CHANNEL_ID
 import com.rizqi.tms.utility.BACKUP_NOTIFICATION_CHANNEL_NAME
 import dagger.hilt.android.HiltAndroidApp

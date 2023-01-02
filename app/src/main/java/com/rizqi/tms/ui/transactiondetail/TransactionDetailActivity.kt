@@ -37,6 +37,8 @@ class TransactionDetailActivity : AppCompatActivity() {
                 id = transaction.transaction.id
                 time = getFormattedDateString(transaction.transaction.time, EEE_DD_MMM_YYYY_HH_MM)
                 total = getString(R.string.rp_, ThousandFormatter.format(transaction.transaction.total))
+                pay = getString(R.string.rp_, ThousandFormatter.format(transaction.transaction.pay))
+                moneyChange = getString(R.string.rp_, ThousandFormatter.format(transaction.transaction.changeMoney))
             }
         }
 

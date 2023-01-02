@@ -23,7 +23,7 @@ data class TransactionWithItemInCashier(
 
     fun toNetworkTransaction() : _Transaction {
         return _Transaction(
-            transaction.time, transaction.total, transaction.thumbnails, itemInCashiers.map { it.toNetworkItemInCashier() }, transaction.id
+            transaction.time, transaction.total, transaction.thumbnails, itemInCashiers.map { it.toNetworkItemInCashier() }, transaction.pay, transaction.changeMoney, transaction.id
         )
     }
 
@@ -37,6 +37,8 @@ data class TransactionWithItemInCashier(
                     "https://th.bing.com/th/id/OIP.s0Z2hUx8APiV2h206fs5TwHaJ4?pid=ImgDet&w=768&h=1024&rs=1",
                     "https://th.bing.com/th/id/OIP.s0Z2hUx8APiV2h206fs5TwHaJ4?pid=ImgDet&w=768&h=1024&rs=1",
                 ),
+                12000,
+                0,
                 1
             ),
             listOf(
