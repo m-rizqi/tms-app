@@ -7,6 +7,7 @@ import com.dantsu.escposprinter.textparser.PrinterTextParserImg
 import com.rizqi.tms.R
 import com.rizqi.tms.model.BillItem
 import com.rizqi.tms.model.TransactionWithItemInCashier
+import kotlin.math.min
 
 data class BillStringBuilder(
     val context: Context,
@@ -96,9 +97,9 @@ data class BillStringBuilder(
             var quantityIndex = 0
             var totalIndex = 0
             while (nameIndex < name.length || quantityIndex < quantity.length || totalIndex < total.length){
-                val subName = try {name.substring(nameIndex, nameIndex+columnWidth)}catch (_ : Exception){""}
-                val subQuantity = try {quantity.substring(quantityIndex, quantityIndex+columnWidth)}catch (_ : Exception){""}
-                val subTotal = try {total.substring(totalIndex, totalIndex+columnWidth)}catch (_ : Exception){""}
+                val subName = try {name.substring(nameIndex, min(name.length, nameIndex+columnWidth))}catch (_ : Exception){""}
+                val subQuantity = try {quantity.substring(quantityIndex, min(quantity.length, quantityIndex+columnWidth))}catch (_ : Exception){""}
+                val subTotal = try {total.substring(totalIndex, min(total.length, totalIndex+columnWidth))}catch (_ : Exception){""}
                 nameIndex += columnWidth
                 quantityIndex += columnWidth
                 totalIndex += columnWidth
@@ -145,7 +146,7 @@ data class BillStringBuilder(
             qrCodeAppSection
         ))
         builder.append(
-            "\n".repeat(blankLine)
+            "\n".repeat(5+blankLine)
         )
         return builder.toString()
     }
