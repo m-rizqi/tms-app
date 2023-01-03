@@ -32,47 +32,12 @@ import com.rizqi.tms.ui.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val UPDATE_REQUEST = 134
-    private var updateManager : AppUpdateManager? = null
     private lateinit var binding : ActivityMainBinding
-
-    private val installStateUpdateListener = InstallStateUpdatedListener {
-        when(it.installStatus()){
-            InstallStatus.DOWNLOADED -> {
-                Snackbar.make(binding.root, getString(R.string.update_downloaded), Snackbar.LENGTH_INDEFINITE).apply {
-                    setAction(getString(R.string.reload)){
-                        updateManager?.completeUpdate()
-                    }
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        updateManager = AppUpdateManagerFactory.create(this)
-        updateManager?.appUpdateInfo?.addOnSuccessListener {
-            if (it.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                if (it.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)){
-                    try {
-                        updateManager?.startUpdateFlowForResult(it, AppUpdateType.FLEXIBLE, this, UPDATE_REQUEST)
-                        updateManager?.registerListener(installStateUpdateListener)
-                    }catch (_ : Exception){
-                        Toast.makeText(this, getString(R.string.update_available), Toast.LENGTH_SHORT).show()
-                    }
-                }
-                else if (it.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)){
-                    try {
-                        updateManager?.startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, UPDATE_REQUEST)
-                    }catch (_ : Exception){
-                        Toast.makeText(this, getString(R.string.update_available), Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
 
         // Initialize Database
         TMSDatabase.getDatabase(this)
@@ -82,19 +47,5 @@ class MainActivity : AppCompatActivity() {
         }
         startActivity(Intent(this, OnBoardingActivity::class.java))
 
-    }
-
-    override fun onStop() {
-        try {
-            updateManager?.unregisterListener(installStateUpdateListener)
-        }catch (_ : Exception){}
-        super.onStop()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == UPDATE_REQUEST && resultCode == RESULT_OK){
-
-        }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 }

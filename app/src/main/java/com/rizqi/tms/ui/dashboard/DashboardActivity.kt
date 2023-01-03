@@ -6,10 +6,18 @@ import android.icu.util.Calendar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.rizqi.tms.R
 import com.rizqi.tms.TMSPreferences.Companion.getBackupSchedule
 import com.rizqi.tms.TMSPreferences.Companion.getLastBackupDate
@@ -41,11 +49,62 @@ class DashboardActivity : AppCompatActivity() {
     private var dashboardState = HOME
     private var isExitApp = false
     private val CAMERA_REQ = 732
+    private val UPDATE_REQUEST = 134
+    private var updateManager : AppUpdateManager? = null
+
+    private val installStateUpdateListener = InstallStateUpdatedListener {
+        when(it.installStatus()){
+            InstallStatus.DOWNLOADED -> {
+                Snackbar.make(binding.root, getString(R.string.update_downloaded), Snackbar.LENGTH_INDEFINITE).apply {
+                    setAction(getString(R.string.reload)){
+                        updateManager?.completeUpdate()
+                    }
+                }.also {snackbar ->
+                    snackbar.show()
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        try {
+            updateManager?.unregisterListener(installStateUpdateListener)
+        }catch (_ : Exception){}
+        super.onDestroy()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == UPDATE_REQUEST && resultCode == RESULT_OK){
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        updateManager = AppUpdateManagerFactory.create(this)
+        updateManager?.appUpdateInfo?.addOnSuccessListener {
+            if (it.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                if (it.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)){
+                    try {
+                        updateManager?.startUpdateFlowForResult(it, AppUpdateType.FLEXIBLE, this, UPDATE_REQUEST)
+                        updateManager?.registerListener(installStateUpdateListener)
+                    }catch (_ : Exception){
+                        Toast.makeText(this, getString(R.string.update_available), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                else if (it.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)){
+                    try {
+                        updateManager?.startUpdateFlowForResult(it, AppUpdateType.IMMEDIATE, this, UPDATE_REQUEST)
+                    }catch (_ : Exception){
+                        Toast.makeText(this, getString(R.string.update_available), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
 
         val arrayPermission = mutableListOf<String>()
 
