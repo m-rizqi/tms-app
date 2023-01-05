@@ -15,7 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.rizqi.tms.databinding.FragmentStep1CreateItemBinding
 import com.rizqi.tms.ui.takeimage.TakeImageActivity
-import com.rizqi.tms.utility.Message
+import com.rizqi.tms.utility.StringResource
 import com.rizqi.tms.utility.getAndDecodeBitmap
 
 class Step1CreateItemFragment : Fragment() {
@@ -79,7 +79,7 @@ class Step1CreateItemFragment : Fragment() {
     }
 
     class Step1CreateItemValidation(
-        val nameError : Message?
+        val nameError : StringResource?
     )
 
 }

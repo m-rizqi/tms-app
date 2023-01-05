@@ -3,15 +3,12 @@ package com.rizqi.tms.ui.createitem
 import android.animation.AnimatorSet
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.animation.doOnEnd
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.card.MaterialCardView
@@ -25,8 +22,6 @@ import com.rizqi.tms.utility.hideLoading
 import com.rizqi.tms.utility.showLoading
 import com.rizqi.tms.viewmodel.ItemViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
@@ -92,7 +87,7 @@ class CreateItemActivity : AppCompatActivity(), OnStepChangedListener {
             when(result){
                 is Resource.Error -> {
                     hideLoading(binding.lCreateItemLoading)
-                    Toast.makeText(this, result.message?.asString(this), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, result.stringResource?.asString(this), Toast.LENGTH_SHORT).show()
                 }
                 is Resource.Success -> {
                     hideLoading(binding.lCreateItemLoading)

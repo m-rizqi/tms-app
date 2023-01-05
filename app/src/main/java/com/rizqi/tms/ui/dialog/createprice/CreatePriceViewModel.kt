@@ -8,7 +8,7 @@ import com.rizqi.tms.R
 import com.rizqi.tms.model.*
 import com.rizqi.tms.model.Unit
 import com.rizqi.tms.utility.CONNECTOR_TEXT_FORMAT
-import com.rizqi.tms.utility.Message
+import com.rizqi.tms.utility.StringResource
 
 class CreatePriceViewModel : ViewModel(){
     private val _quantityConnector = MutableLiveData<Double?>(null)
@@ -102,13 +102,13 @@ class CreatePriceViewModel : ViewModel(){
 
     fun validate(isUsingConnector : Boolean, context : Context) = CreatePriceValidation(
         if (!isUsingConnector || (_quantityConnector.value != null && _quantityConnector.value != 0.0)) null else
-            Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.connector_between_price)),
-        if (_barcode.value?.isBlank() == false) null else Message.StringResource(R.string.barcode_cannot_empty_press_the_icon),
-        if (_unit.value != null) null else Message.StringResource(R.string.no_unit_yet_click_add_unit),
+            StringResource.StringResWithParams(R.string.field_must_be_filled, context.getString(R.string.connector_between_price)),
+        if (_barcode.value?.isBlank() == false) null else StringResource.StringResWithParams(R.string.barcode_cannot_empty_press_the_icon),
+        if (_unit.value != null) null else StringResource.StringResWithParams(R.string.no_unit_yet_click_add_unit),
         if (!_isMerchantEnabled.value!! || _merchantPrice.value != 0.0) null else
-            Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.merchant_price)),
+            StringResource.StringResWithParams(R.string.field_must_be_filled, context.getString(R.string.merchant_price)),
         if (!_isConsumerEnabled.value!! || _consumerPrice.value != 0.0) null else
-            Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.consumer_price))
+            StringResource.StringResWithParams(R.string.field_must_be_filled, context.getString(R.string.consumer_price))
     )
 
     fun getPriceAndSubPrice(merchantSpecialPriceList : List<SpecialPrice.MerchantSpecialPrice>, consumerSpecialPriceList: List<SpecialPrice.ConsumerSpecialPrice>): PriceAndSubPrice {
@@ -158,14 +158,14 @@ class CreatePriceViewModel : ViewModel(){
     }
 
     class CreatePriceValidation(
-        val connectorMessage: Message?,
-        val barcodeMessage: Message?,
-        val unitMessage: Message?,
-        val merchantMessage: Message?,
-        val consumerMessage: Message?
+        val connectorStringResource: StringResource?,
+        val barcodeStringResource: StringResource?,
+        val unitStringResource: StringResource?,
+        val merchantStringResource: StringResource?,
+        val consumerStringResource: StringResource?
     ){
-        val isAllValid = connectorMessage == null && barcodeMessage == null && unitMessage == null
-                && merchantMessage == null && consumerMessage == null
+        val isAllValid = connectorStringResource == null && barcodeStringResource == null && unitStringResource == null
+                && merchantStringResource == null && consumerStringResource == null
     }
 
 }

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.rizqi.tms.R
 import com.rizqi.tms.model.User
-import com.rizqi.tms.utility.Message
+import com.rizqi.tms.utility.StringResource
 import com.rizqi.tms.utility.Validator
 
 class RegisterViewModel : ViewModel() {
@@ -29,13 +29,13 @@ class RegisterViewModel : ViewModel() {
     fun validate(context: Context): RegisterValidation{
         return RegisterValidation(
             if (_name.value.isNullOrBlank())
-                Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.name)) else null,
+                StringResource.StringResWithParams(R.string.field_must_be_filled, context.getString(R.string.name)) else null,
             if (!Validator.validateEmail(_email.value!!))
-                Message.StringResource(R.string.email_not_valid) else null,
+                StringResource.StringResWithParams(R.string.email_not_valid) else null,
             if (!Validator.validatePassword(_password.value!!))
-                Message.StringResource(R.string.password_helper) else null,
+                StringResource.StringResWithParams(R.string.password_helper) else null,
             if (!Validator.validateConfirmPassword(_password.value!!, _confirmPassword.value!!))
-                Message.StringResource(R.string.confirm_password_must_equal) else null,
+                StringResource.StringResWithParams(R.string.confirm_password_must_equal) else null,
         )
     }
     fun getUser() : User{
@@ -45,10 +45,10 @@ class RegisterViewModel : ViewModel() {
     }
 
     inner class RegisterValidation(
-        val nameError : Message?,
-        val emailError : Message?,
-        val passwordError : Message?,
-        val confirmPasswordError : Message?
+        val nameError : StringResource?,
+        val emailError : StringResource?,
+        val passwordError : StringResource?,
+        val confirmPasswordError : StringResource?
     ){
         val isValid : Boolean = Validator.validityAllNull(
             nameError, emailError, passwordError, confirmPasswordError

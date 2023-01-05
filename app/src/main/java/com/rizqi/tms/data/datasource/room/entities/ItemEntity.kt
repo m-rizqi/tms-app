@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class ItemEntity(
     var name : String = "",
-    @ColumnInfo(name = "image_path")
-    var imagePath : String? = "",
+    @ColumnInfo(name = "image_id")
+    var imageId : Long? = null,
     @ColumnInfo(name = "is_reminded")
     var isReminded : Boolean = false,
     @ColumnInfo(name = "click_count")

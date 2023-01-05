@@ -74,7 +74,7 @@ class CreateUpdateUnitDialog(
                 when(res){
                     is Resource.Error -> {
                         hideLoading()
-                        Toast.makeText(context, res.message?.asString(requireContext()), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, res.stringResource?.asString(requireContext()), Toast.LENGTH_SHORT).show()
                     }
                     is Resource.Success -> {
                         hideLoading()

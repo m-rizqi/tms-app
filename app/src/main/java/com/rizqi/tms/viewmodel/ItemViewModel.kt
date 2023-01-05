@@ -2,18 +2,16 @@ package com.rizqi.tms.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
 import com.rizqi.tms.R
 import com.rizqi.tms.model.*
 import com.rizqi.tms.repository.ItemRepository
-import com.rizqi.tms.utility.Message
+import com.rizqi.tms.utility.StringResource
 import com.rizqi.tms.utility.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.lang.NullPointerException
 import javax.inject.Inject
@@ -86,7 +84,7 @@ class ItemViewModel @Inject constructor(
                 }
                 _insertItemWithPrices.value = Resource.Success(itemWithPrices)
             }catch (e : Exception){
-                _insertItemWithPrices.value = Resource.Error(Message.DynamicString(e.message.toString()))
+                _insertItemWithPrices.value = Resource.Error(StringResource.DynamicString(e.message.toString()))
             }
         }
     }
@@ -141,7 +139,7 @@ class ItemViewModel @Inject constructor(
                 itemRepository.deleteItem(item)
                 _deleteItem.value = Resource.Success(true)
             }catch (e : Exception){
-                _deleteItem.value = Resource.Error(Message.StringResource(R.string.failed_delete_item), false)
+                _deleteItem.value = Resource.Error(StringResource.StringResWithParams(R.string.failed_delete_item), false)
             }
         }
     }
@@ -276,7 +274,7 @@ class ItemViewModel @Inject constructor(
                 _updateItemWithPrices.value = Resource.Success(itemWithPrices)
             }catch (e : Exception){
                 e.printStackTrace()
-                _updateItemWithPrices.value = Resource.Error(Message.DynamicString(e.message.toString()))
+                _updateItemWithPrices.value = Resource.Error(StringResource.DynamicString(e.message.toString()))
             }
         }
     }

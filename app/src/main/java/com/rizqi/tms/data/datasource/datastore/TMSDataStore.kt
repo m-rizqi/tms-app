@@ -15,15 +15,13 @@ private val Context.datastore : DataStore<Preferences> by preferencesDataStore(
     name = TMS_PREFERENCES_NAME
 )
 
+
 class AppDataStore(private val context : Context) {
     private val IS_LOGIN = booleanPreferencesKey("is_login")
-    private val IS_ANONYMOUS = booleanPreferencesKey("is_anonymous")
-    private val USER_ID = intPreferencesKey("user_id")
     private val FIREBASE_USER_ID = stringPreferencesKey("firebase_user_id")
-    private val LAST_BACKUP_DATE = longPreferencesKey("last_backup_date")
+    private val LAST_BACKUP_TIME_MILLIS = longPreferencesKey("last_backup_time_millis")
     private val IS_BACKUP_WITH_IMAGE = booleanPreferencesKey("is_backup_with_image")
     private val BACKUP_SCHEDULE = intPreferencesKey("backup_schedule")
-    private val NEXT_BACKUP_DATE = longPreferencesKey("next_backup_date")
 
     suspend fun saveLoginToPreferencesStore(isLogin : Boolean) {
         context.datastore.edit { preferences ->
@@ -43,13 +41,13 @@ class AppDataStore(private val context : Context) {
             preferences[IS_LOGIN] ?: false
         }
 
-    suspend fun saveIsAnonymousToPreferencesStore(isAnonymous : Boolean) {
+    suspend fun saveLastBackupTimeMillisToPreferencesStore(lastBackupTimeMillis : Long) {
         context.datastore.edit { preferences ->
-            preferences[IS_ANONYMOUS] = isAnonymous
+            preferences[LAST_BACKUP_TIME_MILLIS] = lastBackupTimeMillis
         }
     }
 
-    val isAnonymousPreference : Flow<Boolean> = context.datastore.data
+    val lastBackupTimeMillisPreference : Flow<Long?> = context.datastore.data
         .catch {
             if (it is IOException){
                 emit(emptyPreferences())
@@ -58,16 +56,16 @@ class AppDataStore(private val context : Context) {
             }
         }
         .map { preferences ->
-            preferences[IS_ANONYMOUS] ?: true
+            preferences[LAST_BACKUP_TIME_MILLIS]
         }
 
-    suspend fun saveUserIdToPreferencesStore(userId : Int) {
+    suspend fun saveFirebaseUserIdToPreferencesStore(firebaseUserId : String) {
         context.datastore.edit { preferences ->
-            preferences[USER_ID] = userId
+            preferences[FIREBASE_USER_ID] = firebaseUserId
         }
     }
 
-    val userIdPreference : Flow<Int> = context.datastore.data
+    val firebaseUserIdPreference : Flow<String?> = context.datastore.data
         .catch {
             if (it is IOException){
                 emit(emptyPreferences())
@@ -76,6 +74,49 @@ class AppDataStore(private val context : Context) {
             }
         }
         .map { preferences ->
-            preferences[USER_ID] ?: -1
+            preferences[FIREBASE_USER_ID]
         }
+
+    suspend fun saveIsBackupWithImageToPreferencesStore(isBackupWithImage : Boolean) {
+        context.datastore.edit { preferences ->
+            preferences[IS_BACKUP_WITH_IMAGE] = isBackupWithImage
+        }
+    }
+
+    val isBackupWithImagePreference : Flow<Boolean> = context.datastore.data
+        .catch {
+            if (it is IOException){
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }
+        .map { preferences ->
+            preferences[IS_BACKUP_WITH_IMAGE] ?: false
+        }
+
+    suspend fun saveBackupScheduleToPreferencesStore(backupSchedule: BackupSchedule) {
+        context.datastore.edit { preferences ->
+            preferences[BACKUP_SCHEDULE] = backupSchedule.ordinal
+        }
+    }
+
+    val backupSchedulePreference : Flow<BackupSchedule> = context.datastore.data
+        .catch {
+            if (it is IOException){
+                emit(emptyPreferences())
+            } else {
+                throw it
+            }
+        }
+        .map { preferences ->
+            val backupScheduleOrdinal = preferences[BACKUP_SCHEDULE] ?: BackupSchedule.EVERY_MONTH.ordinal
+            when(backupScheduleOrdinal){
+                BackupSchedule.EVERY_DAY.ordinal -> BackupSchedule.EVERY_DAY
+                BackupSchedule.EVERY_WEEK.ordinal -> BackupSchedule.EVERY_WEEK
+                BackupSchedule.EVERY_MONTH.ordinal -> BackupSchedule.EVERY_MONTH
+                else -> BackupSchedule.NEVER
+            }
+        }
+
 }

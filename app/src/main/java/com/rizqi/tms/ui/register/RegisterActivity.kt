@@ -95,7 +95,7 @@ class RegisterActivity : AppCompatActivity() {
                                     when(res){
                                         is Resource.Error -> {
                                             hideLoading(binding.lRegisterLoading)
-                                            Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this@RegisterActivity, res.stringResource?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
                                         }
                                         is Resource.Success -> {
                                             res.data?.let { it1 -> setUserId(it1) }
@@ -107,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
                                                 when(unitRes){
                                                     is Resource.Error -> {
                                                         hideLoading(binding.lRegisterLoading)
-                                                        Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(this@RegisterActivity, res.stringResource?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
                                                         goToDashboard()
                                                     }
                                                     is Resource.Success -> {
@@ -193,7 +193,7 @@ class RegisterActivity : AppCompatActivity() {
                                                 when(res){
                                                     is Resource.Error -> {
                                                         hideLoading(binding.lRegisterLoading)
-                                                        Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(this@RegisterActivity, res.stringResource?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
                                                     }
                                                     is Resource.Success -> {
                                                         res.data?.let { it1 -> setUserId(it1) }
@@ -205,7 +205,7 @@ class RegisterActivity : AppCompatActivity() {
                                                             when(unitRes){
                                                                 is Resource.Error -> {
                                                                     hideLoading(binding.lRegisterLoading)
-                                                                    Toast.makeText(this@RegisterActivity, res.message?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
+                                                                    Toast.makeText(this@RegisterActivity, res.stringResource?.asString(this@RegisterActivity), Toast.LENGTH_SHORT).show()
                                                                     goToDashboard()
                                                                 }
                                                                 is Resource.Success -> {

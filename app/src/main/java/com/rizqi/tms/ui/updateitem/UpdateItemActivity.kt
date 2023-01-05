@@ -134,7 +134,7 @@ class UpdateItemActivity : AppCompatActivity() {
                     when(res){
                         is Resource.Error -> {
                             hideLoading(binding.lUpdateItemLoading)
-                            Toast.makeText(this@UpdateItemActivity, res.message?.asString(this@UpdateItemActivity), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@UpdateItemActivity, res.stringResource?.asString(this@UpdateItemActivity), Toast.LENGTH_SHORT).show()
                         }
                         is Resource.Success -> {
                             hideLoading(binding.lUpdateItemLoading)

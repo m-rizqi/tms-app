@@ -114,7 +114,7 @@ class LoginActivity : AppCompatActivity(){
                                     when(res){
                                         is Resource.Error -> {
                                             hideLoading(binding.lLoginLoading)
-                                            Toast.makeText(this@LoginActivity, res.message?.asString(this@LoginActivity), Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(this@LoginActivity, res.stringResource?.asString(this@LoginActivity), Toast.LENGTH_SHORT).show()
                                             goToDashboard()
                                         }
                                         is Resource.Success -> {
@@ -198,7 +198,7 @@ class LoginActivity : AppCompatActivity(){
                                                 when(res){
                                                     is Resource.Error -> {
                                                         hideLoading(binding.lLoginLoading)
-                                                        Toast.makeText(this@LoginActivity, res.message?.asString(this@LoginActivity), Toast.LENGTH_SHORT).show()
+                                                        Toast.makeText(this@LoginActivity, res.stringResource?.asString(this@LoginActivity), Toast.LENGTH_SHORT).show()
                                                         goToDashboard()
                                                     }
                                                     is Resource.Success -> {

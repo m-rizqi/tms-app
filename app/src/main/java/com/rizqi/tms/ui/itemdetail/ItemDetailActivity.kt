@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import com.bumptech.glide.Glide
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityItemDetailBinding
-import com.rizqi.tms.databinding.DialogSkipAlertBinding
 import com.rizqi.tms.model.ItemWithPrices
 import com.rizqi.tms.ui.dialog.warning.WarningDialog
 import com.rizqi.tms.ui.updateitem.UpdateItemActivity
@@ -77,7 +76,7 @@ class ItemDetailActivity : AppCompatActivity() {
                             when(res){
                                 is Resource.Error -> {
                                     hideLoading(binding.lItemDetailLoading)
-                                    Toast.makeText(this, res.message?.asString(this), Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, res.stringResource?.asString(this), Toast.LENGTH_SHORT).show()
                                 }
                                 is Resource.Success -> {
                                     hideLoading(binding.lItemDetailLoading)

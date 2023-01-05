@@ -1,7 +1,6 @@
 package com.rizqi.tms.ui.createitem
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,9 +8,8 @@ import androidx.lifecycle.ViewModel
 import com.rizqi.tms.R
 import com.rizqi.tms.model.Item
 import com.rizqi.tms.model.ItemWithPrices
-import com.rizqi.tms.model.Price
 import com.rizqi.tms.model.PriceAndSubPrice
-import com.rizqi.tms.utility.Message
+import com.rizqi.tms.utility.StringResource
 
 class CreateItemViewModel : ViewModel() {
     private val _prices = MutableLiveData(mutableListOf<PriceAndSubPrice>())
@@ -54,7 +52,7 @@ class CreateItemViewModel : ViewModel() {
 
     fun validateStep1(context: Context) = Step1CreateItemFragment.Step1CreateItemValidation(
         if (_name.value.isNullOrBlank()){
-            Message.StringResource(R.string.field_must_be_filled, context.getString(R.string.item_name))
+            StringResource.StringResWithParams(R.string.field_must_be_filled, context.getString(R.string.item_name))
         }else{
             null
         }

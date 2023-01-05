@@ -227,11 +227,11 @@ class UpdatePriceBottomSheet(
                 val consumerSpecialPriceValidity = consumerSpecialPriceAdapter.validate()
                 val priceValidity = viewModel.validate(isConnectorVisible, requireContext())
                 binding.apply {
-                    tilCreatePriceConnector.errorText = priceValidity.connectorMessage?.asString(requireContext())
-                    tilCreatePriceBarcode.errorText = priceValidity.barcodeMessage?.asString(requireContext())
-                    tvCreatePriceUnitError.text = priceValidity.unitMessage?.asString(requireContext())
-                    tilCreatePriceMerchant.errorText = priceValidity.merchantMessage?.asString(requireContext())
-                    tilCreatePriceConsumer.errorText = priceValidity.consumerMessage?.asString(requireContext())
+                    tilCreatePriceConnector.errorText = priceValidity.connectorStringResource?.asString(requireContext())
+                    tilCreatePriceBarcode.errorText = priceValidity.barcodeStringResource?.asString(requireContext())
+                    tvCreatePriceUnitError.text = priceValidity.unitStringResource?.asString(requireContext())
+                    tilCreatePriceMerchant.errorText = priceValidity.merchantStringResource?.asString(requireContext())
+                    tilCreatePriceConsumer.errorText = priceValidity.consumerStringResource?.asString(requireContext())
                 }
                 if (!merchantSpecialPriceValidity || !consumerSpecialPriceValidity || !priceValidity.isAllValid) return@setOnClickListener
                 val castedMerchantSpecialPriceList = castSpecialPriceToMerchant(merchantSpecialPriceList)
