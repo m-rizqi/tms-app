@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "443213232021",
+    "firebase_url": "https://toko-management-system-default-rtdb.firebaseio.com",
+    "project_id": "toko-management-system",
+    "storage_bucket": "toko-management-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443213232021:android:753cfc6f4e88dbd242689c",
+        "android_client_info": {
+          "package_name": "com.rizqi.tms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443213232021-kck2526dldr0hsm417ia0lmcu25m0aab.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rizqi.tms",
+            "certificate_hash": "2e0433f774b7a57555e258ea4312bc26fa9758c9"
+          }
+        },
+        {
+          "client_id": "443213232021-ghe7irkumabj9v8qht77rr27tko3ferc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_Lchwh4Q43hLyCtHJb5np8MswTPH1gbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443213232021-ghe7irkumabj9v8qht77rr27tko3ferc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
