@@ -16,10 +16,7 @@ data class ItemInCashier (
     var priceId : Long? = null,
     var subPriceId : Long? = null,
     var transactionId : Long? = null,
-    var id : Long? = null,
-    var subPrice: SubPrice? = null,
-    var price : Price? = null,
-    var item: Item? = null
+    var id : Long? = null
 ) {
     fun toItemInCashierEntity() : ItemInCashierEntity {
         return ItemInCashierEntity(

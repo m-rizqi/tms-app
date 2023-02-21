@@ -7,4 +7,25 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    TMS Color-->
+    <color name="primary_100">#4641A7</color>
+    <color name="primary_80">#CC4641A7</color>
+    <color name="primary_60">#994641A7</color>
+    <color name="primary_40">#664641A7</color>
+    <color name="primary_20">#334641A7</color>
+    <color name="primary_15">#264641A7</color>
+    <color name="accent">#FCC84E</color>
+    <color name="accent_2">#FC3867</color>
+    <color name="accent_3">#21D268</color>
+    <color name="black_100">#0A0A0A</color>
+    <color name="black_80">#CC0A0A0A</color>
+    <color name="black_70">#B30A0A0A</color>
+    <color name="black_60">#990A0A0A</color>
+    <color name="black_40">#660A0A0A</color>
+    <color name="black_20">#330A0A0A</color>
+    <color name="black_10">#1A0A0A0A</color>
+    <color name="danger_main">#CB3A31</color>
+    <color name="track_color">#dad9ed</color>
+    <color name="disabled">#EDEDED</color>
 </resources>
