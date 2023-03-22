@@ -2,6 +2,8 @@ package com.rizqi.tms.di
 
 import android.content.Context
 import com.rizqi.tms.R
+import com.rizqi.tms.data.datasource.firebase.auth.FirebaseAuthentication
+import com.rizqi.tms.data.datasource.firebase.auth.MainFirebaseAuthentication
 import com.rizqi.tms.data.datasource.room.TMSDatabase
 import com.rizqi.tms.data.datasource.room.dao.ItemDao
 import com.rizqi.tms.data.datasource.room.dao.PriceDao
@@ -9,6 +11,8 @@ import com.rizqi.tms.data.datasource.room.dao.SpecialPriceDao
 import com.rizqi.tms.data.datasource.room.dao.SubPriceDao
 import com.rizqi.tms.data.repository.specialprice.MainSpecialPriceRepository
 import com.rizqi.tms.data.repository.specialprice.SpecialPriceRepository
+import com.rizqi.tms.domain.login.SignInWithEmailAndPasswordUseCase
+import com.rizqi.tms.domain.login.SignInWithEmailAndPasswordUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -67,4 +71,12 @@ object AppModule {
     fun provideSpecialPriceRepository(
         specialPriceDao: SpecialPriceDao
     ) : SpecialPriceRepository = MainSpecialPriceRepository(specialPriceDao)
+
+    @Provides
+    fun provideFirebaseAuthentication(
+        @ApplicationContext context: Context,
+        @FirebaseWebClientId firebaseWebClientId : String
+    ) : FirebaseAuthentication {
+        return MainFirebaseAuthentication(firebaseWebClientId, context)
+    }
 }

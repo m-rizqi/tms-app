@@ -292,6 +292,7 @@
     <string name="pay">Bayar</string>
     <string name="money_change">Kembalian</string>
     <string name="thank_you_for_visiting">Terima Kasih Atas Kunjungan Anda</string>
+    <string name="password_not_valid">Password tidak valid</string>
 
     <string-array name="months">
         <item>Januari</item>

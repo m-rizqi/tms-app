@@ -28,10 +28,7 @@ class OnBoardingActivity : AppCompatActivity() {
         lifecycleScope.launchWhenCreated {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect {uiState ->
-                    if (uiState.isStartToLoginActivity) {
-                        startLoginActivity()
-                        return@collect
-                    }
+
                 }
             }
         }
@@ -39,6 +36,10 @@ class OnBoardingActivity : AppCompatActivity() {
         setupPageChangeCallback()
         binding.btnOnboardingNext.setOnClickListener {
             viewModel.nextPage()
+            if (viewModel.uiState.value.shouldStartToLoginActivity) {
+                startLoginActivity()
+                return@setOnClickListener
+            }
             binding.vpOnboarding.currentItem = viewModel.uiState.value.fragmentIndex
         }
         binding.tvOnboardingSkip.setOnClickListener {

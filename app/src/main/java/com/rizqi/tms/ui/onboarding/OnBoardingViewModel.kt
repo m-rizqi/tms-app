@@ -23,7 +23,7 @@ class OnBoardingViewModel : ViewModel() {
     fun nextPage() {
         if (_uiState.value.fragmentIndex == 2){
             _uiState.update { currentUiState ->
-                currentUiState.copy(isStartToLoginActivity = true)
+                currentUiState.copy(shouldStartToLoginActivity = true)
             }
         }else{
             _uiState.update { currentUiState ->
@@ -34,7 +34,7 @@ class OnBoardingViewModel : ViewModel() {
 
     data class OnBoardingUiState(
         val fragmentIndex : Int = 0,
-        val isStartToLoginActivity : Boolean = false,
+        val shouldStartToLoginActivity : Boolean = false,
         val onBoardingContents : List<OnBoardingContent> = listOf(
             OnBoardingContent(
                 R.string.scan_and_save_item,

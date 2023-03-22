@@ -1,6 +1,7 @@
 package com.rizqi.tms.ui.onboarding
 
 import androidx.lifecycle.Lifecycle
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.*
@@ -128,5 +129,13 @@ class OnBoardingActivityTest {
     fun test_click_button_skip_should_open_login_activity(){
         onView(withId(R.id.tv_onboarding_skip)).perform(click())
         intended(hasComponent(LoginActivity::class.java.name))
+    }
+
+    @Test
+    fun test_start_to_login_then_click_back_should_stay_in_on_boarding() {
+        onView(withId(R.id.tv_onboarding_skip)).perform(click())
+        Espresso.pressBack()
+        Espresso.pressBack()
+        onView(withId(R.id.btn_onboarding_next)).check(matches(isDisplayed()))
     }
 }

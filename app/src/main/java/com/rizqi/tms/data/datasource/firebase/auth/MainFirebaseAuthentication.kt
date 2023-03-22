@@ -45,6 +45,7 @@ class MainFirebaseAuthentication @Inject constructor(
                 .setGoogleIdTokenRequestOptions(GoogleIdTokenRequestOptions.builder()
                     .setSupported(true)
                     .setServerClientId(firebaseWebClientId)
+                    .setFilterByAuthorizedAccounts(false)
                     .build()
                 )
                 .build()
