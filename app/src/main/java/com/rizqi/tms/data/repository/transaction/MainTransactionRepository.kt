@@ -11,8 +11,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainTransactionRepository(
+class MainTransactionRepository @Inject constructor(
     private val transactionDao: TransactionDao,
     private val itemInCashierRepository: ItemInCashierRepository
 ) : TransactionRepository {

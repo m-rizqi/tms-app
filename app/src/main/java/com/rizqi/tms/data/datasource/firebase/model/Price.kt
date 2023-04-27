@@ -30,4 +30,23 @@ data class Price(
         SubPrice(),
         SubPrice()
     )
+
+    fun toModelPrice() : com.rizqi.tms.data.model.Price{
+        return com.rizqi.tms.data.model.Price(
+            id =  this.id,
+            barcode =  this.barcode,
+            isMainPrice =  this.isMainPrice,
+            prevQuantityConnector =  this.prevQuantityConnector,
+            prevPriceConnectorId =  this.prevPriceConnectorId,
+            nextQuantityConnector =  this.nextQuantityConnector,
+            nextPriceConnectorId =  this.nextPriceConnectorId,
+            itemId =  this.itemId,
+            unitId =  this.unitId,
+            unitName =  this.unitName,
+            prevUnitName =  this.prevUnitName,
+            merchantSubPrice =  this.merchantSubPrice.toModelSubPrice(),
+            consumerSubPrice = this.consumerSubPrice.toModelSubPrice(),
+        )
+    }
+
 }

@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.rizqi.tms.R
 import com.rizqi.tms.databinding.ActivityLoginBinding
+import com.rizqi.tms.ui.dashboard.DashboardActivity
 import com.rizqi.tms.ui.dialog.SkipWarningDialog
 import com.rizqi.tms.ui.hideLoading
 import com.rizqi.tms.ui.showLoading
@@ -52,7 +53,9 @@ class LoginActivity : AppCompatActivity() {
 
                     uiState.shouldStartDashboardActivity.also {
                         if (it) {
-                            Toast.makeText(this@LoginActivity, "Success", Toast.LENGTH_SHORT).show()
+                            startActivity(
+                                Intent(this@LoginActivity, DashboardActivity::class.java)
+                            )
                             viewModel.setDashboardActivityStarted()
                         }
                     }
@@ -71,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             tilLoginEmail.etInputLayoutDefault.doAfterTextChanged { viewModel.setEmail(it.toString()) }
             tilLoginPassword.etInputLayoutDefault.doAfterTextChanged { viewModel.setPassword(it.toString()) }
-            btnLogin.setOnClickListener { viewModel.login() }
+            btnLogin.setOnClickListener { viewModel.loginWithEmailAndPassword() }
             tvLoginSkip.setOnClickListener { showSkipWarningDialog() }
             btnLoginWithGoogle.root.setOnClickListener { viewModel.loginWithGoogle() }
         }

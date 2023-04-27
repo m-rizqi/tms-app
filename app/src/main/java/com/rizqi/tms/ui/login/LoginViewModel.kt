@@ -4,10 +4,11 @@ import android.content.Intent
 import android.content.IntentSender
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.rizqi.tms.R
 import com.rizqi.tms.data.datasource.firebase.auth.FirebaseAuthentication
-import com.rizqi.tms.data.datasource.firebase.auth.MainFirebaseAuthentication
 import com.rizqi.tms.domain.KeyValue
 import com.rizqi.tms.domain.login.SignInWithEmailAndPasswordUseCase
+import com.rizqi.tms.domain.restore.RestoreDatabaseUseCase
 import com.rizqi.tms.shared.StringResource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val signInWithEmailAndPasswordUseCase: SignInWithEmailAndPasswordUseCase,
+    private val restoreDatabaseUseCase: RestoreDatabaseUseCase,
     private val firebaseAuthentication: FirebaseAuthentication
 ) : ViewModel() {
 
@@ -42,11 +44,12 @@ class LoginViewModel @Inject constructor(
         updateUiState { it.copy(shouldStartDashboardActivity = false) }
     }
 
-    fun login(){
+    fun loginWithEmailAndPassword(){
         updateUiState { it.copy(isDisplayingLoading = true) }
         viewModelScope.launch {
-            val resource = signInWithEmailAndPasswordUseCase.invoke(uiState.value.email, uiState.value.password)
+            val resource = signInWithEmailAndPasswordUseCase(uiState.value.email, uiState.value.password)
             if (resource.isSuccess){
+                resource.data?.uid?.let { restoreDatabase(it) }
                 updateUiState { it.copy(shouldStartDashboardActivity = true) }
             }else{
                 updateUiState {
@@ -116,6 +119,7 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             val resource = firebaseAuthentication.signInWithCredential(data)
             if (resource.isSuccess){
+                resource.firebaseUser?.uid?.let { restoreDatabase(it) }
                 updateUiState {
                     it.copy(
                         shouldStartDashboardActivity = true
@@ -129,6 +133,16 @@ class LoginViewModel @Inject constructor(
                 }
             }
             updateUiState { it.copy(isDisplayingLoading = false) }
+        }
+    }
+
+    private suspend fun restoreDatabase(firebaseUserId : String){
+        updateUiState { it.copy(generalErrorMessage = StringResource.StringResWithParams(R.string.restoring_database)) }
+        val result = restoreDatabaseUseCase(firebaseUserId)
+        if (!result.data.isNullOrEmpty()){
+            updateUiState {
+                it.copy(generalErrorMessage = result.data.last())
+            }
         }
     }
 

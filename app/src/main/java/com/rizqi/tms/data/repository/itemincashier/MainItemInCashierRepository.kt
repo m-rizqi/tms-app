@@ -10,8 +10,9 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MainItemInCashierRepository(
+class MainItemInCashierRepository @Inject constructor(
     private val itemInCashierDao: ItemInCashierDao
 ) : ItemInCashierRepository{
     override suspend fun insertItemInCashier(
