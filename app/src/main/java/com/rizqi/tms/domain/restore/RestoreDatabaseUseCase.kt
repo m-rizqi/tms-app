@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 interface RestoreDatabaseUseCase {
     suspend operator fun invoke(firebaseUserId : String) : Resource<List<StringResource?>>
+
 }
 
 class RestoreDatabaseUseCaseImpl @Inject constructor(
