@@ -15,6 +15,9 @@
         android:theme="@style/Theme.TokoManagementSystem.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ui.takeimage.TakeImageActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.createitem.CreateItemActivity"
             android:exported="false" />
         <activity

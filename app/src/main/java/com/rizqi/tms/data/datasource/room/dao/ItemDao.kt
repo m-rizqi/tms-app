@@ -55,4 +55,7 @@ interface ItemDao {
     @Query("DELETE FROM ItemEntity")
     suspend fun deleteAllItemEntity()
 
+    @Query("SELECT EXISTS(SELECT 1 FROM ItemEntity WHERE name = :name)")
+    suspend fun checkItemNameAlreadyExist(name : String) : Boolean
+
 }

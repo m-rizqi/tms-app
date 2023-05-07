@@ -19,4 +19,5 @@ interface ItemRepository {
     suspend fun getItemsByBarcode(barcode : String) : Resource<List<Item>>
     fun getAllItem() : Flow<Resource<List<Item>>>
     suspend fun updateItemImageId(id : Long, imageId : Long)
+    suspend fun checkItemNameAlreadyExist(name : String) : Boolean
 }

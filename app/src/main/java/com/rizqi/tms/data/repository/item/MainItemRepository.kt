@@ -182,4 +182,10 @@ class MainItemRepository @Inject constructor(
         }
     }
 
+    override suspend fun checkItemNameAlreadyExist(name: String): Boolean {
+        return withContext(Dispatchers.IO){
+            itemDao.checkItemNameAlreadyExist(name)
+        }
+    }
+
 }

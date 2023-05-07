@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.res.ResourcesCompat
 import com.rizqi.tms.databinding.LayoutLoadingBinding
+import com.rizqi.tms.ui.createitem.CreateItemViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 
 internal fun Resources.getColorSafe(colorId : Int): Int {
     return ResourcesCompat.getColor(this, colorId, null)
