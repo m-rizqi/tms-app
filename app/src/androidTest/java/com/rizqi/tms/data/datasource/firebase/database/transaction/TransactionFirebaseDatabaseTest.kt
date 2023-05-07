@@ -38,10 +38,10 @@ class TransactionFirebaseDatabaseTest {
     private val item1 = Item(1, "Item Test 1", 123, true, 2, System.currentTimeMillis(), listOf(price))
     private val item2 = Item(2, "Item Test 2", 789, false, 4, System.currentTimeMillis(), listOf(price))
     private val listOfItem = listOf(item1, item2)
-    private val itemInCashier1 = ItemInCashier(1.0, 12000L, "123456789", TotalPriceType.ORIGINAL, PriceType.MERCHANT, 9000.0, "Bungkus", 123, "Item Test 1", 1, 1, 1, 1, 1)
-    private val itemInCashier2 = ItemInCashier(1.0, 12000L, "123456789", TotalPriceType.ORIGINAL, PriceType.CONSUMER, 9000.0, "Sachet", 123, "Item Test 2", 2, 2, 2, 1, 2)
-    private val transaction1 = Transaction(System.currentTimeMillis(), 24000L, listOf(123, 124), listOf(itemInCashier1, itemInCashier2), 1)
-    private val transaction2 = Transaction(System.currentTimeMillis(), 16000L, listOf(223, 341), listOf(itemInCashier1, itemInCashier2), 2)
+    private val itemInCashier1 = ItemInCashier(1.0, 12000.0, "123456789", TotalPriceType.ORIGINAL, PriceType.MERCHANT, 9000.0, "Bungkus", 123, "Item Test 1", 1, 1, 1, 1, 1)
+    private val itemInCashier2 = ItemInCashier(1.0, 12000.0, "123456789", TotalPriceType.ORIGINAL, PriceType.CONSUMER, 9000.0, "Sachet", 123, "Item Test 2", 2, 2, 2, 1, 2)
+    private val transaction1 = Transaction(System.currentTimeMillis(), 24000.0, listOf(123, 124), listOf(itemInCashier1, itemInCashier2), 1)
+    private val transaction2 = Transaction(System.currentTimeMillis(), 16000.0, listOf(223, 341), listOf(itemInCashier1, itemInCashier2), 2)
 
     @Test
     @Throws(IOException::class)

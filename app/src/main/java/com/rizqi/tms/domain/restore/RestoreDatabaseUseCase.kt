@@ -1,5 +1,6 @@
 package com.rizqi.tms.domain.restore
 
+import android.util.Log
 import com.rizqi.tms.data.datasource.firebase.database.item.ItemFirebaseDatabase
 import com.rizqi.tms.data.datasource.firebase.database.transaction.TransactionFirebaseDatabase
 import com.rizqi.tms.data.datasource.firebase.database.unit.UnitFirebaseDatabase
@@ -12,7 +13,6 @@ import javax.inject.Inject
 
 interface RestoreDatabaseUseCase {
     suspend operator fun invoke(firebaseUserId : String) : Resource<List<StringResource?>>
-
 }
 
 class RestoreDatabaseUseCaseImpl @Inject constructor(

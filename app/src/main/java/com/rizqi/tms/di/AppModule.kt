@@ -12,6 +12,8 @@ import com.rizqi.tms.data.datasource.firebase.database.unit.MainUnitFirebaseData
 import com.rizqi.tms.data.datasource.firebase.database.unit.UnitFirebaseDatabase
 import com.rizqi.tms.data.datasource.room.TMSDatabase
 import com.rizqi.tms.data.datasource.room.dao.*
+import com.rizqi.tms.data.datasource.storage.images.ImageStorageDataSource
+import com.rizqi.tms.data.datasource.storage.images.MainImageStorageDataSource
 import com.rizqi.tms.data.repository.item.ItemRepository
 import com.rizqi.tms.data.repository.item.MainItemRepository
 import com.rizqi.tms.data.repository.itemincashier.ItemInCashierRepository
@@ -159,4 +161,10 @@ object AppModule {
     fun provideUnitRepository(
         mainUnitRepository: MainUnitRepository
     ) : UnitRepository = mainUnitRepository
+
+    @Singleton
+    @Provides
+    fun provideImageStorageDataSource(
+        mainImageStorageDataSource: MainImageStorageDataSource
+    ) : ImageStorageDataSource = mainImageStorageDataSource
 }

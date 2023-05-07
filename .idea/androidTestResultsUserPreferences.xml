@@ -698,6 +698,20 @@
             </AndroidTestResultsTableState>
           </value>
         </entry>
+        <entry key="1105374711">
+          <value>
+            <AndroidTestResultsTableState>
+              <option name="preferredColumnWidths">
+                <map>
+                  <entry key="4687d56b" value="120" />
+                  <entry key="Duration" value="90" />
+                  <entry key="OPPO&#10; CPH2159" value="120" />
+                  <entry key="Tests" value="360" />
+                </map>
+              </option>
+            </AndroidTestResultsTableState>
+          </value>
+        </entry>
         <entry key="1126779148">
           <value>
             <AndroidTestResultsTableState>

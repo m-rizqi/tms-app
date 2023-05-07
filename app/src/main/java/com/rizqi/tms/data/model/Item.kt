@@ -1,5 +1,6 @@
 package com.rizqi.tms.data.model
 
+import android.graphics.Bitmap
 import com.rizqi.tms.data.datasource.room.entities.ItemEntity
 import com.rizqi.tms.data.datasource.room.entities.ItemWithPricesEntity
 
@@ -10,7 +11,8 @@ data class Item(
     var isReminded : Boolean,
     var clickCount : Long,
     var lastUpdateInMillis : Long,
-    var prices : List<Price> = listOf()
+    var prices : List<Price> = listOf(),
+    var image : Bitmap? = null
 ){
     fun toItemEntity() : ItemEntity {
         return ItemEntity(

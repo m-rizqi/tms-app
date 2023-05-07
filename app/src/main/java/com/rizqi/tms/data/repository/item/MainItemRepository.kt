@@ -1,6 +1,8 @@
 package com.rizqi.tms.data.repository.item
 
 import com.rizqi.tms.data.datasource.room.dao.ItemDao
+import com.rizqi.tms.data.datasource.storage.images.ImageRequest
+import com.rizqi.tms.data.datasource.storage.images.ImageStorageDataSource
 import com.rizqi.tms.data.model.Item
 import com.rizqi.tms.data.model.Resource
 import com.rizqi.tms.data.repository.price.PriceRepository
@@ -15,7 +17,7 @@ import javax.inject.Inject
 
 class MainItemRepository @Inject constructor(
     private val itemDao: ItemDao,
-    private val priceRepository: PriceRepository
+    private val priceRepository: PriceRepository,
 ) : ItemRepository{
     override suspend fun insertItem(item: Item): Resource<Item> {
         return withContext(Dispatchers.IO){
@@ -25,6 +27,7 @@ class MainItemRepository @Inject constructor(
                 price.itemId = itemId
                 priceRepository.insertPrice(price)
             }
+
             return@withContext Resource(true, item, null)
         }
     }

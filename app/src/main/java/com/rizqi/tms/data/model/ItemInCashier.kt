@@ -1,5 +1,6 @@
 package com.rizqi.tms.data.model
 
+import android.graphics.Bitmap
 import com.rizqi.tms.data.datasource.room.entities.ItemInCashierEntity
 
 data class ItemInCashier (
@@ -16,7 +17,7 @@ data class ItemInCashier (
     var priceId : Long? = null,
     var subPriceId : Long? = null,
     var transactionId : Long? = null,
-    var id : Long? = null
+    var id : Long? = null,
 ) {
     fun toItemInCashierEntity() : ItemInCashierEntity {
         return ItemInCashierEntity(

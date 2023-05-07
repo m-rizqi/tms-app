@@ -1,5 +1,6 @@
 package com.rizqi.tms.data.model
 
+import android.graphics.Bitmap
 import com.rizqi.tms.data.datasource.room.entities.TransactionEntity
 import com.rizqi.tms.data.datasource.room.entities.TransactionWithItemInCashierEntity
 
@@ -8,7 +9,7 @@ data class Transaction (
     var total : Double = 0.0,
     var imageIdOfThumbnails : List<Long?> = emptyList(),
     var itemInCashiers : List<ItemInCashier> = emptyList(),
-    var id : Long? = null
+    var id : Long? = null,
 ) {
     fun toTransactionEntity() : TransactionEntity {
         return TransactionEntity(
